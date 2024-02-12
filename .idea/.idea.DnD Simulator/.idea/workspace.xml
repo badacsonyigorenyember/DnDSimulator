@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Script/EntityListScrollView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/EntityListScrollView.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/UIHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/UIHandler.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/EntityScrollListDisplay.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/EntityScrollListDisplay.cs.meta" afterDir="false" />
+    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="feat: Working download panel">
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/Bestiary.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/download_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/download_icon.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/instantiate_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/instantiate_icon.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/ListElement.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Get5etoolsInfos.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Get5etoolsInfos.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Image.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Image.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +133,7 @@
       <updated>1707678347061</updated>
       <workItem from="1707678348971" duration="12435000" />
       <workItem from="1707696084819" duration="64000" />
-      <workItem from="1707737752543" duration="11379000" />
+      <workItem from="1707737752543" duration="11715000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -177,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1707696133585</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="feat: Working download panel">
+      <created>1707752708151</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1707752708151</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -224,7 +224,8 @@
     <MESSAGE value="feat: Base Unity project" />
     <MESSAGE value="fix: minor fixes" />
     <MESSAGE value="feat: PNG load to Scene from script" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: PNG load to Scene from script" />
+    <MESSAGE value="feat: Working download panel" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Working download panel" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
