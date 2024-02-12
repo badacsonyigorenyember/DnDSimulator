@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -14,6 +12,12 @@ public class Get5etoolsInfos : MonoBehaviour
 
     private void Start() {
         StartCoroutine(GetRequest());
+    }
+
+    private void Update() {
+        if (Input.anyKeyDown) {
+            ObjectGenerator.GenerateSprite(Resources.Load<Texture2D>(images[0].Path()), Vector2.zero);
+        }
     }
 
     IEnumerator GetRequest() {
@@ -41,8 +45,8 @@ public class Get5etoolsInfos : MonoBehaviour
             images.Add(new Image(list[i]));
         }
 
-        foreach (var image in images) {
-            using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(image.Url)) {
+        for(int i = 0; i < 1; i++) {
+            using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(images[i].Url)) {
                 yield return request.SendWebRequest();
             
                 switch (request.result) {
@@ -55,12 +59,9 @@ public class Get5etoolsInfos : MonoBehaviour
                         Texture2D texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
 
                         byte[] bytes = texture.EncodeToPNG();
-                        File.WriteAllBytes("Assets/Resources/Images/" + image.Name + ".png", bytes);
+                        File.WriteAllBytes("Assets/Resources/Images/" + images[i].Name + ".png", bytes);
                         break;
-                
                 }
-            
-            
             }
             
             

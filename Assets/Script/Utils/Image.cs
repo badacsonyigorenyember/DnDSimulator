@@ -13,5 +13,9 @@ public class Image
         Name = Url.Split("/").Last().Replace("%20", " ");
         Name = Name.Remove(Name.Length - 4);
     }
+
+    public string Path() {
+        return "Images/" + Name;
+    }
 }
         

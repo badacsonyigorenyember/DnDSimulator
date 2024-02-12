@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Resources.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Get5etoolsInfos.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Get5etoolsInfos.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/Image.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/Image.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/ObjectGenerator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/ObjectGenerator.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Get5etoolsInfos.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Get5etoolsInfos.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Image.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Image.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +114,14 @@
       <option name="project" value="LOCAL" />
       <updated>1707680796248</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix: minor fixes">
+      <created>1707693037569</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1707693037569</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,7 +166,8 @@
     <MESSAGE value="fix: Fixed Unity base project" />
     <MESSAGE value="fix: Removed .DS_Store" />
     <MESSAGE value="feat: Base Unity project" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Base Unity project" />
+    <MESSAGE value="fix: minor fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: minor fixes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
