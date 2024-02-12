@@ -2,13 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Script/ObjectGenerator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/ObjectGenerator.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/EntityListScrollView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/EntityListScrollView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/UIHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/UIHandler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/EntityScrollListDisplay.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/EntityScrollListDisplay.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Get5etoolsInfos.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Get5etoolsInfos.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Image.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Image.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Image.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Image.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +43,46 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/0d/0f25536b/RenderPipelineManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/EntityListScrollView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb543db4513343d1826c5ea13681e0f36e00/28/1b929c01/Canvas.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/EntityListScrollView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/EntityListScrollView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/b0/18200550/HostView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/71/2b0d5876/EditorApplication.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/35/145c88a2/EditorCompilationInterface.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/EntityListScrollView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/27/72eab906/GUIUtility.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/bd/fdd22459/Event.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/EntityListScrollView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/EntityListScrollView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/75/a1cc6909/ScriptableRuntimeReflectionSystemWrapper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/EntityListScrollView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Get5etoolsInfos.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -69,10 +116,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="27187">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="27187" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -92,6 +139,8 @@
       <option name="presentableId" value="Default" />
       <updated>1707678347061</updated>
       <workItem from="1707678348971" duration="12435000" />
+      <workItem from="1707696084819" duration="64000" />
+      <workItem from="1707737752543" duration="11379000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -121,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1707693037569</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: PNG load to Scene from script">
+      <created>1707696133585</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1707696133585</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,7 +223,8 @@
     <MESSAGE value="fix: Removed .DS_Store" />
     <MESSAGE value="feat: Base Unity project" />
     <MESSAGE value="fix: minor fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: minor fixes" />
+    <MESSAGE value="feat: PNG load to Scene from script" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: PNG load to Scene from script" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
