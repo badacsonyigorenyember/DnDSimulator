@@ -15,7 +15,7 @@ public class Entity
     }
 
     public string Path() {
-        return "Images/Bestiary" + Name;
+        return "Images/Bestiary/" + Name;
     }
 }
         

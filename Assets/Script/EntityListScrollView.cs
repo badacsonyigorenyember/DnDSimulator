@@ -1,11 +1,12 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Application = UnityEngine.Device.Application;
+using Acttion = System.Action;
 
 public class EntityListScrollView : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class EntityListScrollView : MonoBehaviour
     [SerializeField] private Button ShowButton;
     [SerializeField] private Button HideButton;
 
-    private List<Entity> Entities = new List<Entity>();
+    private List<MonsterObj> Monsters = new List<MonsterObj>();
 
     private List<GameObject> EntityObjs = new List<GameObject>();
     
@@ -28,38 +29,41 @@ public class EntityListScrollView : MonoBehaviour
         HideButton.onClick.AddListener(HidePanel);
         ShowButton.onClick.AddListener(Showpanel);
     }
+    
 
     private void Update() {
         if (SearchInput.isFocused) {
             if (searchText != SearchInput.text) {
-                FillScrollViewWithData(Entities.Where(e => e.Name.ToLower().Contains(SearchInput.text.ToLower())).ToList());
+                FillScrollViewWithData(Monsters.Where(e => e.Name.ToLower().Contains(SearchInput.text.ToLower())).ToList());
                 searchText = SearchInput.text;
             }
         }
     }
 
     void FillListWithData() {
-        Entities = Get5etoolsInfos.entites;
+        Monsters = Get5etoolsInfos.monsters;
         
         FillScrollViewWithData();
     }
 
-    void FillScrollViewWithData(List<Entity> list = null) {
+    void FillScrollViewWithData(List<MonsterObj> list = null) {
         foreach (var obj in EntityObjs) {
             Destroy(obj);
         }
         EntityObjs.Clear();
-        
-        foreach (var entity in list ?? Entities) {
+
+        foreach (var monster in list ?? Monsters) {
             GameObject e = Instantiate(Prefab, Content);
-            e.name = entity.Name;
+            e.name = monster.Name;
             if (e.TryGetComponent(out RectTransform rect)) {
                 rect.anchorMax = new Vector2(1, 1);
                 rect.position = new Vector3(0, 0, 0);
             }
+            
+            //bool exists = File.Exists(Application.dataPath + "/Resources/" + monster.Path() + ".png");
 
             if (e.TryGetComponent(out EntityScrollListDisplay display)) {
-                display.Init(entity);
+                display.Init(monster, false); //TODO
             }
             
             EntityObjs.Add(e);
