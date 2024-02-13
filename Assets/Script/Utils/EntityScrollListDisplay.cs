@@ -48,6 +48,11 @@ public class EntityScrollListDisplay : MonoBehaviour
         GameObject a = new GameObject();
         a.name = Data.Name;
         a.AddComponent<SpriteRenderer>().sprite = e.CreateSprite();
+        a.AddComponent<CircleCollider2D>();
+        a.layer = LayerMask.NameToLayer("Entity");
+        
+        e.Obj = a;
+        GameManager.Entities.Add(e);
     }
     
     

@@ -67,6 +67,7 @@ public class CameraMovement : MonoBehaviour
             foreach (var entity in entitiesToMove) {
                 Vector3 entityPos = entity.transform.position;
                 Vector3 dir = (cam.ScreenToWorldPoint(Input.mousePosition) - entityPos).normalized;
+                Debug.Log(dir);
                 dir.z = 0;
                 entity.transform.Translate(dir * entitySpeed * Time.deltaTime);
             }

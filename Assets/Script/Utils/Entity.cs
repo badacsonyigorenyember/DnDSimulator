@@ -6,7 +6,7 @@ public class Entity
 {
     public string Name;
     public int Hp;
-    private byte[] ImageData;
+    public GameObject Obj;
 
     public Entity(MonsterData data) {
         Name = data.Name;

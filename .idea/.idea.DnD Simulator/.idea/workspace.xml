@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Script/GameManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/GameManager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/MonsterData.cs" afterDir="false" />
+    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="feat: Sprite load to scene">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/CameraMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/CameraMovement.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/EntityListScrollView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/EntityListScrollView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Get5etoolsInfos.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Get5etoolsInfos.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/DataHandler.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/EntityScrollListDisplay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/EntityScrollListDisplay.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Monster.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Monster.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/MonsterData.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/MonsterObj.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/MonsterObj.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +118,7 @@
       <workItem from="1707767882906" duration="5256000" />
       <workItem from="1707773623988" duration="924000" />
       <workItem from="1707774570635" duration="3577000" />
-      <workItem from="1707778175443" duration="4392000" />
+      <workItem from="1707778175443" duration="5769000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -182,7 +176,14 @@
       <option name="project" value="LOCAL" />
       <updated>1707777120354</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feat: Sprite load to scene">
+      <created>1707782836960</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1707782836960</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,7 +233,8 @@
     <MESSAGE value="feat: Working download panel" />
     <MESSAGE value="fix: Image folder is added to git" />
     <MESSAGE value="feat: Newton JSON reader introduced and working MonsterObj data fetch" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Newton JSON reader introduced and working MonsterObj data fetch" />
+    <MESSAGE value="feat: Sprite load to scene" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Sprite load to scene" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

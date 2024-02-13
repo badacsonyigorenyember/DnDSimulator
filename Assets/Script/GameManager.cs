@@ -8,5 +8,5 @@ public static class GameManager
     public static readonly string DATA_SAVE_PATH = Application.dataPath + "/Resources/Bestiary/Data/";
     public static readonly string IMG_SAVE_PATH = Application.dataPath + "/Resources/Bestiary/Images/";
 
-    public static List<Entity> Entities;
+    public static List<Entity> Entities = new List<Entity>();
 }

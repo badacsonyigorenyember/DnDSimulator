@@ -50,20 +50,20 @@ public class EntityListScrollView : MonoBehaviour
         MonsterDataObjs.Clear();
 
         foreach (var monster in list ?? Monsters) {
-            GameObject e = Instantiate(Prefab, Content);
-            e.name = monster.Name;
-            if (e.TryGetComponent(out RectTransform rect)) {
+            GameObject obj = Instantiate(Prefab, Content);
+            obj.name = monster.Name;
+            if (obj.TryGetComponent(out RectTransform rect)) {
                 rect.anchorMax = new Vector2(1, 1);
                 rect.position = new Vector3(0, 0, 0);
             }
 
             
 
-            if (e.TryGetComponent(out EntityScrollListDisplay display)) {
+            if (obj.TryGetComponent(out EntityScrollListDisplay display)) {
                 display.Init(monster);
             }
             
-            MonsterDataObjs.Add(e);
+            MonsterDataObjs.Add(obj);
         }
     }
 
