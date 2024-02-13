@@ -10,16 +10,39 @@ public class FileListScrollDisplay : MonoBehaviour
 {
     private TextMeshProUGUI Text;
     private WebFile Data;
+    private string Name;
     
     private List<Button> Buttons = new List<Button>();
 
     private Action<ScrollButtonState> DownloadAction;
-
-    public void Init(WebFile webFile) {
-        Data = webFile;
+    
+    public void Init(WebFile data) {
+        Data = data;
+        Name = data.Name;
         
+        Init();
+        
+        if (data.type == "dir") {
+            SetActive(ScrollButtonState.Open);
+        }
+        else {
+            SetActive(DataHandler.MonsterIsOnDisk(Data.Name)
+                ? ScrollButtonState.Instantiate
+                : ScrollButtonState.Download);
+        }
+    }
+
+    public void Init(Entity entity) {
+        Name = entity.Name;
+        
+        Init();
+        
+        SetActive(ScrollButtonState.Instantiate);
+    }
+
+    private void Init() {
         Text = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        Text.text = webFile.Name;
+        Text.text = Name;
         
         Button DownloadButton = transform.GetChild(1).GetComponent<Button>();
         DownloadButton.onClick.AddListener(Download);
@@ -32,18 +55,10 @@ public class FileListScrollDisplay : MonoBehaviour
         
         Buttons.AddRange( new List<Button> { DownloadButton, InstantiateButton, OpenButton });
 
-        if (webFile.type == "dir") {
-            SetActive(ScrollButtonState.Open);
-        }
-        else {
-            if (DataHandler.MonsterIsOnDisk(Data.Name)) {
-                SetActive(ScrollButtonState.Instantiate);
-            }
-            else {
-                SetActive(ScrollButtonState.Download);
-            }
-        }
+        
     }
+
+    
 
     private void SetActive(ScrollButtonState state){
         for (int i = 0; i < Buttons.Count; i++) {
@@ -62,13 +77,13 @@ public class FileListScrollDisplay : MonoBehaviour
     }
 
     private void Instantiate() {
-        Entity e = DataHandler.CreateEntity(Data.Name);
+        Entity e = DataHandler.CreateEntity(Name);
         
         GameManager.Entities.Add(e);
     }
 
     private void Open() {
-        DataHandler.currentPath += "/" + Data.Name;
+        DataHandler.currentPath += "/" + Name;
         StartCoroutine(DataHandler.GetImagesList());
     }
     

@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Script/OnlyShowDownloaded.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/OnlyShowDownloaded.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/ScrollButtonState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/ScrollButtonState.cs.meta" afterDir="false" />
+    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="fix: Fixed EntityPanel position and responsibility in Scene view">
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/256x256 1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/256x256 1.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/256x256 2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/256x256 2.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/256x256 3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/256x256 3.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/256x256 4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/256x256 4.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/256x256.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/256x256.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/arrow_back_icon_151627.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/arrow_back_icon_151627.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/open_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/open_icon.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/pixilart-drawing.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/Images/pixilart-drawing.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Images/Bestiary.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/ListElement.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/ListElement.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/CameraMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/CameraMovement.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/FileListScrollView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/FileListScrollView.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/FileListScrollDisplay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/FileListScrollDisplay.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/JsonHelper.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/JsonHelper.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/MonsterData.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/MonsterData.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/WebFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/WebFile.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,10 +107,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="44172">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="44172" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -131,7 +138,7 @@
       <workItem from="1707778175443" duration="5915000" />
       <workItem from="1707822933719" duration="10660000" />
       <workItem from="1707841530793" duration="6692000" />
-      <workItem from="1707848253347" duration="4053000" />
+      <workItem from="1707848253347" duration="10550000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -210,7 +217,14 @@
       <option name="project" value="LOCAL" />
       <updated>1707834488328</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fix: Fixed EntityPanel position and responsibility in Scene view">
+      <created>1707860494579</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1707860494579</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,7 +277,8 @@
     <MESSAGE value="feat: Sprite load to scene" />
     <MESSAGE value="feat: Working Sprite handling, moving, camera movement, zoom" />
     <MESSAGE value="feat: Working folder system. Not only files are appear, but folders as well. Working back and forth movement in folder system" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Working folder system. Not only files are appear, but folders as well. Working back and forth movement in folder system" />
+    <MESSAGE value="fix: Fixed EntityPanel position and responsibility in Scene view" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Fixed EntityPanel position and responsibility in Scene view" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

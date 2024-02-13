@@ -77,25 +77,20 @@ public class DataHandler : MonoBehaviour
         }
         
         string downloadUrl;
-        
-        Debug.Log(GameManager.DATA_URL + data.Source.ToLower() + ".json");
-        
-            using (UnityWebRequest request = UnityWebRequest.Get(GameManager.DATA_URL + data.Source.ToLower() + ".json")) {
-                yield return request.SendWebRequest();
-                
-                if (!HandleWebRequestResult(request, "Image data download"))
-                    yield break;
-            
-                downloadUrl = JsonConvert.DeserializeObject<WebFile>(request.downloadHandler.text)!.download_url;
-                
-                Debug.Log("Successful image download URL access");
-            }
-        
-        
-        
-        Debug.Log(downloadUrl);
 
-        if (!File.Exists(GameManager.DATA_SAVE_PATH + data.Name + "data.json")) {
+        using (UnityWebRequest request = UnityWebRequest.Get(GameManager.DATA_URL + data.Source.ToLower() + ".json")) {
+            yield return request.SendWebRequest();
+            
+            if (!HandleWebRequestResult(request, "Image data download"))
+                yield break;
+        
+            downloadUrl = JsonConvert.DeserializeObject<WebFile>(request.downloadHandler.text)!.download_url;
+            
+            Debug.Log("Successful image download URL access!");
+        }
+        
+
+        if (!File.Exists(GameManager.DATA_SAVE_PATH + data.Source + ".json")) {
             using (UnityWebRequest request = UnityWebRequest.Get(downloadUrl)) {
                 yield return request.SendWebRequest();
             
@@ -118,6 +113,21 @@ public class DataHandler : MonoBehaviour
 
     public static bool MonsterIsOnDisk(string name) {
         return File.Exists(GameManager.IMG_SAVE_PATH + name + ".png");
+    }
+
+    public static List<Entity> GetDownloadedEntities() {
+        var info = new DirectoryInfo(GameManager.DATA_SAVE_PATH);
+        var fileInfo = info.GetFiles();
+
+        List<Entity> entities = new List<Entity>();
+
+        foreach (var f in fileInfo) {
+            if (f.Name.Contains(".json") && !f.Name.Contains(".meta")) {
+                entities.Add(JsonConvert.DeserializeObject<Entity>(File.ReadAllText(GameManager.DATA_SAVE_PATH + f.Name)));
+            }
+        }
+
+        return entities;
     }
 
     public static void GoBackOneFolder() {
@@ -150,7 +160,13 @@ public class DataHandler : MonoBehaviour
         [JsonProperty("name")] public string Name;
         [JsonProperty("hp")] public JObject hp;
 
-        private int GetHp => hp["average"]!.Value<int>();
+        private int GetHp {
+            get {
+                if (hp == null) return 1;
+                
+                return hp["average"]!.Value<int>();
+            }
+        }
 
         public Entity Convert() {
             return new Entity(Name, GetHp);

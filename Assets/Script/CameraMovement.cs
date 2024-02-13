@@ -13,6 +13,7 @@ public class CameraMovement : MonoBehaviour
     private Camera cam;
     public bool moving;
     public float entitySpeed;
+    public static bool canZoom;
 
     public List<GameObject> entitiesToMove;
 
@@ -20,13 +21,18 @@ public class CameraMovement : MonoBehaviour
         cam = Camera.main;
         entitiesToMove = new List<GameObject>();
         moving = false;
+        canZoom = true;
     }
 
     void Update() {
         Move(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0));
-        Zoom();
-        
+        if (canZoom) Zoom();
+
         MoveCharacter();
+    }
+
+    public static void CanZoom() {
+        canZoom = !canZoom;
     }
 
 

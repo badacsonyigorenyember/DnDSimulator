@@ -24,6 +24,10 @@ public class WebFile
 
     public string download_url;
     public string type;
+
+    public WebFile() {
+        
+    }
 }
 
 

@@ -20,5 +20,9 @@ public class Entity
         
         return Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), Vector2.zero);
     }
+
+    public WebFile ConvertToWebFile() {
+        return new WebFile();
+    }
 }
         

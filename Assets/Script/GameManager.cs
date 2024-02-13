@@ -11,4 +11,6 @@ public static class GameManager
     public static readonly string JSON_SAVE_PATH = Application.dataPath + "/Resources/Bestiary/Data/Data/";
 
     public static List<Entity> Entities = new List<Entity>();
+    private static List<Entity> DownloadedEntities = new List<Entity>();
+
 }
