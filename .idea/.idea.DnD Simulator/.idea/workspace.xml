@@ -2,20 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Script/OnlyShowDownloaded.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/OnlyShowDownloaded.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/ScrollButtonState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/ScrollButtonState.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Images/download_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Images/download_icon.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Images/instantiate_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Images/instantiate_icon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Images/Bestiary.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/ListElement.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/ListElement.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/CameraMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/CameraMovement.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/EntityListScrollView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/FileListScrollView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/EntityListScrollView.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/FileListScrollView.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/FileListScrollView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/FileListScrollView.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/EntityScrollListDisplay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/FileListScrollDisplay.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/EntityScrollListDisplay.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/FileListScrollDisplay.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/FileListScrollDisplay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/FileListScrollDisplay.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/JsonHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/JsonHelper.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/MonsterData.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/MonsterData.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/WebFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/WebFile.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -97,10 +100,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="40359">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="40359" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -126,7 +129,9 @@
       <workItem from="1707773623988" duration="924000" />
       <workItem from="1707774570635" duration="3577000" />
       <workItem from="1707778175443" duration="5915000" />
-      <workItem from="1707822933719" duration="7363000" />
+      <workItem from="1707822933719" duration="10660000" />
+      <workItem from="1707841530793" duration="6692000" />
+      <workItem from="1707848253347" duration="4053000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -198,7 +203,14 @@
       <option name="project" value="LOCAL" />
       <updated>1707784009778</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="feat: Working folder system. Not only files are appear, but folders as well. Working back and forth movement in folder system">
+      <created>1707834488327</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1707834488328</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,26 +262,8 @@
     <MESSAGE value="feat: Newton JSON reader introduced and working MonsterObj data fetch" />
     <MESSAGE value="feat: Sprite load to scene" />
     <MESSAGE value="feat: Working Sprite handling, moving, camera movement, zoom" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Working Sprite handling, moving, camera movement, zoom" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Script/DataHandler.cs</url>
-          <line>24</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" initialLine="22" containingFunctionPresentation="method 'GetImagesList'">
-            <startOffsets>
-              <option value="576" />
-            </startOffsets>
-            <endOffsets>
-              <option value="577" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="feat: Working folder system. Not only files are appear, but folders as well. Working back and forth movement in folder system" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Working folder system. Not only files are appear, but folders as well. Working back and forth movement in folder system" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

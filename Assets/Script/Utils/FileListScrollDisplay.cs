@@ -13,7 +13,7 @@ public class FileListScrollDisplay : MonoBehaviour
     
     private List<Button> Buttons = new List<Button>();
 
-    private Action DownloadAction;
+    private Action<ScrollButtonState> DownloadAction;
 
     public void Init(WebFile webFile) {
         Data = webFile;
@@ -33,35 +33,38 @@ public class FileListScrollDisplay : MonoBehaviour
         Buttons.AddRange( new List<Button> { DownloadButton, InstantiateButton, OpenButton });
 
         if (webFile.type == "dir") {
-            SetActive("Open");
+            SetActive(ScrollButtonState.Open);
         }
         else {
-            SetActive("Download");
+            if (DataHandler.MonsterIsOnDisk(Data.Name)) {
+                SetActive(ScrollButtonState.Instantiate);
+            }
+            else {
+                SetActive(ScrollButtonState.Download);
+            }
         }
     }
 
-    private void SetActive(string n){
-        foreach (var button in Buttons) {
-            button.gameObject.SetActive(button.name == n);
+    private void SetActive(ScrollButtonState state){
+        for (int i = 0; i < Buttons.Count; i++) {
+            if (i == (int)state) {
+                Buttons[i].gameObject.SetActive(true);
+            }
+            else {
+                Buttons[i].gameObject.SetActive(false);
+            }
         }
     }
 
     private void Download() {
-        
+        DownloadAction += SetActive;
+        StartCoroutine(DataHandler.DownloadImage(Data, DownloadAction));
     }
 
     private void Instantiate() {
+        Entity e = DataHandler.CreateEntity(Data.Name);
         
-        
-        /*Entity e = new Entity(Data);
-        GameObject a = new GameObject();
-        a.name = Data.Name;
-        a.AddComponent<SpriteRenderer>().sprite = e.CreateSprite();
-        a.AddComponent<CircleCollider2D>();
-        a.layer = LayerMask.NameToLayer("Entity");
-        
-        e.Obj = a;
-        GameManager.Entities.Add(e);*/
+        GameManager.Entities.Add(e);
     }
 
     private void Open() {

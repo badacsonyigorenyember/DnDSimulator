@@ -1,23 +1,22 @@
 
 using System.IO;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class Entity
 {
     public string Name;
     public int Hp;
-    public GameObject Obj;
+    [JsonIgnore] public GameObject Obj;
 
-    public Entity(MonsterData data) {
-        Name = data.Name;
-        Hp = data.Hp;
+    public Entity(string name, int hp) {
+        Name = name;
+        Hp = hp;
     }
 
-    public Sprite CreateSprite() {
-        byte[] textureData = File.ReadAllBytes(GameManager.IMG_SAVE_PATH + Name + ".png");
-        
+    public Sprite CreateSprite(byte[] bytes) {
         Texture2D texture = new Texture2D(0, 0);
-        texture.LoadImage(textureData);
+        texture.LoadImage(bytes);
         
         return Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), Vector2.zero);
     }

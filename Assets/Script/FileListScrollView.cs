@@ -60,30 +60,6 @@ public class FileListScrollView : MonoBehaviour
             FileObjects.Add(obj);
         }
         
-
-
-
-        /*foreach (var obj in MonsterDataObjs) {
-            Destroy(obj);
-        }
-        MonsterDataObjs.Clear();
-
-        foreach (var monster in list ?? Monsters) {
-            GameObject obj = Instantiate(Prefab, Content);
-            obj.name = monster.Name;
-            if (obj.TryGetComponent(out RectTransform rect)) {
-                rect.anchorMax = new Vector2(1, 1);
-                rect.position = new Vector3(0, 0, 0);
-            }
-
-            
-
-            if (obj.TryGetComponent(out FileListScrollDisplay display)) {
-                display.Init(monster);
-            }
-            
-            MonsterDataObjs.Add(obj);
-        }*/
     }
 
     private void Showpanel() {
@@ -111,8 +87,8 @@ public class FileListScrollView : MonoBehaviour
         t.position = startPos + Vector3.right * destination;
 
         
-        a.gameObject.SetActive(false);
-        b.gameObject.SetActive(true);
+        a.transform.parent.gameObject.SetActive(false);
+        b.transform.parent.gameObject.SetActive(true);
         
     }
 

@@ -18,85 +18,37 @@ public class DataHandler : MonoBehaviour
 
     public static string currentPath = "";
 
-    private void Start() {
-        //StartCoroutine(GetBeastiaryData());
-    }
-
     public static IEnumerator GetImagesList() {
-        Debug.LogError(GameManager.IMG_URL + currentPath);
-        using (UnityWebRequest request = UnityWebRequest.Get(GameManager.IMG_URL + currentPath)) {
-            yield return request.SendWebRequest();
+        if (!File.Exists(GameManager.JSON_SAVE_PATH + (currentPath == "" ? "data" : currentPath) + ".json")) {
+            using (UnityWebRequest request = UnityWebRequest.Get(GameManager.IMG_URL + currentPath)) {
+                yield return request.SendWebRequest();
 
-            if (!HandleWebRequestResult(request, "Image list"))
-                yield break;
-
-            files = JsonConvert.DeserializeObject<List<WebFile>>(request.downloadHandler.text)!.
-                Where(f => f.Name[0] >= 'A' && f.Name[0] <= 'Z').ToList();
-
+                if (!HandleWebRequestResult(request, "File list"))
+                    yield break;
+                
+                files = JsonConvert.DeserializeObject<List<WebFile>>(request.downloadHandler.text)!.
+                    Where(f => f.Name[0] >= 'A' && f.Name[0] <= 'Z').ToList();
             
+                Debug.Log("Successful file list access!");
 
-            Debug.Log("Successful data access!");
-        }
-
-        OnDataDownloaded.Invoke();
-    }
-    
-    
-
-    /*private static IEnumerator GetBeastiaryData() {
-        string downloadUrl;
-
-        using (UnityWebRequest request = UnityWebRequest.Get(GameManager.DATA_URL)) {
-            yield return request.SendWebRequest();
-
-            if (!HandleWebRequestResult(request, "Data access"))
-                yield break;
-
-            downloadUrl = JsonUtility.FromJson<WebFile>(request.downloadHandler.text).download_url;
-            
-            Debug.Log("Successful data access!");
-        }
-        
-        using (UnityWebRequest request = UnityWebRequest.Get(downloadUrl)) {
-            yield return request.SendWebRequest();
-            
-            if (!HandleWebRequestResult(request, "Data download"))
-                yield break;
-            
-            string json = request.downloadHandler.text;
-            json = json.Substring(13, json.Length - 15);
-            
-            List<MonsterDataDownloaded> monsterDataDownloaded = JsonConvert.DeserializeObject<List<MonsterDataDownloaded>>(json);
-            
-            foreach (var m in monsterDataDownloaded!) {
-                monsters.Add(m.Convert());
+                Directory.CreateDirectory(GameManager.JSON_SAVE_PATH);
+                File.WriteAllText(GameManager.JSON_SAVE_PATH + (currentPath == "" ? "data" : currentPath) + ".json",
+                    JsonConvert.SerializeObject(files));
             }
-            
-            Directory.CreateDirectory(GameManager.DATA_SAVE_PATH);
-            //File.WriteAllText(GameManager.DATA_SAVE_PATH + "data.json", json); ha offline kéne majd csinálni
-            
-            Debug.Log("Successful data download!");
         }
-        
-        using (UnityWebRequest request = UnityWebRequest.Get(GameManager.IMG_URL)) {
-            yield return request.SendWebRequest();
+        else {
+            string json = 
+                File.ReadAllText(GameManager.JSON_SAVE_PATH + (currentPath == "" ? "data" : currentPath) + ".json");
 
-            if (!HandleWebRequestResult(request, "Image URL access"))
-                yield break;
-
-            List<WebFile> webFiles = JsonConvert.DeserializeObject<List<WebFile>>(request.downloadHandler.text);
-
-            foreach (var monster in monsters)
-            {
-                monster.DownloadUrl = webFiles!.Find(w => w.Name == monster.Name).download_url;
-            }
-
-            Debug.Log("Successful image URL access!");
+            yield return null;
+            
+            files = JsonConvert.DeserializeObject<List<WebFile>>(json);
+            
+            Debug.Log("Successful file list read!");
         }
         
         OnDataDownloaded.Invoke();
-
-    }*/
+    }
 
     private static bool HandleWebRequestResult(UnityWebRequest request, string operation) {
         if (request.result != UnityWebRequest.Result.Success)
@@ -108,26 +60,60 @@ public class DataHandler : MonoBehaviour
     }
 
     
-    public static IEnumerator DownloadImage(MonsterData data, Action action) {
-        using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(data.DownloadUrl)) {
+    public static IEnumerator DownloadImage(WebFile data, Action<ScrollButtonState> action) {
+        using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(data.download_url)) {
             yield return request.SendWebRequest();
-            
+        
             if (!HandleWebRequestResult(request, "Image download"))
                 yield break;
-            
+        
             Texture2D texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
 
             byte[] bytes = texture.EncodeToPNG();
 
             if (!Directory.Exists(GameManager.IMG_SAVE_PATH)) Directory.CreateDirectory(GameManager.IMG_SAVE_PATH);
-
-            if (!File.Exists(GameManager.IMG_SAVE_PATH + data.Name + ".png"))
-                File.WriteAllBytes(GameManager.IMG_SAVE_PATH + data.Name + ".png", bytes);
             
-            Debug.Log(File.Exists(GameManager.IMG_SAVE_PATH + data.Name + ".png"));
+            File.WriteAllBytes(GameManager.IMG_SAVE_PATH + data.Name + ".png", bytes);
         }
         
-        action.Invoke();
+        string downloadUrl;
+        
+        Debug.Log(GameManager.DATA_URL + data.Source.ToLower() + ".json");
+        
+            using (UnityWebRequest request = UnityWebRequest.Get(GameManager.DATA_URL + data.Source.ToLower() + ".json")) {
+                yield return request.SendWebRequest();
+                
+                if (!HandleWebRequestResult(request, "Image data download"))
+                    yield break;
+            
+                downloadUrl = JsonConvert.DeserializeObject<WebFile>(request.downloadHandler.text)!.download_url;
+                
+                Debug.Log("Successful image download URL access");
+            }
+        
+        
+        
+        Debug.Log(downloadUrl);
+
+        if (!File.Exists(GameManager.DATA_SAVE_PATH + data.Name + "data.json")) {
+            using (UnityWebRequest request = UnityWebRequest.Get(downloadUrl)) {
+                yield return request.SendWebRequest();
+            
+                if (!HandleWebRequestResult(request, "Data download"))
+                    yield break;
+            
+                string json = request.downloadHandler.text;
+
+                Entity entity = JsonConvert.DeserializeObject<Root>(json)!.list.Find(m => m.Name == data.Name).Convert();
+                
+                Directory.CreateDirectory(GameManager.DATA_SAVE_PATH);
+                File.WriteAllText(GameManager.DATA_SAVE_PATH + data.Name + ".json", JsonConvert.SerializeObject(entity));
+            
+                Debug.Log("Successful data download!");
+            }
+        }
+        
+        action.Invoke(ScrollButtonState.Instantiate);
     }
 
     public static bool MonsterIsOnDisk(string name) {
@@ -139,17 +125,41 @@ public class DataHandler : MonoBehaviour
 
         currentPath = currentPath.Remove(currentPath.LastIndexOf('/'));
     }
+
+    public static Entity CreateEntity(string name) {
+        byte[] bytes = File.ReadAllBytes(GameManager.IMG_SAVE_PATH + name + ".png");
+        string json = File.ReadAllText(GameManager.DATA_SAVE_PATH + name + ".json");
+
+        Entity e = JsonConvert.DeserializeObject<Entity>(json);
+        
+        GameObject a = new GameObject
+        {
+            name = name
+        };
+
+        a.AddComponent<SpriteRenderer>().sprite = e.CreateSprite(bytes);
+        a.AddComponent<CircleCollider2D>();
+        a.layer = LayerMask.NameToLayer("Entity");
+        
+        e.Obj = a;
+        return e;
+    }
     
 
     protected class MonsterDataDownloaded {
         [JsonProperty("name")] public string Name;
         [JsonProperty("hp")] public JObject hp;
 
-        public int GetHp => hp["average"]!.Value<int>();
+        private int GetHp => hp["average"]!.Value<int>();
 
-        public MonsterData Convert() {
-            return new MonsterData(Name, GetHp);
+        public Entity Convert() {
+            return new Entity(Name, GetHp);
         }
+    }
+
+    protected class Root
+    {
+        [JsonProperty("monster")] public List<MonsterDataDownloaded> list;
     }
 
 }
