@@ -1,21 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
+using System.IO;
 using UnityEngine;
 
 public class Entity
 {
-    public string Url;
     public string Name;
+    public int Hp;
+    private byte[] ImageData;
 
-    public Entity(string raw) {
-        Url = raw.Split(": ")[1].Replace("\"", "").Replace(",", "");
-        Name = Url.Split("/").Last().Replace("%20", " ");
-        Name = Name.Remove(Name.Length - 4);
+    public Entity(MonsterData data) {
+        Name = data.Name;
+        Hp = data.Hp;
     }
 
-    public string Path() {
-        return "Images/Bestiary/" + Name;
+    public Sprite CreateSprite() {
+        byte[] textureData = File.ReadAllBytes(GameManager.IMG_SAVE_PATH + Name + ".png");
+        
+        Texture2D texture = new Texture2D(0, 0);
+        texture.LoadImage(textureData);
+        
+        return Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), Vector2.zero);
     }
 }
         

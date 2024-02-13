@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Application = UnityEngine.Device.Application;
-using Acttion = System.Action;
 
 public class EntityListScrollView : MonoBehaviour
 {
@@ -17,14 +14,14 @@ public class EntityListScrollView : MonoBehaviour
     [SerializeField] private Button ShowButton;
     [SerializeField] private Button HideButton;
 
-    private List<MonsterObj> Monsters = new List<MonsterObj>();
+    private List<MonsterData> Monsters = new List<MonsterData>();
 
-    private List<GameObject> EntityObjs = new List<GameObject>();
+    private List<GameObject> MonsterDataObjs = new List<GameObject>();
     
     private string searchText = "";
     
     void Start() {
-        Get5etoolsInfos.OnDataDownloaded += FillListWithData;
+        DataHandler.OnDataDownloaded += FillListWithData;
         
         HideButton.onClick.AddListener(HidePanel);
         ShowButton.onClick.AddListener(Showpanel);
@@ -34,23 +31,23 @@ public class EntityListScrollView : MonoBehaviour
     private void Update() {
         if (SearchInput.isFocused) {
             if (searchText != SearchInput.text) {
-                FillScrollViewWithData(Monsters.Where(e => e.Name.ToLower().Contains(SearchInput.text.ToLower())).ToList());
+                FillScrollViewWithData(Monsters.Where(m => m.Name.ToLower().Contains(SearchInput.text.ToLower())).ToList());
                 searchText = SearchInput.text;
             }
         }
     }
 
     void FillListWithData() {
-        Monsters = Get5etoolsInfos.monsters;
+        Monsters = DataHandler.monsters;
         
         FillScrollViewWithData();
     }
 
-    void FillScrollViewWithData(List<MonsterObj> list = null) {
-        foreach (var obj in EntityObjs) {
+    void FillScrollViewWithData(List<MonsterData> list = null) {
+        foreach (var obj in MonsterDataObjs) {
             Destroy(obj);
         }
-        EntityObjs.Clear();
+        MonsterDataObjs.Clear();
 
         foreach (var monster in list ?? Monsters) {
             GameObject e = Instantiate(Prefab, Content);
@@ -59,14 +56,14 @@ public class EntityListScrollView : MonoBehaviour
                 rect.anchorMax = new Vector2(1, 1);
                 rect.position = new Vector3(0, 0, 0);
             }
+
             
-            //bool exists = File.Exists(Application.dataPath + "/Resources/" + monster.Path() + ".png");
 
             if (e.TryGetComponent(out EntityScrollListDisplay display)) {
-                display.Init(monster, false); //TODO
+                display.Init(monster);
             }
             
-            EntityObjs.Add(e);
+            MonsterDataObjs.Add(e);
         }
     }
 
