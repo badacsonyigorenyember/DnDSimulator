@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EntityListScrollView : MonoBehaviour
+public class FileListScrollView : MonoBehaviour
 {
     [SerializeField] private Transform Content;
     [SerializeField] private GameObject Prefab;
@@ -13,38 +13,57 @@ public class EntityListScrollView : MonoBehaviour
 
     [SerializeField] private Button ShowButton;
     [SerializeField] private Button HideButton;
-
-    private List<MonsterData> Monsters = new List<MonsterData>();
-
-    private List<GameObject> MonsterDataObjs = new List<GameObject>();
+    [SerializeField] private Button BackButton;
+    
+    private List<GameObject> FileObjects = new List<GameObject>();
     
     private string searchText = "";
     
     void Start() {
-        DataHandler.OnDataDownloaded += FillListWithData;
+        StartCoroutine(DataHandler.GetImagesList());
+        DataHandler.OnDataDownloaded += () => {
+            searchText = "";
+            SearchInput.text = "";
+            FillScrollViewWithData();
+        };
         
         HideButton.onClick.AddListener(HidePanel);
         ShowButton.onClick.AddListener(Showpanel);
+        BackButton.onClick.AddListener(Back);
     }
     
 
     private void Update() {
-        if (SearchInput.isFocused) {
-            if (searchText != SearchInput.text) {
-                FillScrollViewWithData(Monsters.Where(m => m.Name.ToLower().Contains(SearchInput.text.ToLower())).ToList());
-                searchText = SearchInput.text;
-            }
+        if (SearchInput.isFocused && searchText != SearchInput.text) {
+            searchText = SearchInput.text;
+            FillScrollViewWithData();
         }
     }
 
-    void FillListWithData() {
-        Monsters = DataHandler.monsters;
-        
-        FillScrollViewWithData();
-    }
+    void FillScrollViewWithData() {
+        foreach (var obj in FileObjects) {
+            Destroy(obj);
+        }
+        FileObjects.Clear();
 
-    void FillScrollViewWithData(List<MonsterData> list = null) {
-        foreach (var obj in MonsterDataObjs) {
+        foreach (var file in DataHandler.files.Where(f => f.Name.ToLower().Contains(searchText.ToLower())).ToList()) {
+            GameObject obj = Instantiate(Prefab, Content);
+            obj.name = file.Name;
+            
+            if (obj.TryGetComponent(out RectTransform rect)) {
+                rect.anchorMax = new Vector2(1, 1);
+                rect.position = new Vector3(0, 0, 0);
+            }
+            
+            obj.GetComponent<FileListScrollDisplay>().Init(file);
+            
+            FileObjects.Add(obj);
+        }
+        
+
+
+
+        /*foreach (var obj in MonsterDataObjs) {
             Destroy(obj);
         }
         MonsterDataObjs.Clear();
@@ -59,20 +78,20 @@ public class EntityListScrollView : MonoBehaviour
 
             
 
-            if (obj.TryGetComponent(out EntityScrollListDisplay display)) {
+            if (obj.TryGetComponent(out FileListScrollDisplay display)) {
                 display.Init(monster);
             }
             
             MonsterDataObjs.Add(obj);
-        }
+        }*/
     }
 
-    public void Showpanel() {
+    private void Showpanel() {
         Debug.Log("Show");
         StartCoroutine(Move(190, ShowButton, HideButton));
     }
 
-    public void HidePanel() {
+    private void HidePanel() {
         Debug.Log("Hide");
         StartCoroutine(Move(-190, HideButton, ShowButton));
     }
@@ -95,5 +114,10 @@ public class EntityListScrollView : MonoBehaviour
         a.gameObject.SetActive(false);
         b.gameObject.SetActive(true);
         
+    }
+
+    private void Back() {
+        DataHandler.GoBackOneFolder();
+        StartCoroutine(DataHandler.GetImagesList());
     }
 }

@@ -5,9 +5,10 @@ public class WebFile
     private string name;
     
     [JsonProperty("name")]public string Name {
-        get => name;
-        set => name = value.Remove(value.Length - 4);
+        get;
+        set;
     }
 
     public string download_url;
+    public string type;
 }
