@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="feat: Working downloaded entity list">
+    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/Map.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/Map.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/FileListScrollView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/FileListScrollView.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Monster.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Monster.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/FileListScrollDisplay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/FileListScrollDisplay.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/WebFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/WebFile.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,14 +43,14 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/0d/0f25536b/RenderPipelineManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/71/2b0d5876/EditorApplication.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/CameraMovement.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/35/145c88a2/EditorCompilationInterface.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb543db4513343d1826c5ea13681e0f36e00/28/1b929c01/Canvas.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/13/2262e589/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/6a/8160c0ec/AsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/27/72eab906/GUIUtility.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/41/46c094f0/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Utils/Entity.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/DataHandler.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/30/ff03d46a/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/b4/067199e8/InvokableCall.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/bd/fdd22459/Event.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/75/a1cc6909/ScriptableRuntimeReflectionSystemWrapper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/b0/18200550/HostView.cs" root0="SKIP_HIGHLIGHTING" />
@@ -91,10 +95,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="44172">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="58035">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="44172" />
+      <option name="pid" value="58035" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -122,7 +126,9 @@
       <workItem from="1707778175443" duration="5915000" />
       <workItem from="1707822933719" duration="10660000" />
       <workItem from="1707841530793" duration="6692000" />
-      <workItem from="1707848253347" duration="14483000" />
+      <workItem from="1707848253347" duration="14823000" />
+      <workItem from="1707901120820" duration="20599000" />
+      <workItem from="1707932709769" duration="2937000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -215,7 +221,14 @@
       <option name="project" value="LOCAL" />
       <updated>1707867530465</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="feat: Can list adventure images (maps), but can't download them yet. Working switching between entities and maps">
+      <created>1707871727216</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1707871727216</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,7 +283,15 @@
     <MESSAGE value="feat: Working folder system. Not only files are appear, but folders as well. Working back and forth movement in folder system" />
     <MESSAGE value="fix: Fixed EntityPanel position and responsibility in Scene view" />
     <MESSAGE value="feat: Working downloaded entity list" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Working downloaded entity list" />
+    <MESSAGE value="feat: Can list adventure images (maps), but can't download them yet. Working switching between entities and maps" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Can list adventure images (maps), but can't download them yet. Working switching between entities and maps" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Type#EntityType" memberName="value__" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

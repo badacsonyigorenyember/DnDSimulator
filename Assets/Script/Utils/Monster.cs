@@ -3,15 +3,15 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class Entity
+public class Monster : DataHandler.Instantiatable
 {
-    public string Name;
-    public int Hp;
-    [JsonIgnore] public GameObject Obj;
+    public int hp;
+    [JsonIgnore] public GameObject obj;
 
-    public Entity(string name, int hp) {
-        Name = name;
-        Hp = hp;
+    public Monster(string name, int hp, string adventure) {
+        this.name = name;
+        this.hp = hp;
+        this.adventure = adventure;
     }
 
     public Sprite CreateSprite(byte[] bytes) {

@@ -1,42 +1,63 @@
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WebFile
 {
     private string name;
-    private string source;
-
-    [JsonIgnore] public string extension;
+    private string adventureName;
     
-    [JsonProperty("name")]public string Name {
-        get => name;
+    public FileType fileType;
+
+    public string AdventureName {
+        get => adventureName.Contains("/") ? adventureName.Split("/")[1] : adventureName;
+        set => adventureName = value;
+    }
+
+    [JsonProperty("name")] public string Name {
+        get { 
+            if(name.Contains('.')) {
+                return name.Remove(name.IndexOf('.'));
+            }
+            else {
+                return name;
+            }
+        }
         set {
             name = value;
-            if (name.Contains('.')) {
-                string[] split = name.Split('.');
-                extension = split[1];
-                name = split[0];
-            }
         }
     }
 
-    [JsonProperty("path")]public string Source {
-        get => source;
-        set {
-            source = value.Remove(0, value.IndexOf('/') + 1);
-            if (source.Contains('/')) {
-                source = source.Remove(source.IndexOf('/'));
+    public string GetDownloadPath(DataHandler.DownloadType donwloadType) {
+        if (donwloadType == DataHandler.DownloadType.Data) {
+            return $"data/bestiary/bestiary-{adventureName.ToLower()}.json";
+        }
+        else {
+            if (DataHandler.searchType == EntityType.Map) {
+                return $"img/adventure/{adventureName}/{name.Replace(" ", "%20")}";
+
             }
+            return $"img/{adventureName}/{name.Replace(" ", "%20")}";
         }
     }
 
-    public string download_url;
-    public string type;
-
-    public WebFile() {
-        
+    public string GetFullName() {
+        return name;
     }
+
 }
 
+public enum FileType
+{
+    Folder,
+    File
+}
+
+public enum EntityType
+{
+    Map,
+    Monster
+}
 

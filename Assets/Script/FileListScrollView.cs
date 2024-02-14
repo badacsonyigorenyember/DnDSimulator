@@ -18,7 +18,7 @@ public class FileListScrollView : MonoBehaviour
     
     private List<GameObject> FileObjects = new List<GameObject>();
 
-    private static Action<bool> SelectionModeAction;
+    private static Action SelectionModeAction;
     private static Action StartDataListingAction;
     private static bool ShowingOnlyDownloaded;
     private static bool ShowingMaps;
@@ -26,11 +26,11 @@ public class FileListScrollView : MonoBehaviour
     private string searchText = "";
     
     void Start() {
-        StartCoroutine(DataHandler.GetImagesList());
-        DataHandler.OnDataDownloaded += () => {
+        StartCoroutine(DataHandler.GetFileList());
+        DataHandler.OnDataAccess += () => {
             searchText = "";
             SearchInput.text = "";
-            FillScrollViewWithData(false);
+            FillScrollViewWithData();
         };
 
 
@@ -48,22 +48,16 @@ public class FileListScrollView : MonoBehaviour
     private void Update() {
         if (SearchInput.isFocused && searchText != SearchInput.text) {
             searchText = SearchInput.text;
-            FillScrollViewWithData(ShowingOnlyDownloaded);
+            FillScrollViewWithData();
         }
     }
 
-    void FillScrollViewWithData(bool onlyDownloaded) {
+    void FillScrollViewWithData() {
         foreach (var obj in FileObjects) {
             Destroy(obj);
         }
         FileObjects.Clear();
 
-        if (onlyDownloaded) {
-            BackButton.transform.parent.gameObject.SetActive(false);
-            FillScrollViewWithEntities();
-            return;
-        }
-        
         BackButton.transform.parent.gameObject.SetActive(true);
 
         foreach (var file in DataHandler.files.Where(f => f.Name.ToLower().Contains(searchText.ToLower())).ToList()) {
@@ -72,10 +66,8 @@ public class FileListScrollView : MonoBehaviour
         
     }
 
-    void FillScrollViewWithEntities() {
-        foreach (var entity in DataHandler.GetDownloadedEntities().Where(f => f.Name.ToLower().Contains(searchText.ToLower())).ToList()) {
-            CreateScrollViewObject(entity.Name).Init(entity);
-        }
+    void FillScrollViewWithDownloadedEntities(List<DataHandler.Instantiatable> list) {
+        
     }
 
     private FileListScrollDisplay CreateScrollViewObject(string n) {
@@ -124,33 +116,35 @@ public class FileListScrollView : MonoBehaviour
 
     private void Back() {
         DataHandler.GoBackOneFolder();
-        StartCoroutine(DataHandler.GetImagesList());
+        StartCoroutine(DataHandler.GetFileList());
     }
 
     public static void SelectionModeChange(Image img) {
         ShowingOnlyDownloaded = !ShowingOnlyDownloaded;
-        
+
         var tempColor = img.color;
         tempColor.a = ShowingOnlyDownloaded ? 255 : 0;
         img.color = tempColor; 
         
-        SelectionModeAction.Invoke(ShowingOnlyDownloaded);
+        SelectionModeAction.Invoke();
 
     }
 
     private void StartDataListing() {
-        StartCoroutine(DataHandler.GetImagesList());
+        StartCoroutine(DataHandler.GetFileList());
     }
 
     public static void ChangePanel(TextMeshProUGUI tmp) {
         ShowingMaps = !ShowingMaps;
         if (ShowingMaps) {
-            DataHandler.currentPath = "/adventure";
+            DataHandler.searchPath = "/adventure";
+            DataHandler.searchType = EntityType.Map;
             StartDataListingAction.Invoke();
             tmp.text = "Entities";
         }
         else {
-            DataHandler.currentPath = "";
+            DataHandler.searchPath = "";
+            DataHandler.searchType = EntityType.Monster;
             StartDataListingAction.Invoke();
             tmp.text = "Maps";
         }

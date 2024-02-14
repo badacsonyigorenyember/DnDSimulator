@@ -22,18 +22,19 @@ public class FileListScrollDisplay : MonoBehaviour
         
         Init();
         
-        if (data.type == "dir") {
+        if (data.fileType == FileType.Folder) {
             SetActive(ScrollButtonState.Open);
         }
         else {
-            SetActive(DataHandler.MonsterIsOnDisk(Data.Name)
-                ? ScrollButtonState.Instantiate
-                : ScrollButtonState.Download);
+            SetActive(ScrollButtonState.Download);
+            //SetActive(DataHandler.MonsterIsOnDisk(Data.Name)
+               // ? ScrollButtonState.Instantiate
+               // : ScrollButtonState.Download);
         }
     }
 
-    public void Init(Entity entity) {
-        Name = entity.Name;
+    public void Init(string n) {
+        Name = n;
         
         Init();
         
@@ -54,8 +55,6 @@ public class FileListScrollDisplay : MonoBehaviour
         OpenButton.onClick.AddListener(Open);
         
         Buttons.AddRange( new List<Button> { DownloadButton, InstantiateButton, OpenButton });
-
-        
     }
 
     
@@ -73,18 +72,19 @@ public class FileListScrollDisplay : MonoBehaviour
 
     private void Download() {
         DownloadAction += SetActive;
-        StartCoroutine(DataHandler.DownloadImage(Data, DownloadAction));
+        StartCoroutine(DataHandler.DownloadData(Data, DownloadAction));
     }
 
     private void Instantiate() {
-        Entity e = DataHandler.CreateEntity(Name);
+        //Entity e = DataHandler.CreateEntity(Name);
         
-        GameManager.Entities.Add(e);
+        //GameManager.Entities.Add(e);
     }
 
     private void Open() {
-        DataHandler.currentPath += "/" + Name;
-        StartCoroutine(DataHandler.GetImagesList());
+        DataHandler.searchPath = DataHandler.searchType == EntityType.Map ? "/adventure" : "";
+        DataHandler.searchPath += "/" + (Data.fileType == FileType.Folder ? Data.Name : Data.AdventureName);
+        StartCoroutine(DataHandler.GetFileList());
     }
     
     
