@@ -40,20 +40,13 @@ public class DataHandler : MonoBehaviour
 
                 files = JsonConvert.DeserializeObject<List<WebFile>>(request.downloadHandler.text)!
                     .Where(f =>
-                        f.Name.Length > 0 &&
-                        (f.Name[0] >= 'A' && f.Name[0] <= 'Z' || f.Name.Contains("jpeg")))
+                        f.name.Length > 0 &&
+                        (f.name[0] >= 'A' && f.name[0] <= 'Z' || f.name.Contains("jpeg")))
                     .Select(f => {
-                        f.AdventureName = searchPath == "" ? "" : searchPath.Remove(0, 1);
-                        if (searchPath != "") {
-                            f.AdventureName =  searchPath.Split("/").Last();
-                        }
-                        else {
-                            f.AdventureName = "";
-                        }
-                        f.fileType = f.GetFullName().Contains('.') ? FileType.File : FileType.Folder;
+                        f.Init();
                         return f;
                     }).ToList();
-            
+
                 Debug.Log("Successful FileList access!");
                 
                 Directory.CreateDirectory(GameManager.DATA_SAVE_PATH + "/list" + (searchType == EntityType.Map ? "/adventure" : ""));
@@ -83,20 +76,22 @@ public class DataHandler : MonoBehaviour
                     yield break;
 
                 BestiaryDownloadData data = JsonConvert.DeserializeObject<Root>(request.downloadHandler.text)!.entities
-                    .Find(e => e.name == file.Name);
+                    .Find(e => e.name == file.name);
 
                 Debug.Log("Successful data download");
 
                 Directory.CreateDirectory(GameManager.DATA_SAVE_PATH + "/data/bestiary");
-                File.WriteAllText(GameManager.DATA_SAVE_PATH + "/data/bestiary/" + file.Name + ".json", JsonConvert.SerializeObject(data.CreateEntity(file.AdventureName)));
+                File.WriteAllText(GameManager.DATA_SAVE_PATH + "/data/bestiary/" + file.name + ".json", JsonConvert.SerializeObject(data.CreateEntity(file)));
             }
         }
         else {
-            Map map = new Map(file.Name, file.AdventureName);
+            Map map = new Map(file.name, file.adventureName, file.extension);
                         
             Directory.CreateDirectory(GameManager.DATA_SAVE_PATH + "/data/map");
-            File.WriteAllText(GameManager.DATA_SAVE_PATH + "/data/map/" + file.Name, JsonConvert.SerializeObject(map));
+            File.WriteAllText(GameManager.DATA_SAVE_PATH + "/data/map/" + file.name + ".json", JsonConvert.SerializeObject(map));
         }
+
+        string a = GameManager.DOWNLOAD_URL + file.GetDownloadPath(DownloadType.Image);
         
         using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(GameManager.DOWNLOAD_URL + file.GetDownloadPath(DownloadType.Image))) {
             yield return request.SendWebRequest();
@@ -110,11 +105,11 @@ public class DataHandler : MonoBehaviour
 
             if (searchType != EntityType.Map) {
                 Directory.CreateDirectory(GameManager.DATA_SAVE_PATH + "/img/bestiary");
-                File.WriteAllBytes(GameManager.DATA_SAVE_PATH + "/img/bestiary/" + file.GetFullName(), img.EncodeToPNG());
+                File.WriteAllBytes(GameManager.DATA_SAVE_PATH + "/img/bestiary/" + file.GetNameWithExtension(), img.EncodeToPNG());
             }
             else {
                 Directory.CreateDirectory(GameManager.DATA_SAVE_PATH + "/img/map");
-                File.WriteAllBytes(GameManager.DATA_SAVE_PATH + "/img/map/" + file.GetFullName(), img.EncodeToPNG());
+                File.WriteAllBytes(GameManager.DATA_SAVE_PATH + "/img/map/" + file.GetNameWithExtension(), img.EncodeToPNG());
             }
         }
         
@@ -155,12 +150,27 @@ public class DataHandler : MonoBehaviour
                 
             }
         }
-        
-        
+
         return files;
     }
 
-    public static Instantiatable CreateEntity(Instantiatable entity) {
+    public static bool EntityIsOnDisk(string name) {
+        string path = GameManager.DATA_SAVE_PATH + "data/";
+        switch (searchType) {
+            case EntityType.Map:
+                path += "map/";
+                break;
+            case EntityType.Monster:
+                path += "bestiary/";
+                break;
+        }
+        
+        Debug.Log(path + name + ".json");
+        return File.Exists(path + name + ".json");
+
+    }
+
+    public static GameObject CreateEntityObj(Instantiatable entity) {
         string path = GameManager.DATA_SAVE_PATH + "img/";
         switch (searchType) {
             case EntityType.Map:
@@ -173,7 +183,10 @@ public class DataHandler : MonoBehaviour
 
         GameObject obj = new GameObject(entity.name);
 
-        return null;
+        byte[] bytes = File.ReadAllBytes(path + entity.name + entity.extension);
+        obj.AddComponent<SpriteRenderer>().sprite = entity.CreateSprite(bytes);
+
+        return obj;
     }
 
     protected class BestiaryDownloadData
@@ -191,8 +204,8 @@ public class DataHandler : MonoBehaviour
             }
         }
 
-        public Monster CreateEntity(string adventure) {
-            Monster e = new Monster(name, hp, adventure);
+        public Monster CreateEntity(WebFile file) {
+            Monster e = new Monster(name, hp, file.adventureName, file.extension);
 
             return e;
         }
@@ -203,14 +216,6 @@ public class DataHandler : MonoBehaviour
         [JsonProperty("monster")]public List<BestiaryDownloadData> entities;
     }
 
-
-
-    public abstract class Instantiatable
-    {
-        public string name;
-        public string adventure;
-    }
-    
 
 
     private static bool HandleWebRequestResult(UnityWebRequest request, string operation) {

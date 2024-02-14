@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class Map : DataHandler.Instantiatable
+public class Map : Instantiatable
 {
-    public GameObject obj;
 
-    public Map(string name, string adventure) {
+    public Map(string name, string adventure, string extension) {
         this.name = name;
         this.adventure = adventure;
+        this.extension = extension;
     }
 }

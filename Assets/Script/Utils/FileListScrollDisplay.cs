@@ -18,7 +18,7 @@ public class FileListScrollDisplay : MonoBehaviour
     
     public void Init(WebFile data) {
         Data = data;
-        Name = data.Name;
+        Name = data.name;
         
         Init();
         
@@ -26,10 +26,10 @@ public class FileListScrollDisplay : MonoBehaviour
             SetActive(ScrollButtonState.Open);
         }
         else {
-            SetActive(ScrollButtonState.Download);
-            //SetActive(DataHandler.MonsterIsOnDisk(Data.Name)
-               // ? ScrollButtonState.Instantiate
-               // : ScrollButtonState.Download);
+            SetActive(ScrollButtonState.Download); 
+            SetActive(DataHandler.EntityIsOnDisk(Data.name) 
+                ? ScrollButtonState.Instantiate
+                : ScrollButtonState.Download);
         }
     }
 
@@ -83,7 +83,7 @@ public class FileListScrollDisplay : MonoBehaviour
 
     private void Open() {
         DataHandler.searchPath = DataHandler.searchType == EntityType.Map ? "/adventure" : "";
-        DataHandler.searchPath += "/" + (Data.fileType == FileType.Folder ? Data.Name : Data.AdventureName);
+        DataHandler.searchPath += "/" + (Data.fileType == FileType.Folder ? Data.name : Data.adventureName);
         StartCoroutine(DataHandler.GetFileList());
     }
     

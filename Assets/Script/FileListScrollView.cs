@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -58,16 +59,25 @@ public class FileListScrollView : MonoBehaviour
         }
         FileObjects.Clear();
 
+        if (ShowingOnlyDownloaded) {
+            FillScrollViewWithDownloadedEntities();
+            return;
+        }
+
         BackButton.transform.parent.gameObject.SetActive(true);
 
-        foreach (var file in DataHandler.files.Where(f => f.Name.ToLower().Contains(searchText.ToLower())).ToList()) {
-            CreateScrollViewObject(file.Name).Init(file);
+        foreach (var file in DataHandler.files.Where(f => f.name.ToLower().Contains(searchText.ToLower())).ToList()) {
+            CreateScrollViewObject(file.name).Init(file);
         }
         
     }
 
-    void FillScrollViewWithDownloadedEntities(List<DataHandler.Instantiatable> list) {
+    void FillScrollViewWithDownloadedEntities() {
+        BackButton.transform.parent.gameObject.SetActive(false);
         
+        foreach (var file in DataHandler.ListDownloadedFiles().Where(f => f.name.ToLower().Contains(searchText.ToLower())).ToList()) {
+            CreateScrollViewObject(file.name).Init(file.name);
+        }
     }
 
     private FileListScrollDisplay CreateScrollViewObject(string n) {
