@@ -18,10 +18,11 @@ public class FileListScrollView : MonoBehaviour
     
     private List<GameObject> FileObjects = new List<GameObject>();
 
-    private static Action<bool> SelectionMode;
+    private static Action<bool> SelectionModeAction;
+    private static Action StartDataListingAction;
     private static bool ShowingOnlyDownloaded;
-     
-    
+    private static bool ShowingMaps;
+
     private string searchText = "";
     
     void Start() {
@@ -32,10 +33,12 @@ public class FileListScrollView : MonoBehaviour
             FillScrollViewWithData(false);
         };
 
-        SelectionMode += FillScrollViewWithData;
+
+        SelectionModeAction += FillScrollViewWithData;
+        StartDataListingAction += StartDataListing;
 
         ShowingOnlyDownloaded = false;
-        
+
         HideButton.onClick.AddListener(HidePanel);
         ShowButton.onClick.AddListener(Showpanel);
         BackButton.onClick.AddListener(Back);
@@ -73,8 +76,6 @@ public class FileListScrollView : MonoBehaviour
         foreach (var entity in DataHandler.GetDownloadedEntities().Where(f => f.Name.ToLower().Contains(searchText.ToLower())).ToList()) {
             CreateScrollViewObject(entity.Name).Init(entity);
         }
-        
-        
     }
 
     private FileListScrollDisplay CreateScrollViewObject(string n) {
@@ -93,17 +94,15 @@ public class FileListScrollView : MonoBehaviour
 
     private void Showpanel() {
         Debug.Log("Show");
-        StartCoroutine(Move(190, ShowButton, HideButton));
+        StartCoroutine(Move((int) GetComponent<RectTransform>().rect.width + 10, ShowButton, HideButton));
     }
 
     private void HidePanel() {
         Debug.Log("Hide");
-        StartCoroutine(Move(-540, HideButton, ShowButton));
+        StartCoroutine(Move( (int) -GetComponent<RectTransform>().rect.width - 10, HideButton, ShowButton));
     }
 
     private IEnumerator Move(int destination, Button a, Button b) {
-        
-        //TODO refelible
         RectTransform t = GetComponent<RectTransform>();
 
         Vector3 startPos = t.position;
@@ -135,8 +134,27 @@ public class FileListScrollView : MonoBehaviour
         tempColor.a = ShowingOnlyDownloaded ? 255 : 0;
         img.color = tempColor; 
         
-        SelectionMode.Invoke(ShowingOnlyDownloaded);
+        SelectionModeAction.Invoke(ShowingOnlyDownloaded);
 
+    }
+
+    private void StartDataListing() {
+        StartCoroutine(DataHandler.GetImagesList());
+    }
+
+    public static void ChangePanel(TextMeshProUGUI tmp) {
+        ShowingMaps = !ShowingMaps;
+        if (ShowingMaps) {
+            DataHandler.currentPath = "/adventure";
+            StartDataListingAction.Invoke();
+            tmp.text = "Entities";
+        }
+        else {
+            DataHandler.currentPath = "";
+            StartDataListingAction.Invoke();
+            tmp.text = "Maps";
+        }
+        
     }
 
 }

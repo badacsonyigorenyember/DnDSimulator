@@ -6,10 +6,19 @@ public class WebFile
 {
     private string name;
     private string source;
+
+    [JsonIgnore] public string extension;
     
     [JsonProperty("name")]public string Name {
-        get => name.Contains(".png") ? name[..^4] : name;
-        set => name = value;
+        get => name;
+        set {
+            name = value;
+            if (name.Contains('.')) {
+                string[] split = name.Split('.');
+                extension = split[1];
+                name = split[0];
+            }
+        }
     }
 
     [JsonProperty("path")]public string Source {

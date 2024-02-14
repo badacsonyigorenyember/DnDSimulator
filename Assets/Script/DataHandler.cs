@@ -5,8 +5,6 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -17,21 +15,23 @@ public class DataHandler : MonoBehaviour
     public static Action OnDataDownloaded;
 
     public static string currentPath = "";
-
+    
     public static IEnumerator GetImagesList() {
         if (!File.Exists(GameManager.JSON_SAVE_PATH + (currentPath == "" ? "data" : currentPath) + ".json")) {
             using (UnityWebRequest request = UnityWebRequest.Get(GameManager.IMG_URL + currentPath)) {
                 yield return request.SendWebRequest();
 
+                Debug.Log(GameManager.IMG_URL + currentPath);
+                
                 if (!HandleWebRequestResult(request, "File list"))
                     yield break;
                 
                 files = JsonConvert.DeserializeObject<List<WebFile>>(request.downloadHandler.text)!.
-                    Where(f => f.Name[0] >= 'A' && f.Name[0] <= 'Z').ToList();
+                    Where(f => (f.Name[0] >= 'A' && f.Name[0] <= 'Z') || f.Name.Contains(".jpg")).ToList();
             
                 Debug.Log("Successful file list access!");
 
-                Directory.CreateDirectory(GameManager.JSON_SAVE_PATH);
+                Directory.CreateDirectory(GameManager.JSON_SAVE_PATH + currentPath.Remove(currentPath.LastIndexOf('/') + 1));
                 File.WriteAllText(GameManager.JSON_SAVE_PATH + (currentPath == "" ? "data" : currentPath) + ".json",
                     JsonConvert.SerializeObject(files));
             }
@@ -73,7 +73,7 @@ public class DataHandler : MonoBehaviour
 
             if (!Directory.Exists(GameManager.IMG_SAVE_PATH)) Directory.CreateDirectory(GameManager.IMG_SAVE_PATH);
             
-            File.WriteAllBytes(GameManager.IMG_SAVE_PATH + data.Name + ".png", bytes);
+            File.WriteAllBytes(GameManager.IMG_SAVE_PATH + data.Name + "." + data.extension, bytes);
         }
         
         string downloadUrl;
@@ -110,7 +110,7 @@ public class DataHandler : MonoBehaviour
         
         action.Invoke(ScrollButtonState.Instantiate);
     }
-
+    
     public static bool MonsterIsOnDisk(string name) {
         return File.Exists(GameManager.IMG_SAVE_PATH + name + ".png");
     }
