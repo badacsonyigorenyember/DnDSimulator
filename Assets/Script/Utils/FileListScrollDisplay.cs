@@ -76,9 +76,8 @@ public class FileListScrollDisplay : MonoBehaviour
     }
 
     private void Instantiate() {
-        //Entity e = DataHandler.CreateEntity(Name);
-        
-        //GameManager.Entities.Add(e);
+        Instantiatable entity = DataHandler.CreateEntity(name);
+        GameManager.Entities.Add(entity);
     }
 
     private void Open() {

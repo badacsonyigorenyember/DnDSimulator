@@ -23,18 +23,15 @@ public class DataHandler : MonoBehaviour
         Image,
         Data
     }
-
+    
     public static IEnumerator GetFileList() {
         string currentFolder = searchPath == "" ? "main" : searchPath;
-        Debug.Log(GameManager.IMG_URL + searchPath);
-        Debug.Log(searchType);
+        string filePath = GameManager.DATA_SAVE_PATH + "/list/" + currentFolder + ".json";
 
-
-        if (!File.Exists(GameManager.DATA_SAVE_PATH + "/list/" + currentFolder + ".json")) {
+        if (!File.Exists(filePath)) {
             using (UnityWebRequest request = UnityWebRequest.Get(GameManager.IMG_URL + searchPath)) {
                 yield return request.SendWebRequest();
-            
-                
+
                 if (!HandleWebRequestResult(request, "File list"))
                     yield break;
 
@@ -50,12 +47,11 @@ public class DataHandler : MonoBehaviour
                 Debug.Log("Successful FileList access!");
                 
                 Directory.CreateDirectory(GameManager.DATA_SAVE_PATH + "/list" + (searchType == EntityType.Map ? "/adventure" : ""));
-                File.WriteAllText(GameManager.DATA_SAVE_PATH + "/list/" + currentFolder + ".json", JsonConvert.SerializeObject(files));
+                File.WriteAllText(filePath, JsonConvert.SerializeObject(files));
             }
         }
         else {
-            string json = File.ReadAllText(GameManager.DATA_SAVE_PATH + "/list/" + currentFolder + ".json");
-
+            string json = File.ReadAllText(filePath);
             files = JsonConvert.DeserializeObject<List<WebFile>>(json);
 
             yield return null;
@@ -63,11 +59,12 @@ public class DataHandler : MonoBehaviour
             Debug.Log("Successful FileList read!");
         }
         
-        
         OnDataAccess.Invoke();
     }
 
     public static IEnumerator DownloadData(WebFile file, Action<ScrollButtonState> action) {
+        string filePath = GameManager.DATA_SAVE_PATH + "/data/";
+        
         if (searchType != EntityType.Map) {
             using (UnityWebRequest request = UnityWebRequest.Get(GameManager.DOWNLOAD_URL + file.GetDownloadPath(DownloadType.Data))) {
                 yield return request.SendWebRequest();
@@ -81,17 +78,17 @@ public class DataHandler : MonoBehaviour
                 Debug.Log("Successful data download");
 
                 Directory.CreateDirectory(GameManager.DATA_SAVE_PATH + "/data/bestiary");
-                File.WriteAllText(GameManager.DATA_SAVE_PATH + "/data/bestiary/" + file.name + ".json", JsonConvert.SerializeObject(data.CreateEntity(file)));
+                File.WriteAllText(filePath + "bestiary/" + file.name + ".json", JsonConvert.SerializeObject(data.CreateEntity(file)));
             }
         }
         else {
             Map map = new Map(file.name, file.adventureName, file.extension);
                         
             Directory.CreateDirectory(GameManager.DATA_SAVE_PATH + "/data/map");
-            File.WriteAllText(GameManager.DATA_SAVE_PATH + "/data/map/" + file.name + ".json", JsonConvert.SerializeObject(map));
+            File.WriteAllText( filePath + "map/" + file.name + ".json", JsonConvert.SerializeObject(map));
         }
 
-        string a = GameManager.DOWNLOAD_URL + file.GetDownloadPath(DownloadType.Image);
+        filePath = GameManager.DATA_SAVE_PATH + "/img/";
         
         using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(GameManager.DOWNLOAD_URL + file.GetDownloadPath(DownloadType.Image))) {
             yield return request.SendWebRequest();
@@ -105,11 +102,11 @@ public class DataHandler : MonoBehaviour
 
             if (searchType != EntityType.Map) {
                 Directory.CreateDirectory(GameManager.DATA_SAVE_PATH + "/img/bestiary");
-                File.WriteAllBytes(GameManager.DATA_SAVE_PATH + "/img/bestiary/" + file.GetNameWithExtension(), img.EncodeToPNG());
+                File.WriteAllBytes(filePath + "bestiary/" + file.GetNameWithExtension(), img.EncodeToPNG());
             }
             else {
                 Directory.CreateDirectory(GameManager.DATA_SAVE_PATH + "/img/map");
-                File.WriteAllBytes(GameManager.DATA_SAVE_PATH + "/img/map/" + file.GetNameWithExtension(), img.EncodeToPNG());
+                File.WriteAllBytes(filePath + "map/" + file.GetNameWithExtension(), img.EncodeToPNG());
             }
         }
         
@@ -134,24 +131,24 @@ public class DataHandler : MonoBehaviour
         }
 
         DirectoryInfo dir = new DirectoryInfo(path);
-        List<Instantiatable> files = new List<Instantiatable>();
-
+        List<Instantiatable> fileList = new List<Instantiatable>();
+        
         foreach (var file in dir.GetFiles()) {
             if (file.Name.Contains("json") && !file.Name.Contains("meta")) {
                 if (searchType == EntityType.Map) {
-                    files.Add(JsonConvert.DeserializeObject<Map>(File.ReadAllText(path + file.Name)));
+                    fileList.Add(JsonConvert.DeserializeObject<Map>(File.ReadAllText(path + file.Name)));
                     continue;
                 }
 
                 if (searchType == EntityType.Monster) {
-                    files.Add(JsonConvert.DeserializeObject<Monster>(File.ReadAllText(path + file.Name)));
+                    fileList.Add(JsonConvert.DeserializeObject<Monster>(File.ReadAllText(path + file.Name)));
                     continue;
                 }
                 
             }
         }
 
-        return files;
+        return fileList;
     }
 
     public static bool EntityIsOnDisk(string name) {
@@ -165,28 +162,34 @@ public class DataHandler : MonoBehaviour
                 break;
         }
         
-        Debug.Log(path + name + ".json");
         return File.Exists(path + name + ".json");
-
     }
 
-    public static GameObject CreateEntityObj(Instantiatable entity) {
-        string path = GameManager.DATA_SAVE_PATH + "img/";
+    public static Instantiatable CreateEntity(string name) {
+        string imgPath = GameManager.DATA_SAVE_PATH + "img/";
+        string dataPath = GameManager.DATA_SAVE_PATH + "data/";
+
+        Instantiatable entity = null;
+        
         switch (searchType) {
             case EntityType.Map:
-                path += "map/";
+                imgPath += "map/";
+                dataPath += "map/";
+                entity = JsonConvert.DeserializeObject<Map>(dataPath + name + ".json");
                 break;
             case EntityType.Monster:
-                path += "bestiary/";
+                imgPath += "bestiary/";
+                dataPath += "bestiary/";
+                entity = JsonConvert.DeserializeObject<Monster>(dataPath + name + ".json");
                 break;
         }
 
-        GameObject obj = new GameObject(entity.name);
+        GameObject obj = new GameObject(name);
 
-        byte[] bytes = File.ReadAllBytes(path + entity.name + entity.extension);
+        byte[] bytes = File.ReadAllBytes(imgPath + entity!.name + entity.extension);
         obj.AddComponent<SpriteRenderer>().sprite = entity.CreateSprite(bytes);
 
-        return obj;
+        return entity;
     }
 
     protected class BestiaryDownloadData
@@ -205,9 +208,7 @@ public class DataHandler : MonoBehaviour
         }
 
         public Monster CreateEntity(WebFile file) {
-            Monster e = new Monster(name, hp, file.adventureName, file.extension);
-
-            return e;
+            return new Monster(name, hp, file.adventureName, file.extension);
         }
     }
 

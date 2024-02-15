@@ -8,6 +8,9 @@ public abstract class Instantiatable
     public string extension;
     [JsonIgnore] public GameObject obj;
 
+    public Instantiatable() {
+        
+    }
         
     public Sprite CreateSprite(byte[] bytes) {
         Texture2D texture = new Texture2D(0, 0);

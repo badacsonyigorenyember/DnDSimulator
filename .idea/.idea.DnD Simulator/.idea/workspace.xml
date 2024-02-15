@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="fix: Reworked data handling system.">
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/Instantiatable.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/Instantiatable.cs.meta" afterDir="false" />
+    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="fix: Code cleanup">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/FileListScrollView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/FileListScrollView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/FileListScrollDisplay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/FileListScrollDisplay.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Map.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Map.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Monster.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Monster.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/WebFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/WebFile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Instantiatable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Instantiatable.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,8 +36,10 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/DataHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/0d/0f25536b/RenderPipelineManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/71/2b0d5876/EditorApplication.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/DataHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/35/145c88a2/EditorCompilationInterface.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb543db4513343d1826c5ea13681e0f36e00/28/1b929c01/Canvas.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/13/2262e589/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
@@ -51,7 +49,9 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/30/ff03d46a/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/b4/067199e8/InvokableCall.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b6c5d0f08ddf477186f780f49bb14dee469200/ed/a44bb248/String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/DataHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/bd/fdd22459/Event.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/DataHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b24a437d61e74e9d9914d6dbaae665863a00/0d/dfa3b53f/NativeInputSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/75/a1cc6909/ScriptableRuntimeReflectionSystemWrapper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/b0/18200550/HostView.cs" root0="SKIP_HIGHLIGHTING" />
@@ -131,7 +131,7 @@
       <workItem from="1707841530793" duration="6692000" />
       <workItem from="1707848253347" duration="14823000" />
       <workItem from="1707901120820" duration="20599000" />
-      <workItem from="1707932709769" duration="9023000" />
+      <workItem from="1707932709769" duration="12582000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -238,7 +238,14 @@
       <option name="project" value="LOCAL" />
       <updated>1707935692322</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="fix: Code cleanup">
+      <created>1707953032799</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1707953032799</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,7 +302,8 @@
     <MESSAGE value="feat: Working downloaded entity list" />
     <MESSAGE value="feat: Can list adventure images (maps), but can't download them yet. Working switching between entities and maps" />
     <MESSAGE value="fix: Reworked data handling system." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Reworked data handling system." />
+    <MESSAGE value="fix: Code cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Code cleanup" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
