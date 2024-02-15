@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
@@ -188,7 +187,18 @@ public class DataHandler : MonoBehaviour
 
         byte[] bytes = File.ReadAllBytes(imgPath + name + "." + entity!.extension);
         obj.AddComponent<SpriteRenderer>().sprite = entity.CreateSprite(bytes);
-        obj.AddComponent<CircleCollider2D>();
+        
+        if (entity.GetType() == typeof(Monster)) {
+            obj.AddComponent<CreatureComponent>().self = (Monster) entity;
+            obj.AddComponent<CircleCollider2D>();
+        }
+        else {
+            obj.AddComponent<MapComponent>().self = (Map) entity;
+            obj.AddComponent<BoxCollider2D>();
+        }
+        
+
+        obj.layer = LayerMask.NameToLayer("Entity");
 
         return entity;
     }
