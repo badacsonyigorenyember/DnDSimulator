@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="fix: DataHandler.cs code cleanup">
+    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="feat: Working instantiate both monsters and maps">
+      <change afterPath="$PROJECT_DIR$/Assets/Script/EntityEditor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/EntityEditor.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Instantiatable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Instantiatable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Map.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Map.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Monster.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Monster.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,6 +44,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/0d/0f25536b/RenderPipelineManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/71/2b0d5876/EditorApplication.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/DataHandler.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/DataHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/35/145c88a2/EditorCompilationInterface.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb543db4513343d1826c5ea13681e0f36e00/28/1b929c01/Canvas.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/DataHandler.cs" root0="SKIP_HIGHLIGHTING" />
@@ -48,6 +54,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/41/46c094f0/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/30/ff03d46a/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/b4/067199e8/InvokableCall.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/DataHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/DataHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b6c5d0f08ddf477186f780f49bb14dee469200/ed/a44bb248/String.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/DataHandler.cs" root0="SKIP_HIGHLIGHTING" />
@@ -132,7 +139,7 @@
       <workItem from="1707841530793" duration="6692000" />
       <workItem from="1707848253347" duration="14823000" />
       <workItem from="1707901120820" duration="20599000" />
-      <workItem from="1707932709769" duration="13887000" />
+      <workItem from="1707932709769" duration="16355000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -253,7 +260,14 @@
       <option name="project" value="LOCAL" />
       <updated>1707956726733</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="feat: Working instantiate both monsters and maps">
+      <created>1707958012430</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1707958012430</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -312,7 +326,8 @@
     <MESSAGE value="fix: Reworked data handling system." />
     <MESSAGE value="fix: Code cleanup" />
     <MESSAGE value="fix: DataHandler.cs code cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: DataHandler.cs code cleanup" />
+    <MESSAGE value="feat: Working instantiate both monsters and maps" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Working instantiate both monsters and maps" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -322,13 +337,26 @@
           <line>167</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" initialLine="167" containingFunctionPresentation="method 'CreateEntity'">
             <startOffsets>
-              <option value="6280" />
+              <option value="6284" />
             </startOffsets>
             <endOffsets>
-              <option value="6281" />
+              <option value="6285" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Script/EntityEditor.cs</url>
+          <line>20</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Script/EntityEditor.cs" initialLine="20" containingFunctionPresentation="method 'InputCheck'">
+            <startOffsets>
+              <option value="416" />
+            </startOffsets>
+            <endOffsets>
+              <option value="417" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

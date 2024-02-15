@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public abstract class Instantiatable
 {
@@ -7,6 +8,7 @@ public abstract class Instantiatable
     public string adventure;
     public string extension;
     [JsonIgnore] public GameObject obj;
+    
 
     public Sprite CreateSprite(byte[] bytes) {
         Texture2D texture = new Texture2D(0, 0);
@@ -14,4 +16,5 @@ public abstract class Instantiatable
         
         return Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), Vector2.zero);
     }
+    
 }

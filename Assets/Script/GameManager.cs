@@ -8,6 +8,7 @@ public static class GameManager
     public static readonly string DATA_SAVE_PATH = Application.dataPath + "/resources/bestiary/";
 
     public static List<Instantiatable> Entities = new List<Instantiatable>();
-    private static List<Instantiatable> DownloadedEntities = new List<Instantiatable>();
+
+    public static Map map;
 
 }
