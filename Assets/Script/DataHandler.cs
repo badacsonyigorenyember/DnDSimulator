@@ -174,19 +174,19 @@ public class DataHandler : MonoBehaviour
         switch (searchType) {
             case EntityType.Map:
                 imgPath += "map/";
-                dataPath += "map/";
-                entity = JsonConvert.DeserializeObject<Map>(dataPath + name + ".json");
+                dataPath += "map/" + name + ".json";
+                entity = JsonConvert.DeserializeObject<Map>(File.ReadAllText(dataPath));
                 break;
             case EntityType.Monster:
                 imgPath += "bestiary/";
-                dataPath += "bestiary/";
-                entity = JsonConvert.DeserializeObject<Monster>(dataPath + name + ".json");
+                dataPath += "bestiary/" + name + ".json";
+                entity = JsonConvert.DeserializeObject<Monster>(File.ReadAllText(dataPath));
                 break;
         }
 
         GameObject obj = new GameObject(name);
 
-        byte[] bytes = File.ReadAllBytes(imgPath + entity!.name + entity.extension);
+        byte[] bytes = File.ReadAllBytes(imgPath + name + "." + entity!.extension);
         obj.AddComponent<SpriteRenderer>().sprite = entity.CreateSprite(bytes);
 
         return entity;
