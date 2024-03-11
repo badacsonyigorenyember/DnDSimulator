@@ -11,8 +11,4 @@ public class Entity : NetworkBehaviour
     public bool isCharacter;
     public Vector2 position;
     public int initiativeModifier;
-
-    public int RollInitiative() {
-        return Random.Range(1, 20) + initiativeModifier;
-    }
 }

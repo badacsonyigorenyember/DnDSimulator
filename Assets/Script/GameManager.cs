@@ -7,8 +7,4 @@ public static class GameManager
     public const string DOWNLOAD_URL = "https://raw.githubusercontent.com/5etools-mirror-1/5etools-mirror-1.github.io/master/";
     public static readonly string DATA_SAVE_PATH = Application.dataPath + "/resources/bestiary/";
 
-    public static List<Instantiatable> Entities = new List<Instantiatable>();
-
-    public static Map map;
-
 }

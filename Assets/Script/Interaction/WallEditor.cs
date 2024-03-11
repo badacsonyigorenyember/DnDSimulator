@@ -54,7 +54,7 @@ public class WallEditor : MonoBehaviour
 
 
     public void AddWallPosition(Vector2 position) {
-        if (!MouseInputHandler.validClick) return;
+        if (!MouseInputHandler.validClick || _currentDoor != null) return;
 
         if (_wallMakingList.Count == 0) {
             finishButton.gameObject.SetActive(true);
@@ -122,6 +122,7 @@ public class WallEditor : MonoBehaviour
 
     void CreateDoor() {
         _currentDoor = Instantiate(doorObj, MouseInputHandler.Instance.GetMouseSnappedPosition(), Quaternion.identity).GetComponent<Door>();
+        _currentDoor.GetComponent<NetworkObject>().Spawn();
         _currentDoor.ChangeDoorHitBox(false);
     }
 
@@ -129,6 +130,8 @@ public class WallEditor : MonoBehaviour
         if (_currentDoor == null) return;
         
         _currentDoor.GetComponent<NetworkObject>().Despawn();
+        
+        FogOfWar.Instance.RefreshClientRpc();
     }
     
     

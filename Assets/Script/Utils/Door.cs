@@ -8,7 +8,7 @@ public class Door : NetworkBehaviour
     public override void OnNetworkSpawn() {
         base.OnNetworkSpawn();
         if (!IsServer)
-            GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
         
         _closed = true;
     }
