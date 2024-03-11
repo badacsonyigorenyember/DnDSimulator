@@ -1,10 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class CameraMovement : MonoBehaviour
+public class CameraMovement : NetworkBehaviour
 {
     public Vector3 position;
     public float speed;
@@ -22,13 +20,22 @@ public class CameraMovement : MonoBehaviour
         entitiesToMove = new List<GameObject>();
         moving = false;
         canZoom = true;
+        GameObject.Find("fow").GetComponent<MeshRenderer>().enabled = true;
+        
+        
+        
+    }
+
+    public override void OnNetworkSpawn() {
+        if (!IsOwner) {
+            Destroy(this);
+        }
     }
 
     void Update() {
         Move(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0));
         if (canZoom) Zoom();
-
-        MoveCharacter();
+        
     }
 
     public static void CanZoom() {
@@ -37,7 +44,7 @@ public class CameraMovement : MonoBehaviour
 
 
     void Move(Vector3 dir) {
-        transform.Translate(dir * speed * Time.deltaTime);
+        transform.Translate(dir * (speed * Time.deltaTime));
     }
 
     void Zoom() {
@@ -48,42 +55,5 @@ public class CameraMovement : MonoBehaviour
 
     }
 
-    void MoveCharacter() {
-        if (Input.GetMouseButtonDown(0)) {
-            Vector2 rayOrigin = cam.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.zero);
-
-            if (hit.collider != null) {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Entity")) {
-                    if (Input.GetKey(KeyCode.LeftShift)) {
-                        entitiesToMove.Add(hit.collider.gameObject);
-                    }
-                    else {
-                        entitiesToMove.Add(hit.collider.gameObject);
-                        moving = true;
-                    }
-                }
-                else {
-                    entitiesToMove.Clear();
-                }
-            }
-        }
-
-        if (moving && Input.GetMouseButton(0)) {
-            foreach (var entity in entitiesToMove) {
-                Vector3 entityPos = entity.transform.position;
-                Vector3 dir = (cam.ScreenToWorldPoint(Input.mousePosition) - entityPos).normalized;
-                dir.z = 0;
-                entity.transform.Translate(dir * entitySpeed * Time.deltaTime);
-            }
-        }
-
-        if (Input.GetMouseButtonUp(0)) {
-            if (moving) {
-                entitiesToMove.Clear();
-            }
-            moving = false;
-
-        }
-    }
+    
 }

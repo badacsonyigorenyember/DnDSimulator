@@ -8,82 +8,83 @@ using UnityEngine.SceneManagement;
 public class Player : NetworkBehaviour
 {
     [SerializeField] private float speed = 10;
-    [SerializeField] private float entitySpeed = 200;
+    [SerializeField] private float zoomSpeed = 10;
+    [SerializeField] private float minZoomScale;
+    [SerializeField] private float maxZoomScale;
+    [SerializeField] private float clientLerpTime;
 
-    private Vector3 inputDirection;
-    [SerializeField] private Camera cam;
+    private float clientLerpElapsedTime;
+    private Vector3 _inputDirection;
+    private float currentOrthographicSize;
+    private Vector3 currentCamPosition; 
 
-    private List<NetworkObject> entitiesToMove = new();
+    public Bounds visibleBorder;
+    public bool shouldMove;
+
+    public Camera cam;
+
+    public static Player Instance { get; private set; }
+
+    private void Awake() {
+        Instance = this;
+    }
+
+    private void Start() {
+        currentCamPosition = cam.transform.position;
+    }
 
     private bool canMoveEntities;
 
-    public override void OnNetworkSpawn() {
-        if (!IsOwner) {
-            gameObject.SetActive(false);
-            return;
-        }
-        cam.gameObject.SetActive(true);
-    }
-
     private void Update() {
-        if (!IsOwner) return;
-        
-        inputDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
-        MoveCharacter();
+        _inputDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
     }
 
     private void FixedUpdate() {
-        if (!IsOwner) return;
+        if (IsServer) {
+            serverMove();
+            Zoom();
+        }
+        else {
+            clientMove();
+        }
+    }
+
+    void serverMove() {
+        transform.Translate(_inputDirection * (speed * Time.deltaTime));
+    }
+
+    void clientMove() {
+        if(!shouldMove) return;
         
-        Move();
-    }
-    
-    void Move() {
-        transform.Translate(inputDirection * (speed * Time.deltaTime));
-    }
-    
-    void MoveCharacter() {
-        if (Input.GetMouseButtonDown(0)) {
-            Vector2 rayOrigin = cam.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.zero);
+        clientLerpElapsedTime += Time.deltaTime;
+        float t = Mathf.Clamp01(clientLerpElapsedTime / clientLerpTime);
 
-            if (hit.collider != null) {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Entity")) {
-                    if (Input.GetKey(KeyCode.LeftShift)) {
-                        entitiesToMove.Add(hit.collider.gameObject.GetComponent<NetworkObject>());
-                    }
-                    else {
-                        entitiesToMove.Add(hit.collider.gameObject.GetComponent<NetworkObject>());
-                        canMoveEntities = true;
-                    }
-                }
-                else {
-                    entitiesToMove.Clear();
-                }
-            }
+        if (t >= 1) {
+            currentOrthographicSize = cam.orthographicSize;
+            clientLerpElapsedTime = 0;
+            currentCamPosition = cam.transform.position;
+            shouldMove = false;
         }
 
-        if (canMoveEntities && Input.GetMouseButton(0)) {
-            foreach (var entity in entitiesToMove) {
-                Vector3 entityPos = entity.transform.position;
-                Vector3 dir = (cam.ScreenToWorldPoint(Input.mousePosition) - entityPos).normalized;
-                dir.z = 0;
-                entity.transform.Translate(dir * (entitySpeed * Time.deltaTime));
-                if(entity.TryGetComponent(out Character ch)) {
-                    ch.Moving();
-                }
-            }
-        }
+        float width = visibleBorder.size.x;
+        float height = visibleBorder.size.y;
 
-        if (Input.GetMouseButtonUp(0)) {
-            if (canMoveEntities) {
-                entitiesToMove.Clear();
-            }
-            
-            canMoveEntities = false;
+        float aspectRatio = cam.aspect;
 
-        }
+        float desiredCameraSize = width / aspectRatio >= height ? width / (2 * aspectRatio) : height / 2;
+        desiredCameraSize = Mathf.Max(desiredCameraSize, 5);
+        
+        Vector3 desiredCameraosition = visibleBorder.center + new Vector3(0, 0, -10);
+
+        cam.orthographicSize = Mathf.Lerp(currentOrthographicSize, desiredCameraSize, t);
+        cam.transform.position = Vector3.Lerp(currentCamPosition, desiredCameraosition, t);
     }
-    
-    
+
+    void Zoom() {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+        cam.orthographicSize =
+            Mathf.Clamp(cam.orthographicSize - scroll * zoomSpeed, minZoomScale, maxZoomScale);
+
+    }
 }

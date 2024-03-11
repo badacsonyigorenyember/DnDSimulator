@@ -2,18 +2,61 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Script/CreatureEditor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/CreatureEditor.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/MapEditor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/MapEditor.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/CreatureComponent.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/CreatureComponent.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/MapComponent.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/MapComponent.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Character.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Character.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/FileHandling.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/FogOfWar.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/FogOfWar.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/GridView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/GridView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Interaction.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Interaction/Door.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Interaction/Door.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Interaction/EntityEditPanelHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Interaction/EntityInteractionHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Interaction/EntityInteractionHandler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Interaction/MouseInputHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Interaction/MouseInputHandler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Interaction/WallEditor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Interaction/WallEditor.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Movement.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Network.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Network/ClientHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Network/ClientHandler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Network/SceneHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Network/SceneHandler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/UI.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/UI/ButtonHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/UI/ButtonHandler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/FogOfWar.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/FogOfWar/FogOfWarEdge.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/FogOfWar/FogOfWarEdge.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/FogOfWar/FogOfWarPolygon.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/FogOfWar/FogOfWarPolygon.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/FogOfWar/MaskObj.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/FogOfWar/MaskObj.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea 20.30.47/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/DataHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/EntityEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/EntityEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/CameraMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/CameraMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Movement/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Movement/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Network/ClientNetworkTransform.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Network/ClientNetworkTransform.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Network/NetworkManagerHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Network/NetworkManagerHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Network/PlayerController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Network/PlayerController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,27 +88,29 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/0d/0f25536b/RenderPipelineManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/71/2b0d5876/EditorApplication.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/35/145c88a2/EditorCompilationInterface.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb543db4513343d1826c5ea13681e0f36e00/28/1b929c01/Canvas.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/13/2262e589/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Script/CameraMovement.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/6a/8160c0ec/AsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Script/DataHandler.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/27/72eab906/GUIUtility.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/41/46c094f0/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/30/ff03d46a/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/b4/067199e8/InvokableCall.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Script/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b6c5d0f08ddf477186f780f49bb14dee469200/ed/a44bb248/String.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/bd/fdd22459/Event.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Script/Utils/Instantiatable.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b24a437d61e74e9d9914d6dbaae665863a00/0d/dfa3b53f/NativeInputSystem.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Script/Utils/CreatureComponent.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Script/EntityEditor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/75/a1cc6909/ScriptableRuntimeReflectionSystemWrapper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/b0/18200550/HostView.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/MapEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/71/2b0d5876/EditorApplication.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/Network/NetworkManagerHelper.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/10/872f5aa5/Rect.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/35/145c88a2/EditorCompilationInterface.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b6c5d0f08ddf477186f780f49bb14dee469200/ed/a44bb248/String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/EntityEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/DataHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb543db4513343d1826c5ea13681e0f36e00/28/1b929c01/Canvas.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/CameraMovement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/13/2262e589/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/27/72eab906/GUIUtility.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/30/ff03d46a/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/41/46c094f0/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/b4/067199e8/InvokableCall.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/Utils/Instantiatable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/6a/8160c0ec/AsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/bd/fdd22459/Event.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/Utils/CreatureComponent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/75/a1cc6909/ScriptableRuntimeReflectionSystemWrapper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b24a437d61e74e9d9914d6dbaae665863a00/0d/dfa3b53f/NativeInputSystem.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -108,10 +153,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="68033">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="34855">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="68033" />
+      <option name="pid" value="34855" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -144,7 +189,33 @@
       <workItem from="1707932709769" duration="16385000" />
       <workItem from="1707999949877" duration="39000" />
       <workItem from="1708005140684" duration="1599000" />
-      <workItem from="1708007266730" duration="4013000" />
+      <workItem from="1708007266730" duration="4252000" />
+      <workItem from="1708011537928" duration="518000" />
+      <workItem from="1708012247309" duration="744000" />
+      <workItem from="1708081641243" duration="10859000" />
+      <workItem from="1708267272337" duration="5609000" />
+      <workItem from="1708347654809" duration="4420000" />
+      <workItem from="1708353377422" duration="956000" />
+      <workItem from="1708358317405" duration="6066000" />
+      <workItem from="1709127317607" duration="9176000" />
+      <workItem from="1709209577430" duration="1773000" />
+      <workItem from="1709211400164" duration="241000" />
+      <workItem from="1709211660784" duration="3908000" />
+      <workItem from="1709400558772" duration="2114000" />
+      <workItem from="1709556088024" duration="1990000" />
+      <workItem from="1709563532023" duration="1840000" />
+      <workItem from="1709625615636" duration="3376000" />
+      <workItem from="1709647424322" duration="4965000" />
+      <workItem from="1709706452102" duration="12175000" />
+      <workItem from="1709722899568" duration="8674000" />
+      <workItem from="1709819402330" duration="1733000" />
+      <workItem from="1709821349393" duration="11656000" />
+      <workItem from="1709903065291" duration="11301000" />
+      <workItem from="1709924429345" duration="10590000" />
+      <workItem from="1709979195659" duration="5622000" />
+      <workItem from="1710053390267" duration="3570000" />
+      <workItem from="1710072009793" duration="22666000" />
+      <workItem from="1710136822418" duration="4165000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -279,7 +350,28 @@
       <option name="project" value="LOCAL" />
       <updated>1707960499842</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="feat: Editor system implementation, not working">
+      <created>1708011395768</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1708011395768</updated>
+    </task>
+    <task id="LOCAL-00021" summary="feat: Working multiplayer with simple moving">
+      <created>1709706551895</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1709706551895</updated>
+    </task>
+    <task id="LOCAL-00022" summary="fix: Fixed multiplayer camera mechanic. Now Each PlayerPrefab has a camera and OnSpawn it turn to enabled of disabled">
+      <created>1709737352500</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1709737352500</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,7 +432,10 @@
     <MESSAGE value="fix: DataHandler.cs code cleanup" />
     <MESSAGE value="feat: Working instantiate both monsters and maps" />
     <MESSAGE value="feat: Right click detection on entities" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Right click detection on entities" />
+    <MESSAGE value="feat: Editor system implementation, not working" />
+    <MESSAGE value="feat: Working multiplayer with simple moving" />
+    <MESSAGE value="fix: Fixed multiplayer camera mechanic. Now Each PlayerPrefab has a camera and OnSpawn it turn to enabled of disabled" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Fixed multiplayer camera mechanic. Now Each PlayerPrefab has a camera and OnSpawn it turn to enabled of disabled" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
