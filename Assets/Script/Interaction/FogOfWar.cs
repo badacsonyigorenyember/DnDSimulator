@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Unity.Netcode;
-using Unity.Netcode.Components;
-using Unity.VisualScripting;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 public class FogOfWar : NetworkBehaviour
 {
@@ -17,16 +12,12 @@ public class FogOfWar : NetworkBehaviour
 
     public GameObject mask;
     public GameObject fog;
-
-    private float asd = 0;
-
+    
     private void Awake() {
         Instance = this;
     }
 
     private void Start() {
-        //NetworkManager.Singleton.StartHost();
-        
         string materialName = IsServer ? "serverFogMaterial" : "clientFogMaterial";
         fog.GetComponent<MeshRenderer>().material = Resources.Load<Material>("materials/" + materialName);
 
