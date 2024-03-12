@@ -14,6 +14,13 @@ public class Entity : NetworkBehaviour
 
     public override void OnDestroy() {
         base.OnDestroy();
+        
+        foreach (Transform child in transform) {
+            if (child.TryGetComponent(out NetworkObject netObj)) {
+                netObj.Despawn();
+            }
+        }
+        
         InitiativeHandler.Instance.RemoveEntityFromList(this);
     }
 }

@@ -1,6 +1,4 @@
-using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +6,7 @@ public class InitiativePanelHelper : MonoBehaviour
 {
     public Button removeEntityButton;
     public Entity entity;
+    public int place;
 
     private void Start() {
         removeEntityButton.onClick.AddListener(() => {
@@ -16,8 +15,11 @@ public class InitiativePanelHelper : MonoBehaviour
         });
     }
 
-    public void Init(Entity entity, int place) {
+    public void Init(Entity entity, int place, bool isCurrentEntity) {
         this.entity = entity;
-        transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = place + ". - " + this.entity.name;
+        this.place = place;
+        TextMeshProUGUI textMeshPro = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        textMeshPro.text = this.place + ". - " + this.entity.name;
+        textMeshPro.color = isCurrentEntity ? Color.green : Color.black;
     }
 }

@@ -152,7 +152,10 @@ public class MouseInputHandler : MonoBehaviour
 
     void ClearEntitisToMove() {
         foreach (var entity in _entitiesToMove) {
-            Destroy(entity.transform.GetChild(0).gameObject);
+            foreach (Transform child in entity.transform) {
+                if(child.name == selectionPrefab.name + "(Clone)")
+                    Destroy(child.gameObject);
+            }
         }
         
         _entitiesToMove.Clear();

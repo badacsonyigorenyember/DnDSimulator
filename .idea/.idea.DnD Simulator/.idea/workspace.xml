@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/InitiativePanelHelper.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/InitiativePanelHelper.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/MouseInputHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Interaction/MouseInputHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Movement/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Movement/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/InitiativePanelHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/InitiativePanelHelper.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,10 +97,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="43233">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="50219">
       <option name="allowRunningInParallel" value="false" />
-      <option name="listenPortForConnections" value="true" />
-      <option name="pid" value="43233" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" value="50219" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -162,7 +161,8 @@
       <workItem from="1710072009793" duration="22666000" />
       <workItem from="1710136822418" duration="10391000" />
       <workItem from="1710163593941" duration="2789000" />
-      <workItem from="1710166697102" duration="8848000" />
+      <workItem from="1710166697102" duration="9115000" />
+      <workItem from="1710252310617" duration="5525000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -339,7 +339,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710163707607</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="feat: Initiative calculator with UI implementation. Adding and removing entities works with tree.">
+      <created>1710236015347</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1710236015347</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -381,7 +388,6 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="fix: Fixed Unity base project" />
     <MESSAGE value="fix: Removed .DS_Store" />
     <MESSAGE value="feat: Base Unity project" />
     <MESSAGE value="fix: minor fixes" />
@@ -406,29 +412,31 @@
     <MESSAGE value="temp: Temporary save everything, then sort what needs and what doesn't need" />
     <MESSAGE value="fix: Deleted unnecessary files" />
     <MESSAGE value="fix: Changed the door behaviour. The script went from the first child to the root object" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Changed the door behaviour. The script went from the first child to the root object" />
+    <MESSAGE value="feat: Initiative calculator with UI implementation. Adding and removing entities works with tree." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Initiative calculator with UI implementation. Adding and removing entities works with tree." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs</url>
-          <line>40</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs" initialLine="43" containingFunctionPresentation="method 'RemoveEntityFromList'">
+          <url>file://$PROJECT_DIR$/Assets/Script/Utils/InitiativePanelHelper.cs</url>
+          <line>12</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Script/Utils/InitiativePanelHelper.cs" initialLine="12" containingFunctionPresentation="lambda expression inside method 'Start'">
             <startOffsets>
-              <option value="1021" />
+              <option value="289" />
             </startOffsets>
             <endOffsets>
-              <option value="1022" />
+              <option value="345" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="5" />
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#EntityType" memberName="value__" />
+        <PinnedItemInfo parentTag="Type#Node" memberName="entity" />
       </pinned-members>
     </pin-to-top-manager>
   </component>
