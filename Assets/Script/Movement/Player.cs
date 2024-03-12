@@ -81,6 +81,8 @@ public class Player : NetworkBehaviour
     }
 
     void Zoom() {
+        if(!MouseInputHandler.validClick) return;
+        
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
         cam.orthographicSize =

@@ -11,4 +11,9 @@ public class Entity : NetworkBehaviour
     public bool isCharacter;
     public Vector2 position;
     public int initiativeModifier;
+
+    public override void OnDestroy() {
+        base.OnDestroy();
+        InitiativeHandler.Instance.RemoveEntityFromList(this);
+    }
 }

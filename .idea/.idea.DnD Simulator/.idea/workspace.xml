@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/InitiativePanelHelper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Utils/InitiativePanelHelper.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/Door.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Door.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/Door.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Door.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/WallEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Interaction/WallEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/MouseInputHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Interaction/MouseInputHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Movement/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Movement/Player.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,26 +39,22 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/0d/0f25536b/RenderPipelineManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/b0/18200550/HostView.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/71/2b0d5876/EditorApplication.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/Network/NetworkManagerHelper.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/10/872f5aa5/Rect.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/35/145c88a2/EditorCompilationInterface.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b6c5d0f08ddf477186f780f49bb14dee469200/ed/a44bb248/String.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb543db4513343d1826c5ea13681e0f36e00/28/1b929c01/Canvas.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/13/2262e589/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/27/72eab906/GUIUtility.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Interaction/InitiativeHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/30/ff03d46a/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/41/46c094f0/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/b4/067199e8/InvokableCall.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/6a/8160c0ec/AsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/bd/fdd22459/Event.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/75/a1cc6909/ScriptableRuntimeReflectionSystemWrapper.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/b0/18200550/HostView.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Script/Network/NetworkManagerHelper.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/10/872f5aa5/Rect.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Interaction/InitiativeHandler.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Interaction/InitiativeHandler.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Interaction/InitiativeHandler.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/41/46c094f0/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/6a/8160c0ec/AsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b24a437d61e74e9d9914d6dbaae665863a00/0d/dfa3b53f/NativeInputSystem.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -103,10 +98,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="43233">
       <option name="allowRunningInParallel" value="false" />
-      <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="listenPortForConnections" value="true" />
+      <option name="pid" value="43233" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -166,6 +161,8 @@
       <workItem from="1710053390267" duration="3570000" />
       <workItem from="1710072009793" duration="22666000" />
       <workItem from="1710136822418" duration="10391000" />
+      <workItem from="1710163593941" duration="2789000" />
+      <workItem from="1710166697102" duration="8848000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -335,7 +332,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710149155618</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="fix: Changed the door behaviour. The script went from the first child to the root object">
+      <created>1710163707607</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1710163707607</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,9 +405,27 @@
     <MESSAGE value="fix: Fixed multiplayer camera mechanic. Now Each PlayerPrefab has a camera and OnSpawn it turn to enabled of disabled" />
     <MESSAGE value="temp: Temporary save everything, then sort what needs and what doesn't need" />
     <MESSAGE value="fix: Deleted unnecessary files" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Deleted unnecessary files" />
+    <MESSAGE value="fix: Changed the door behaviour. The script went from the first child to the root object" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Changed the door behaviour. The script went from the first child to the root object" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs</url>
+          <line>40</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs" initialLine="43" containingFunctionPresentation="method 'RemoveEntityFromList'">
+            <startOffsets>
+              <option value="1021" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1022" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#EntityType" memberName="value__" />

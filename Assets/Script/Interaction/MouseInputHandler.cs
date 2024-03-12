@@ -41,6 +41,7 @@ public class MouseInputHandler : MonoBehaviour
         SnapMouse();
 
         switch (state) {
+            case MouseHandlingState.InitiativeSelect:
             case MouseHandlingState.CharacterMove:
                 GetEntityOnClick();
                 break;
@@ -82,6 +83,11 @@ public class MouseInputHandler : MonoBehaviour
             GameObject hitObj = hit.collider.gameObject;
 
             if (hitObj.layer == LayerMask.NameToLayer("Entity")) {
+                if (state == MouseHandlingState.InitiativeSelect) {
+                    InitiativeHandler.Instance.AddEntity(hitObj.GetComponent<Entity>());
+                    state = MouseHandlingState.CharacterMove;
+                    return;
+                }
                 if (Input.GetKey(KeyCode.LeftShift)) {
                     AddEntityToEntitiesToMove(hitObj);
                 }
@@ -228,5 +234,6 @@ public class MouseInputHandler : MonoBehaviour
 public enum MouseHandlingState
 {
     CharacterMove,
-    WallEdit
+    WallEdit,
+    InitiativeSelect
 }
