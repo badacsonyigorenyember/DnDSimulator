@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Unity.IO.LowLevel.Unsafe;
 using Unity.Netcode;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class WallEditor : MonoBehaviour
     
     private List<Vector2> _wallMakingList = new();
     private List<GameObject> _wallHelperObjectList = new();
+    private List<Door> _doors = new();
 
     public GameObject wallHelperObject;
     private string _savePath = "/walldata";
@@ -44,15 +46,14 @@ public class WallEditor : MonoBehaviour
         finishButton.onClick.AddListener(FinishWall);
         createDoorButton.onClick.AddListener(CreateDoor);
         
-        LoadFromDisk();
+        LoadEverythingFromDisk();
         FogOfWar.Instance.RefreshClientRpc();
     }
 
     private void FixedUpdate() {
         MoveDoor();
     }
-
-
+    
     public void AddWallPosition(Vector2 position) {
         if (!MouseInputHandler.validClick || _currentDoor != null) return;
 
@@ -71,7 +72,7 @@ public class WallEditor : MonoBehaviour
         _currentWall.points = _wallMakingList.ToArray();
         _currentWall = null;
 
-        WriteToDisk();
+        WriteWallsToDisk();
         Reset();
         
         FogOfWar.Instance.RefreshClientRpc();
@@ -101,6 +102,8 @@ public class WallEditor : MonoBehaviour
     }
 
     public void ReleaseDoor() {
+        if(_currentDoor == null) return;
+        
         _currentDoor.ChangeDoorHitBox(true);
         _currentDoor = null;
         createDoorButton.gameObject.SetActive(true);
@@ -124,6 +127,20 @@ public class WallEditor : MonoBehaviour
         _currentDoor = Instantiate(doorObj, MouseInputHandler.Instance.GetMouseSnappedPosition(), Quaternion.identity).GetComponent<Door>();
         _currentDoor.GetComponent<NetworkObject>().Spawn();
         _currentDoor.ChangeDoorHitBox(false);
+        _doors.Add(_currentDoor);
+    }
+
+    void LoadDoor(Vector2 position, Quaternion rotation, bool isClosed) {
+        GameObject obj = Instantiate(doorObj, position, rotation);
+        obj.GetComponent<NetworkObject>().Spawn();
+
+        Door door = obj.GetComponent<Door>();
+        door.ChangeDoorHitBox(false);
+
+        if(!isClosed)
+            doorObj.GetComponent<Door>().OpenCloseClientRpc();
+        
+        _doors.Add(door);
     }
 
     public void CancelDoor() {
@@ -133,16 +150,12 @@ public class WallEditor : MonoBehaviour
         
         FogOfWar.Instance.RefreshClientRpc();
     }
-    
-    
-    
-    
 
     #region FileManagement
 
-    void WriteToDisk() {
+    void WriteWallsToDisk() {
         Directory.CreateDirectory(_savePath);
-        StreamWriter sw = new StreamWriter(_savePath + "/wall.txt");
+        StreamWriter sw = new StreamWriter(_savePath + "/walls.txt");
 
         EdgeCollider2D[] walls = wallObj.GetComponents<EdgeCollider2D>();
 
@@ -156,13 +169,30 @@ public class WallEditor : MonoBehaviour
         sw.Close();
     }
 
-    void LoadFromDisk() {
-        if (!File.Exists(_savePath + "/wall.txt")) return;
+    void WriteDoorsToDisk() {
+        Directory.CreateDirectory(_savePath);
+        StreamWriter sw = new StreamWriter(_savePath + "/doors.txt");
+
+        foreach (var door in _doors) {
+            Vector2 position = door.transform.position;
+            sw.Write(position.x + " " + position.y + " " + (door.transform.localRotation.z == 0 ? 0 : 1) + " " + (door._isClosed ? 1 : 0) + "\n");
+        }
         
-        var lines = File.ReadAllLines(_savePath + "/wall.txt");
+        sw.Close();
+    }
+    
+    void WriteEverythingToDisk() {
+        WriteWallsToDisk();
+        WriteDoorsToDisk();
+    }
+
+    void LoadWallsFromDisk() {
+        if (!File.Exists(_savePath + "/walls.txt")) return;
+        
+        var lines = File.ReadAllLines(_savePath + "/walls.txt");
 
         foreach (var line in lines) {
-            EdgeCollider2D collider = wallObj.AddComponent<EdgeCollider2D>();
+            EdgeCollider2D edgeCollider = wallObj.AddComponent<EdgeCollider2D>();
             
             string[] stringParts = line.Split(new[]{";"," "}, StringSplitOptions.RemoveEmptyEntries);
             List<Vector2> positions = new List<Vector2>();
@@ -173,12 +203,33 @@ public class WallEditor : MonoBehaviour
                 positions.Add(point);
             }
             
-            collider.points = positions.ToArray();
+            edgeCollider.points = positions.ToArray();
         }
+    }
+
+    void LoadDoorsFromDisk() {
+        if (!File.Exists(_savePath + "/doors.txt")) return;
+        
+        var lines = File.ReadAllLines(_savePath + "/doors.txt");
+
+        foreach (var line in lines) {
+            string[] stringParts = line.Split(new[]{" "}, StringSplitOptions.RemoveEmptyEntries);
+
+            Vector2 position = new Vector2(float.Parse(stringParts[0]), float.Parse(stringParts[1]));
+            Quaternion rotation = Quaternion.Euler(0, 0, stringParts[2] == "0" ? 0 : 90);
+            bool isCLosed = stringParts[3] == "1";
+            
+            LoadDoor(position, rotation, isCLosed);
+        }
+    }
+
+    void LoadEverythingFromDisk() {
+        LoadWallsFromDisk();
+        LoadDoorsFromDisk();
     }
     
     private void OnApplicationQuit() {
-        WriteToDisk();
+        WriteEverythingToDisk();
     }
 
     #endregion

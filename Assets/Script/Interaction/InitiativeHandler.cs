@@ -70,6 +70,8 @@ public class InitiativeHandler : NetworkBehaviour
 
     void ClearTurn() {
         _counter = 0;
+        _entities.Clear();
+        _root = new Node();
 
         if (_currentEntityTurn != null) {
             foreach (Transform child in _currentEntityTurn.transform) {
@@ -77,6 +79,8 @@ public class InitiativeHandler : NetworkBehaviour
                     child.GetComponent<NetworkObject>().Despawn();
             }
         }
+
+        _currentEntityTurn = null;
         
         foreach (var entityPanel in _entityPanels) {
             Destroy(entityPanel);

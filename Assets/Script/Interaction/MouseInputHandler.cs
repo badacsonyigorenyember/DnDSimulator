@@ -181,7 +181,6 @@ public class MouseInputHandler : MonoBehaviour
         FogOfWar.Instance.RefreshClientRpc();
     }
     
-
     #endregion
 
     #region WallHandle
@@ -212,8 +211,6 @@ public class MouseInputHandler : MonoBehaviour
             WallEditor.Instance.RotateDoor();
         }
     }
-
-    
     
     #endregion
 
