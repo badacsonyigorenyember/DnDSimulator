@@ -12,15 +12,17 @@ public class Entity : NetworkBehaviour
     public Vector2 position;
     public int initiativeModifier;
 
-    public override void OnDestroy() {
-        base.OnDestroy();
+    public override void OnNetworkDespawn() {
+        base.OnNetworkDespawn();
         
         foreach (Transform child in transform) {
             if (child.TryGetComponent(out NetworkObject netObj)) {
+                Debug.Log("asd");
                 netObj.Despawn();
             }
         }
         
         InitiativeHandler.Instance.RemoveEntityFromList(this);
+        
     }
 }

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="feat: Now Initiative selection is visible on the scene with a highlighter + in the panel with colors">
+    <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="feat: Door save to disk and load from disk">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/MouseInputHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Interaction/MouseInputHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/WallEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Interaction/WallEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Door.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Door.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +37,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/0d/0f25536b/RenderPipelineManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/b0/18200550/HostView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Utils/Door.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/71/2b0d5876/EditorApplication.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Network/NetworkManagerHelper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/10/872f5aa5/Rect.cs" root0="SKIP_HIGHLIGHTING" />
@@ -163,7 +162,7 @@
       <workItem from="1710136822418" duration="10391000" />
       <workItem from="1710163593941" duration="2789000" />
       <workItem from="1710166697102" duration="9115000" />
-      <workItem from="1710252310617" duration="9090000" />
+      <workItem from="1710252310617" duration="11292000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -354,7 +353,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710258049510</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="feat: Door save to disk and load from disk">
+      <created>1710269417470</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1710269417470</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -396,7 +402,6 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="feat: Base Unity project" />
     <MESSAGE value="fix: minor fixes" />
     <MESSAGE value="feat: PNG load to Scene from script" />
     <MESSAGE value="feat: Working download panel" />
@@ -421,7 +426,8 @@
     <MESSAGE value="fix: Changed the door behaviour. The script went from the first child to the root object" />
     <MESSAGE value="feat: Initiative calculator with UI implementation. Adding and removing entities works with tree." />
     <MESSAGE value="feat: Now Initiative selection is visible on the scene with a highlighter + in the panel with colors" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Now Initiative selection is visible on the scene with a highlighter + in the panel with colors" />
+    <MESSAGE value="feat: Door save to disk and load from disk" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Door save to disk and load from disk" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

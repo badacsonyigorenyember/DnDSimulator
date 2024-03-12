@@ -47,6 +47,7 @@ public class WallEditor : MonoBehaviour
         createDoorButton.onClick.AddListener(CreateDoor);
         
         LoadEverythingFromDisk();
+        
         FogOfWar.Instance.RefreshClientRpc();
     }
 
@@ -135,10 +136,9 @@ public class WallEditor : MonoBehaviour
         obj.GetComponent<NetworkObject>().Spawn();
 
         Door door = obj.GetComponent<Door>();
-        door.ChangeDoorHitBox(false);
-
+        
         if(!isClosed)
-            doorObj.GetComponent<Door>().OpenCloseClientRpc();
+            door.OpenCloseClientRpc();
         
         _doors.Add(door);
     }
@@ -147,6 +147,7 @@ public class WallEditor : MonoBehaviour
         if (_currentDoor == null) return;
         
         _currentDoor.GetComponent<NetworkObject>().Despawn();
+        _doors.Remove(_doors.Last());
         
         FogOfWar.Instance.RefreshClientRpc();
     }
