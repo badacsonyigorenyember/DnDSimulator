@@ -38,14 +38,17 @@ public class EntityEditPanelHandler : MonoBehaviour
 
         if (entityInfo.currentHp <= 0) {
             entityInfo.currentHp = 0;
-            SetHpText();
-            
+
             if (!entityInfo.isCharacter) KillEntity();
+            return;
         }
+        
+        SetHpText();
     }
 
     void KillEntity() {
         entityInfo.GetComponent<NetworkObject>().Despawn();
+        entityInfo = null;
         gameObject.SetActive(false);
     }
 }

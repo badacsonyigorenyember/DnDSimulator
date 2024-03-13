@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Application = UnityEngine.Device.Application;
 
-public class WallEditor : MonoBehaviour
+public class WallEditor : NetworkBehaviour
 {
     public Button drawModeButton;
     public Button finishButton;
@@ -226,7 +226,9 @@ public class WallEditor : MonoBehaviour
 
     void LoadEverythingFromDisk() {
         LoadWallsFromDisk();
-        LoadDoorsFromDisk();
+        
+        if(IsServer)
+            LoadDoorsFromDisk();
     }
     
     private void OnApplicationQuit() {
