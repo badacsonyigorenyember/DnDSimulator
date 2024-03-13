@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class MouseInputHandler : MonoBehaviour
 {
-    public float cellSize = 1.497f;
-    public Vector2 offset = new Vector2(-1.472f, -0.735f);
+    public float cellSize = 1.101f;
+    public Vector2 offset = new Vector2(-0.449f, 0.3f);
 
     public MouseHandlingState state;
     
@@ -57,7 +57,7 @@ public class MouseInputHandler : MonoBehaviour
     void SnapMouse() {
         Vector2 mouseWorldPosition = GetMouseWorldPosition();
 
-        float snapSize = 10 / 1.497f; 
+        float snapSize = 10 / cellSize; 
         
         _mouseSnappedPosition = new Vector2(Mathf.Round(mouseWorldPosition.x * snapSize) / snapSize, Mathf.Round(mouseWorldPosition.y * snapSize) / snapSize);
     }

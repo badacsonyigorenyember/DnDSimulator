@@ -4,10 +4,9 @@
     <list default="true" id="f3a7cebb-dd64-49c0-8553-de031835ad2d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DnD Simulator/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/EntityEditPanelHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Interaction/EntityEditPanelHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/WallEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Interaction/WallEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Interaction/MouseInputHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Interaction/MouseInputHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Utils/Entity.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,16 +38,12 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/0d/0f25536b/RenderPipelineManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/b0/18200550/HostView.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Utils/Door.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/71/2b0d5876/EditorApplication.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Network/NetworkManagerHelper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/10/872f5aa5/Rect.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/515ef12fdf294fbebbbf35d0c115a3a281dc00/35/145c88a2/EditorCompilationInterface.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b6c5d0f08ddf477186f780f49bb14dee469200/ed/a44bb248/String.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Utils/Entity.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Scenes/Game.unity" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eb543db4513343d1826c5ea13681e0f36e00/28/1b929c01/Canvas.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Utils/Entity.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/13/2262e589/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/27/72eab906/GUIUtility.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/30/ff03d46a/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
@@ -57,7 +52,6 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/6a/8160c0ec/AsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8141cd75f5b8477b9b4ea19ed5240df229200/bd/fdd22459/Event.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/janos2000/Unity/Projects/DnD Simulator/Assets/Script/Interaction/WallEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d5ed476487f143bd945b3b0b1df1e725159a00/75/a1cc6909/ScriptableRuntimeReflectionSystemWrapper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b24a437d61e74e9d9914d6dbaae665863a00/0d/dfa3b53f/NativeInputSystem.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -102,10 +96,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="54880">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="54880" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -168,6 +162,8 @@
       <workItem from="1710163593941" duration="2789000" />
       <workItem from="1710166697102" duration="9115000" />
       <workItem from="1710252310617" duration="14181000" />
+      <workItem from="1710313787951" duration="78000" />
+      <workItem from="1710314930390" duration="2768000" />
     </task>
     <task id="LOCAL-00001" summary="fix: Fixed Unity base project">
       <created>1707680387052</created>
@@ -372,7 +368,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710272378945</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="fix: Load doors only on server">
+      <created>1710313859498</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1710313859498</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -414,7 +417,6 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="feat: PNG load to Scene from script" />
     <MESSAGE value="feat: Working download panel" />
     <MESSAGE value="fix: Image folder is added to git" />
     <MESSAGE value="feat: Newton JSON reader introduced and working MonsterObj data fetch" />
@@ -439,24 +441,12 @@
     <MESSAGE value="feat: Now Initiative selection is visible on the scene with a highlighter + in the panel with colors" />
     <MESSAGE value="feat: Door save to disk and load from disk" />
     <MESSAGE value="fix: Entity OnDestroy changed to OnDespawn + fixed door hitbox on load" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Entity OnDestroy changed to OnDespawn + fixed door hitbox on load" />
+    <MESSAGE value="fix: Load doors only on server" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Load doors only on server" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Script/Utils/InitiativePanelHelper.cs</url>
-          <line>12</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Script/Utils/InitiativePanelHelper.cs" initialLine="12" containingFunctionPresentation="lambda expression inside method 'Start'">
-            <startOffsets>
-              <option value="289" />
-            </startOffsets>
-            <endOffsets>
-              <option value="345" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Script/Interaction/EntityEditPanelHandler.cs</url>
           <line>31</line>
@@ -469,6 +459,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs</url>
+          <line>101</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Script/Interaction/InitiativeHandler.cs" initialLine="101" containingFunctionPresentation="method 'RemoveEntityFromList'">
+            <startOffsets>
+              <option value="3146" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3147" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

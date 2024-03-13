@@ -47,6 +47,7 @@ public class EntityEditPanelHandler : MonoBehaviour
     }
 
     void KillEntity() {
+        InitiativeHandler.Instance.RemoveEntityFromList(entityInfo);
         entityInfo.GetComponent<NetworkObject>().Despawn();
         entityInfo = null;
         gameObject.SetActive(false);
