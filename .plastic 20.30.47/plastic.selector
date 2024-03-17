@@ -1,4 +1,0 @@
-repository "DnD Simulator@janos2000@cloud"
-  path "/"
-    br "/main"
-    co "/main"
