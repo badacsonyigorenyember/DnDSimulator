@@ -15,12 +15,11 @@ public class NetworkManagerHelper : MonoBehaviour
     void Awake() {
         hostButton.onClick.AddListener(() => {
            NetworkManager.Singleton.StartHost();
-           
-           if(SceneManager.GetActiveScene().name != "Game")
-            SceneHandler.LoadSceen("Game");
+           SceneManager.LoadScene("Game");
         });
         joinButton.onClick.AddListener(() => {
             NetworkManager.Singleton.StartClient();
+            SceneManager.LoadScene("WaitLobby");
         });
     }
 

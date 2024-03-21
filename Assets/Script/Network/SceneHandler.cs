@@ -1,9 +1,24 @@
+using System;
 using Unity.Netcode;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class SceneHandler 
+public class SceneHandler : NetworkBehaviour
 {
-    public static void LoadSceen(string scene) {
-        NetworkManager.Singleton.SceneManager.LoadScene(scene, LoadSceneMode.Single); 
+    private void Start() {
+        DontDestroyOnLoad(this);
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.A)) {
+            TestClientRpc();
+        }
+    }
+
+    [ClientRpc]
+    void TestClientRpc() {
+        if (!IsServer) {
+            SceneManager.LoadScene("Game");
+        }
     }
 }
