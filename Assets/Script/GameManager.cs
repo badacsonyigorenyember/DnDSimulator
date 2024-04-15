@@ -1,10 +1,63 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
-public static class GameManager
+public class GameManager : NetworkBehaviour
 {
-    public const string IMG_URL = "https://api.github.com/repos/5etools-mirror-1/5etools-mirror-1.github.io/contents/img";
-    public const string DOWNLOAD_URL = "https://raw.githubusercontent.com/5etools-mirror-1/5etools-mirror-1.github.io/master/";
-    public static readonly string DATA_SAVE_PATH = Application.dataPath + "/resources/bestiary/";
+    public Button startStopButton;
 
+    public List<Entity> entities = new();
+
+    public bool isPlaying;
+
+    public static GameManager Instance;
+
+    public GameObject waitingScreenObj;
+
+    private void Awake() {
+        Instance = this;
+    }
+
+    private void Start() {
+        if(!IsServer)
+            waitingScreenObj.transform.parent.gameObject.SetActive(true);
+
+        startStopButton.onClick.AddListener(StartStopGame);
+    }
+
+    void StartStopGame() {
+        isPlaying = !isPlaying;
+        
+        TextMeshProUGUI text = startStopButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        text.text = isPlaying ? "Stop" : "Start";
+        
+        StartStopClientRpc(isPlaying);
+    }
+
+    [ClientRpc]
+    void StartStopClientRpc(bool value) {
+        waitingScreenObj.SetActive(!value);
+        isPlaying = value;
+    }
+
+    /*void OnClientConnected(ulong clientId) {
+        SendGameStateClientRpc(isPlaying);
+    }
+
+    public override void OnNetworkDespawn() {
+        base.OnNetworkDespawn();
+
+        if (IsServer) {
+            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+        }
+    }
+
+    public override void OnNetworkSpawn() {
+        if (IsServer) {
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        }
+    }*/
 }

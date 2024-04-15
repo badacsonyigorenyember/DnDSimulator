@@ -37,9 +37,6 @@ public class Player : NetworkBehaviour
 
     private void Update() {
         _inputDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
-    }
-
-    private void FixedUpdate() {
         if (IsServer) {
             serverMove();
             Zoom();
@@ -51,33 +48,24 @@ public class Player : NetworkBehaviour
 
     void serverMove() {
         transform.Translate(_inputDirection * (speed * Time.deltaTime));
+
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            SendPosClientRpc(transform.position, cam.orthographicSize);
+        }
+    }
+
+    [ClientRpc]
+    void SendPosClientRpc(Vector2 position, float ortographicScale) {
+        if (IsServer) return;
+
+        transform.position = Vector3.MoveTowards(transform.position, position, Time.deltaTime * 50);
+        transform.position = new Vector3(transform.position.x, transform.position.y, -10);
+
+        cam.orthographicSize = ortographicScale;
+
     }
 
     void clientMove() {
-        if(!shouldMove) return;
-        
-        clientLerpElapsedTime += Time.deltaTime;
-        float t = Mathf.Clamp01(clientLerpElapsedTime / clientLerpTime);
-
-        if (t >= 1) {
-            currentOrthographicSize = cam.orthographicSize;
-            clientLerpElapsedTime = 0;
-            currentCamPosition = cam.transform.position;
-            shouldMove = false;
-        }
-
-        float width = visibleBorder.size.x;
-        float height = visibleBorder.size.y;
-
-        float aspectRatio = cam.aspect;
-
-        float desiredCameraSize = width / aspectRatio >= height ? width / (2 * aspectRatio) : height / 2;
-        desiredCameraSize = Mathf.Max(desiredCameraSize, 5);
-        
-        Vector3 desiredCameraosition = visibleBorder.center + new Vector3(0, 0, -10);
-
-        cam.orthographicSize = Mathf.Lerp(currentOrthographicSize, desiredCameraSize, t);
-        cam.transform.position = Vector3.Lerp(currentCamPosition, desiredCameraosition, t);
     }
 
     void Zoom() {

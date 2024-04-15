@@ -34,7 +34,7 @@ public class WallEditor : NetworkBehaviour
         _savePath = Application.dataPath + _savePath;
     }
 
-    private void Start() {
+    /*private void Start() {
         drawModeButton.onClick.AddListener(() => {
             drawModeEnabled = !drawModeEnabled;
             drawModeButton.GetComponent<ButtonHandler>().SetActive(drawModeEnabled);
@@ -50,7 +50,7 @@ public class WallEditor : NetworkBehaviour
         
         FogOfWar.Instance.RefreshClientRpc();
     }
-
+*/
     private void FixedUpdate() {
         MoveDoor();
     }

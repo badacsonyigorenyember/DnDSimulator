@@ -2,27 +2,38 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
+using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WaitingScreenHandler : MonoBehaviour
+public class WaitingScreenHandler : NetworkBehaviour
 {
     public Image image;
+    public TextMeshProUGUI waitingText;
     public float seconds;
     
     private List<Texture2D> _textures = new();
+    private int currentIndex = -1;
 
     private void Start() {
+        if (IsServer) {
+            gameObject.SetActive(false);
+            return;
+        }
+        
         LoadImagesFromDisk();
         StartCoroutine(DisplayTextures());
     }
 
     IEnumerator DisplayTextures() {
-        int currentIndex = 0;
-        
         while (true) {
-            yield return FadeOutImage(image, 1);
+            if (currentIndex != -1) {
+                yield return FadeOutImage(image, 1);
+            }
+            else {
+                currentIndex = 0;
+            }
             
             Texture2D currentTexture = _textures[currentIndex];
             image.sprite = Sprite.Create(currentTexture, new Rect(0, 0, currentTexture.width, currentTexture.height), Vector2.zero);
@@ -42,7 +53,11 @@ public class WaitingScreenHandler : MonoBehaviour
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            image.color = Color.Lerp(Color.white, Color.black, elapsedTime / duration);
+            
+            Color color = Color.Lerp(Color.white, Color.black, elapsedTime / duration);
+            
+            image.color = color;
+            waitingText.color = color;
             yield return null;
         }
 
@@ -56,7 +71,11 @@ public class WaitingScreenHandler : MonoBehaviour
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            image.color = Color.Lerp(Color.black, Color.white, elapsedTime / duration);
+            
+            Color color = Color.Lerp(Color.black, Color.white, elapsedTime / duration);
+            
+            image.color = color;
+            waitingText.color = color;
             yield return null;
         }
 

@@ -16,9 +16,4 @@ public class Entity : NetworkBehaviour
     private void Start() {
         gameObject.AddComponent<CircleCollider2D>();
     }
-
-    public override void OnNetworkSpawn() {
-        base.OnNetworkSpawn();
-        Debug.Log(entityName);
-    }
 }

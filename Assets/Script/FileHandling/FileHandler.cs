@@ -1,25 +1,29 @@
-using Script.Utils;
+using System;
+using System.IO;
+using Unity.Netcode;
+using UnityEngine;
 
-public static class FileHandler
+public class FileHandler : NetworkBehaviour
 {
-    public static void EntityDtoToEntity(Entity entity, EntityDto entityDto) {
-        entity.entityName = entityDto.entityName;
-        entity.currentHp = entityDto.currentHp;
-        entity.maxHp = entityDto.maxHp;
-        entity.isCharacter = entityDto.isCharacter;
-        entity.position = entityDto.position;
-        entity.initiativeModifier = entityDto.initiativeModifier; 
+    public static FileHandler Instance;
+    public string path;
+
+    private void Awake() {
+        Instance = this;
     }
 
-    public static EntityDto EntityToEntityDto(Entity entity) {
-        return new EntityDto
-        {
-            entityName = entity.entityName,
-            currentHp = entity.currentHp,
-            maxHp = entity.maxHp,
-            isCharacter = entity.isCharacter,
-            position = entity.position,
-            initiativeModifier = entity.initiativeModifier
-        };
+    
+
+    public void LoadEntitySprite(Entity entity) {
+        var bytes = File.ReadAllBytes(Application.dataPath + $"/Resources/Entities/{entity.entityName}.png");
+        Texture2D texture = new Texture2D(2, 2);
+        texture.LoadImage(bytes);
+
+        SpriteRenderer renderer = entity.gameObject.GetComponent<SpriteRenderer>();
+
+        renderer.sprite = Sprite.Create(
+            texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero, 200);
+
+        entity.gameObject.GetComponent<CircleCollider2D>().radius = renderer.size.x;
     }
 }

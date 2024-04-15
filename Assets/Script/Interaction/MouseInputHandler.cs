@@ -3,23 +3,24 @@ using System.Linq;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MouseInputHandler : MonoBehaviour
 {
     public float cellSize = 1.101f;
     public Vector2 offset = new Vector2(-0.449f, 0.3f);
-
+    
     public MouseHandlingState state;
     
     private Vector2 _mouseSnappedPosition;
     private bool _canMoveEntities;
     private Vector2 _previousMouseSnappedPosition;
     private Vector2 _mousePositionDifference;
+    
+    public List<GameObject> _entitiesToMove;
 
-    private List<GameObject> _entitiesToMove;
-
-    public GameObject mousecursor;
-    public GameObject selectionPrefab;
+    //public GameObject mousecursor;
+    //public GameObject selectionPrefab;
 
     private Camera _cam;
     public static MouseInputHandler Instance { get; private set; }
@@ -50,7 +51,7 @@ public class MouseInputHandler : MonoBehaviour
                 break;
         }
 
-        mousecursor.transform.position = _mouseSnappedPosition;
+        //mousecursor.transform.position = _mouseSnappedPosition;
 
     }
 
@@ -67,8 +68,6 @@ public class MouseInputHandler : MonoBehaviour
     #region EntityHandle
     
     void GetEntityOnClick() {
-        if (WallEditor.Instance.drawModeEnabled) return;
-        
         if(!validClick) return;
         
         if (Input.GetMouseButtonDown(0)) {
@@ -76,7 +75,6 @@ public class MouseInputHandler : MonoBehaviour
             
             if (hit.collider == null) {
                 ClearEntitisToMove();
-                EntityInteractionHandler.Instance.CancelEntityPanel();
                 return;
             }
             
@@ -146,15 +144,15 @@ public class MouseInputHandler : MonoBehaviour
     void AddEntityToEntitiesToMove(GameObject entity) {
         if (!_entitiesToMove.Contains(entity)) {
             _entitiesToMove.Add(entity);
-            Instantiate(selectionPrefab, entity.transform);
+            //Instantiate(selectionPrefab, entity.transform);
         }
     }
 
     void ClearEntitisToMove() {
         foreach (var entity in _entitiesToMove) {
             foreach (Transform child in entity.transform) {
-                if(child.name == selectionPrefab.name + "(Clone)")
-                    Destroy(child.gameObject);
+                //if(child.name == selectionPrefab.name + "(Clone)")
+                    //Destroy(child.gameObject);
             }
         }
         
@@ -178,7 +176,7 @@ public class MouseInputHandler : MonoBehaviour
             
         }
         
-        FogOfWar.Instance.RefreshClientRpc();
+        //FogOfWar.Instance.RefreshClientRpc();
     }
     
     #endregion

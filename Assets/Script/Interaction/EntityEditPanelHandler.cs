@@ -8,15 +8,17 @@ public class EntityEditPanelHandler : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI hpText;
-    public TMP_InputField hpModifyInput;
+    public TMP_InputField currentHpModifyInput;
+    public TMP_InputField maxHpModifyInput;
+    public TMP_InputField initiativeInput;
     public Entity entityInfo;
 
     public Button hpModifyButton;
-    public Button killButton;
+    public Button statModifyButtin;
 
     private void Start() {
         hpModifyButton.onClick.AddListener(ModifyHp);
-        killButton.onClick.AddListener(KillEntity);
+        statModifyButtin.onClick.AddListener(StatModify);
     }
 
     public void Init(Entity e) {
@@ -29,8 +31,18 @@ public class EntityEditPanelHandler : MonoBehaviour
         hpText.text = entityInfo.currentHp + "/" + entityInfo.maxHp;
     }
 
+    void StatModify() {
+        string stringValue = maxHpModifyInput.text;
+        if (stringValue == "") return;
+
+        int intValue = int.Parse(stringValue);
+        entityInfo.maxHp += intValue;
+        
+        //TODO initiative!!
+    }
+
     void ModifyHp() {
-        string stringValue = hpModifyInput.text;
+        string stringValue = currentHpModifyInput.text;
         if (stringValue == "") return;
 
         int intValue = int.Parse(stringValue);
@@ -47,7 +59,7 @@ public class EntityEditPanelHandler : MonoBehaviour
     }
 
     void KillEntity() {
-        InitiativeHandler.Instance.RemoveEntityFromList(entityInfo);
+        //InitiativeHandler.Instance.RemoveEntityFromList(entityInfo);
         entityInfo.GetComponent<NetworkObject>().Despawn();
         entityInfo = null;
         gameObject.SetActive(false);

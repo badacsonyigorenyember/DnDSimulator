@@ -13,17 +13,20 @@ public class NetworkManagerHelper : MonoBehaviour
     private static NetworkManager manager;
     
     void Awake() {
-        hostButton.onClick.AddListener(() => {
-           NetworkManager.Singleton.StartHost();
-           SceneManager.LoadScene("Game");
-        });
-        joinButton.onClick.AddListener(() => {
-            NetworkManager.Singleton.StartClient();
-            SceneManager.LoadScene("WaitLobby");
-        });
+        hostButton.onClick.AddListener(() => ConnectToGame(true));
+        joinButton.onClick.AddListener(() => ConnectToGame(false));
     }
 
-    private void OnConnectedToServer() {
-        Debug.Log("Connected");
+    void ConnectToGame(bool isServer) {
+        if (isServer) {
+            NetworkManager.Singleton.StartHost();
+            NetworkManager.Singleton.SceneManager.LoadScene("Game", LoadSceneMode.Single);
+        }
+        else {
+            NetworkManager.Singleton.StartClient();
+        }
+        
     }
+    
+    
 }
