@@ -17,12 +17,15 @@ public class GameManager : NetworkBehaviour
     public bool isPlaying;
     public bool isSceneLoaded;
 
+    public SceneObject currentScene;
+
     public static GameManager Instance;
 
     public GameObject waitingScreenObj;
     public static string ENTITY_IMG_PATH;
     public static string ENTITY_DATA_PATH;
-    public static string SCENE_SAVE_PATH;
+    public static string MAP_PATH;
+    public static string SCENE_PATH;
 
     private void Awake() {
         Instance = this;
@@ -31,11 +34,13 @@ public class GameManager : NetworkBehaviour
     private void Start() {
         ENTITY_IMG_PATH = Application.dataPath + "/Resources/Images/Entities";
         ENTITY_DATA_PATH = Application.dataPath + "/Resources/Data/Entities";
-        SCENE_SAVE_PATH = Application.dataPath + "/Resources/Data/Scenes";
+        MAP_PATH = Application.dataPath + "/Resources/Images/Maps";
+        SCENE_PATH = Application.dataPath + "/Resources/Data/Scenes";
 
         Directory.CreateDirectory(ENTITY_IMG_PATH);
         Directory.CreateDirectory(ENTITY_DATA_PATH);
-        Directory.CreateDirectory(SCENE_SAVE_PATH);
+        Directory.CreateDirectory(MAP_PATH);
+        Directory.CreateDirectory(SCENE_PATH);
 
         if (!IsServer) {
             waitingScreenObj.transform.parent.gameObject.SetActive(true);
@@ -52,7 +57,11 @@ public class GameManager : NetworkBehaviour
         text.text = isPlaying ? "Stop" : "Start";
 
         if (isPlaying) {
-            //await CloudDataHDownloader.UploadImages();
+            await CloudDataHandler.UploadImages();
+            await CloudDataHandler.UploadMap(currentScene.name);
+            await CloudDataHandler.UploadSceneData(currentScene.name);
+            
+            Debug.Log("Finished uploading!");
         }
         
         StartGameClientRpc(isPlaying, GetEntityNameList());
@@ -63,33 +72,21 @@ public class GameManager : NetworkBehaviour
     void StartGameClientRpc(bool value, EntityName[] entityNames) {
         waitingScreenObj.SetActive(!value);
         isPlaying = value;
+
+        if (!IsServer) {
+            DownloadData(entityNames);
         
-        DownloadImages(GetEntityNameList());
-        
+        }
     }
 
-    [ClientRpc]
-    void SendImageInfoClientRpc(EntityName[] entityNames) {
-        //if (!IsServer) {
-            DownloadImages(entityNames);
-            
-            Debug.Log("Continued");
-
-            foreach (var entity in entities) {
-                FileHandler.LoadEntitySprite(entity);
-            }
-        //}
-    }
-
-    async void DownloadImages(EntityName[] entityNames) {
-        await CloudDataHDownloader.DownloadImages(entityNames);
+    async void DownloadData(EntityName[] entityNames) {
+        await CloudDataHandler.DownloadImages(entityNames);
         
-        Debug.Log("Awaited");
+        Debug.Log("Finished Download");
     }
 
     void OnClientConnected(ulong clientId) {
-        SendImageInfoClientRpc(GetEntityNameList());
-
+        StartGameClientRpc(isPlaying, GetEntityNameList());
     }
 
     public override void OnNetworkDespawn() {
