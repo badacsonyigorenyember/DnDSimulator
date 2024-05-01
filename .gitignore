@@ -9,7 +9,11 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
-/[Aa]ssets/[Rr]esources/[Ii]mages/[Bb]estiary
+/[Aa]ssets/Resources
+/[Aa]ssets/Firebase
+/[Aa]ssets/[Ss]treamingAssets/
+/[Aa]ssets/Editor*Default*Resources
+/[Aa]ssets/ExternalDependencyManager
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data

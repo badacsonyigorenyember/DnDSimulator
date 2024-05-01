@@ -1,14 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml;
 using TMPro;
-using Unity.IO.LowLevel.Unsafe;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SceneHandler : NetworkBehaviour
@@ -19,7 +14,6 @@ public class SceneHandler : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI _sceneNameTextField;
     
     public SceneObject currentScene;
-    string path;
 
     public GameObject sceneListElementPrefab;
     public GameObject sceneListContainer;
@@ -29,8 +23,6 @@ public class SceneHandler : NetworkBehaviour
     private List<GameObject> sceneListElemets = new();
 
     private void Start() {
-        path = Application.dataPath + "/Saves/Scenes";
-        
         _saveSceneButton.onClick.AddListener(SaveScene);
         _createSceneButton.onClick.AddListener(CreateNewScene);
         _sceneNameTextField.text = "";
@@ -73,8 +65,7 @@ public class SceneHandler : NetworkBehaviour
 
         currentScene.entities = entities;
 
-        Directory.CreateDirectory(path);
-        File.WriteAllText(path + $"/{currentScene.name}.json", JsonUtility.ToJson(currentScene));
+        File.WriteAllText(GameManager.SCENE_SAVE_PATH + $"/{currentScene.name}.json", JsonUtility.ToJson(currentScene));
         
         LoadSavedScenes();
     }
@@ -84,22 +75,20 @@ public class SceneHandler : NetworkBehaviour
         if(!IsServer)
             return;
         
-        SaveScene();
         ClearScene();
 
-        var file = File.ReadAllText(path + $"/{name}.json");
-        
-        currentScene = JsonUtility.FromJson<SceneObject>(file);
+        var mapJson = File.ReadAllText(GameManager.SCENE_SAVE_PATH + $"/{name}.json");
+        currentScene = JsonUtility.FromJson<SceneObject>(mapJson);
         
         _sceneNameTextField.text = currentScene.name;
         
-        Debug.Log(currentScene.name);
-
         foreach (var entityDto in currentScene.entities) {
-            var obj = Instantiate(Resources.Load<GameObject>($"Prefabs/Entitites/{entityDto.entityName}"),
+            var obj = Instantiate(Resources.Load<GameObject>($"Prefabs/EntityPrefab"),
                 entityDto.position, Quaternion.identity);
+            obj.name = entityDto.entityName;
 
             Entity entity = obj.GetComponent<Entity>();
+            EntityWriterHelper.EntityDtoToEntity(entity, entityDto);
 
             GameManager.Instance.entities.Add(entity);
 
@@ -117,8 +106,7 @@ public class SceneHandler : NetworkBehaviour
         mapNetObj.Spawn();
         mapNetObj.transform.SetParent(sceneContainer.transform.GetChild(1));
     }
-    
-    
+
 
 
     void ClearScene() {
@@ -138,8 +126,8 @@ public class SceneHandler : NetworkBehaviour
             Destroy(element);
         }
         
-        if (Directory.Exists(path)) {
-            string[] files = Directory.GetFiles(path);
+        if (Directory.Exists(GameManager.SCENE_SAVE_PATH)) {
+            string[] files = Directory.GetFiles(GameManager.SCENE_SAVE_PATH);
 
             foreach (var file in files) {
                 string fileName = Path.GetFileName(file).Split(".")[0];
