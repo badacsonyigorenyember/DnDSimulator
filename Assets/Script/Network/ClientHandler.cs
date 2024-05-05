@@ -13,7 +13,6 @@ public class ClientHandler : NetworkBehaviour
             foreach (var obj in notVisibleForClients) {
                 obj.gameObject.SetActive(false);
             }
-            gameObject.SetActive(false);
         }
     }
 }

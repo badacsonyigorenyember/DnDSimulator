@@ -49,21 +49,14 @@ public static class CloudDataHandler
         }
     }
     
-    public static async Task DownloadImages(GameManager.EntityName[] entityNames) {
+    public static async Task DownloadImages(List<string> entityNames) {
         List<Task> downloadTasks = new List<Task>();
 
         Directory.CreateDirectory(GameManager.ENTITY_IMG_PATH);
-        
-        var files =
-            Directory.GetFiles(GameManager.ENTITY_IMG_PATH)
-            .Select(Path.GetFileNameWithoutExtension)
-            .ToList();
 
         foreach (var entity in entityNames) {
-            string name = entity.name;
-            
-            if (!files.Contains(name)) {
-                downloadTasks.Add(DownloadImageAsync(name));
+            if (!File.Exists(GameManager.ENTITY_IMG_PATH + $"/{entity}.png")) {
+                downloadTasks.Add(DownloadImageAsync(entity));
             }
         }
         
@@ -134,16 +127,19 @@ public static class CloudDataHandler
         }
     }
 
-    public static async Task DownloadSceneData(string name) {
+    public static async Task<string> DownloadSceneData(string name) {
         StorageReference sceneReference = storageReference.Child($"Data/Scenes/{name}.json");
+        string path = GameManager.SCENE_PATH + $"/{name}.json";
 
-        var downloadTask = sceneReference.GetFileAsync(GameManager.SCENE_PATH + $"/{name}.json");
+        var downloadTask = sceneReference.GetFileAsync(path);
+        
         try {
             await downloadTask;
+            return await File.ReadAllTextAsync(path);
         }
         catch (Exception e) {
             Debug.LogError(e.Message);
-            return;
+            return null;
         }
     }
 }

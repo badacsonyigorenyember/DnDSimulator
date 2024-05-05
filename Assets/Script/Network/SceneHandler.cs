@@ -80,31 +80,26 @@ public class SceneHandler : NetworkBehaviour
         _sceneNameTextField.text = GameManager.Instance.currentScene.name;
         
         foreach (var entityDto in GameManager.Instance.currentScene.entities) {
-            var obj = Instantiate(Resources.Load<GameObject>($"Prefabs/EntityPrefab"),
-                entityDto.position, Quaternion.identity);
+            var obj = Instantiate(Resources.Load<GameObject>($"Prefabs/EntityPrefab"));
             obj.name = entityDto.entityName;
-
-            Entity entity = obj.GetComponent<Entity>();
-            EntityWriterHelper.EntityDtoToEntity(entity, entityDto);
-
-            GameManager.Instance.entities.Add(entity);
 
             NetworkObject netObj = obj.GetComponent<NetworkObject>();
 
             netObj.Spawn();
             netObj.transform.SetParent(sceneContainer.transform.GetChild(0));
-            
         }
 
-        var mapObj = Instantiate(Resources.Load<GameObject>($"Prefabs/Maps/{GameManager.Instance.currentScene.name}"));
+        /*var mapObj = Instantiate(Resources.Load<GameObject>($"Prefabs/Maps/{GameManager.Instance.currentScene.name}"));
 
         NetworkObject mapNetObj = mapObj.GetComponent<NetworkObject>();
         
         mapNetObj.Spawn();
-        mapNetObj.transform.SetParent(sceneContainer.transform.GetChild(1));
+        mapNetObj.transform.SetParent(sceneContainer.transform.GetChild(1));*/
+        
+        LoadEntities();
+        
+        
     }
-
-
 
     void ClearScene() {
         for (int i = GameManager.Instance.entities.Count - 1; i >= 0; i--) {
@@ -141,5 +136,36 @@ public class SceneHandler : NetworkBehaviour
             }
         }
     }
+
+    public static void LoadEntities() {
+        for (int i = 0; i < GameManager.Instance.entities.Count; i++) {
+            Entity entity = GameManager.Instance.entities[i];
+            
+            EntityWriterHelper.EntityDtoToEntity(entity, GameManager.Instance.currentScene.entities[i]);
+
+            entity.transform.position = entity.position;
+
+            string imgPath = GameManager.ENTITY_IMG_PATH + $"/{entity.entityName}.png";
+
+            if (File.Exists(imgPath)) {
+                byte[] imageBytes = File.ReadAllBytes(imgPath);
+
+                Texture2D texture = new Texture2D(1, 1);
+                texture.LoadImage(imageBytes);
+
+                entity.gameObject.GetComponent<SpriteRenderer>().sprite
+                    = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f, 200f);
+
+            }
+            else {
+                Debug.Log("No Image!");
+            }
+        }
+        
+    }
+    
+    
+    
+    
 
 }

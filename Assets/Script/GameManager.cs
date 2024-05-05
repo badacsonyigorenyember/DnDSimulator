@@ -51,42 +51,56 @@ public class GameManager : NetworkBehaviour
     }
 
     async void StartStopGame() {
+        if (currentScene == null) return;
+        
         isPlaying = !isPlaying;
         
         TextMeshProUGUI text = startStopButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         text.text = isPlaying ? "Stop" : "Start";
 
+        List<Task> tasks = new();
+
         if (isPlaying) {
-            await CloudDataHandler.UploadImages();
-            await CloudDataHandler.UploadMap(currentScene.name);
-            await CloudDataHandler.UploadSceneData(currentScene.name);
-            
-            Debug.Log("Finished uploading!");
+             tasks.Add(CloudDataHandler.UploadImages());
+             tasks.Add(CloudDataHandler.UploadMap(currentScene.name));
+             tasks.Add(CloudDataHandler.UploadSceneData(currentScene.name));
+             
+             await Task.WhenAll(tasks);
+             
+             Debug.Log("Finished uploading!");
         }
         
-        StartGameClientRpc(isPlaying, GetEntityNameList());
+        StartGameClientRpc(isPlaying, currentScene.name);
         
     }
 
     [ClientRpc]
-    void StartGameClientRpc(bool value, EntityName[] entityNames) {
-        waitingScreenObj.SetActive(!value);
-        isPlaying = value;
+    void StartGameClientRpc(bool value, string sceneName) {
+        if (IsServer) return;
 
-        if (!IsServer) {
-            DownloadData(entityNames);
-        
-        }
+        SetUpClient(sceneName, value);
     }
 
-    async void DownloadData(EntityName[] entityNames) {
-        await CloudDataHandler.DownloadImages(entityNames);
+    async void SetUpClient(string sceneName, bool value) {
+        string json = await CloudDataHandler.DownloadSceneData(sceneName);
+        currentScene = JsonUtility.FromJson<SceneObject>(json);
+        
+        Debug.Log("Current scene set!");
+
+        await CloudDataHandler.DownloadImages(currentScene.entities.Select(e => e.entityName).ToList());
+        
+        Debug.Log("Images downloaded!");
+
+        SceneHandler.LoadEntities();
         
         Debug.Log("Finished Download");
+        
+        waitingScreenObj.SetActive(!value);
+        isPlaying = value;
     }
 
     void OnClientConnected(ulong clientId) {
-        StartGameClientRpc(isPlaying, GetEntityNameList());
+        
     }
 
     public override void OnNetworkDespawn() {
@@ -103,14 +117,6 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    EntityName[] GetEntityNameList() {
-        return entities
-            .Select(e => e.entityName)
-            .Distinct()
-            .Select(n => new EntityName {name = n})
-            .ToArray();
-    }
-    
     public class EntityName : INetworkSerializable
     {
         public string name;

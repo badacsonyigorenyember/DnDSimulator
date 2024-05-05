@@ -1,7 +1,6 @@
 using System;
 using Unity.Netcode;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 [Serializable]
 public class Entity : NetworkBehaviour
@@ -15,5 +14,11 @@ public class Entity : NetworkBehaviour
 
     private void Start() {
         gameObject.AddComponent<CircleCollider2D>();
+    }
+
+    public override void OnNetworkSpawn() {
+        base.OnNetworkSpawn();
+        
+        GameManager.Instance.entities.Add(this);
     }
 }

@@ -13,7 +13,7 @@ public class WaitingScreenHandler : NetworkBehaviour
     public TextMeshProUGUI waitingText;
     public float seconds;
     
-    private List<Texture2D> _textures = new();
+    public List<Texture2D> _textures;
     private int currentIndex = -1;
 
     private void Start() {
@@ -22,7 +22,6 @@ public class WaitingScreenHandler : NetworkBehaviour
             return;
         }
         
-        LoadImagesFromDisk();
         StartCoroutine(DisplayTextures());
     }
 
@@ -82,19 +81,4 @@ public class WaitingScreenHandler : NetworkBehaviour
         image.color = Color.white;
     }
 
-    void LoadImagesFromDisk() {
-        Texture2D tex = new Texture2D(1, 1);
-        var files = Directory.GetFiles(Application.dataPath + "/Resources/Images/LoadingImages/", "*.jpeg");
-
-        foreach (var file in files) {
-            byte[] bytes = File.ReadAllBytes(file);
-
-            Texture2D texture = new Texture2D(1, 1);
-            texture.LoadImage(bytes);
-            
-            _textures.Add(texture);
-        }
-
-    }
-    
 }
