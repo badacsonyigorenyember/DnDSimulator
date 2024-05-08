@@ -89,16 +89,17 @@ public class SceneHandler : NetworkBehaviour
             netObj.transform.SetParent(sceneContainer.transform.GetChild(0));
         }
 
-        /*var mapObj = Instantiate(Resources.Load<GameObject>($"Prefabs/Maps/{GameManager.Instance.currentScene.name}"));
+        var mapObj = Instantiate(Resources.Load<GameObject>($"Prefabs/MapPrefab"));
 
         NetworkObject mapNetObj = mapObj.GetComponent<NetworkObject>();
         
         mapNetObj.Spawn();
-        mapNetObj.transform.SetParent(sceneContainer.transform.GetChild(1));*/
+        mapNetObj.transform.SetParent(sceneContainer.transform.GetChild(1));
         
+        GameManager.Instance.map = mapObj;
+
         LoadEntities();
-        
-        
+        LoadMap();
     }
 
     void ClearScene() {
@@ -148,22 +149,41 @@ public class SceneHandler : NetworkBehaviour
             string imgPath = GameManager.ENTITY_IMG_PATH + $"/{entity.entityName}.png";
 
             if (File.Exists(imgPath)) {
-                byte[] imageBytes = File.ReadAllBytes(imgPath);
+                byte[] imgBytes = File.ReadAllBytes(imgPath);
 
                 Texture2D texture = new Texture2D(1, 1);
-                texture.LoadImage(imageBytes);
+                texture.LoadImage(imgBytes);
 
                 entity.gameObject.GetComponent<SpriteRenderer>().sprite
                     = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f, 200f);
 
             }
             else {
-                Debug.Log("No Image!");
+                Debug.LogError("No Image!");
             }
         }
+    }
+
+    public static void LoadMap() {
+        GameObject map = GameManager.Instance.map;
+
+        string imgPath = GameManager.MAP_PATH + $"/{GameManager.Instance.currentScene.name}.png";
+        
+        Debug.Log(imgPath);
+        if (File.Exists(imgPath)) {
+            byte[] imgBytes = File.ReadAllBytes(imgPath);
+            Texture2D texture = new Texture2D(1, 1);
+            texture.LoadImage(imgBytes);
+
+            map.GetComponent<SpriteRenderer>().sprite 
+                = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f, 100f);
+        }
+        else {
+            Debug.LogError("No Image!");
+        }
+        
         
     }
-    
     
     
     

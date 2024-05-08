@@ -13,6 +13,7 @@ public class GameManager : NetworkBehaviour
     public Button startStopButton;
 
     public List<Entity> entities = new();
+    public GameObject map;
 
     public bool isPlaying;
     public bool isSceneLoaded;
@@ -82,25 +83,37 @@ public class GameManager : NetworkBehaviour
     }
 
     async void SetUpClient(string sceneName, bool value) {
-        string json = await CloudDataHandler.DownloadSceneData(sceneName);
-        currentScene = JsonUtility.FromJson<SceneObject>(json);
+        if (value) {
+            string json = await CloudDataHandler.DownloadSceneData(sceneName);
+            currentScene = JsonUtility.FromJson<SceneObject>(json);
         
-        Debug.Log("Current scene set!");
+            Debug.Log("Current scene set!");
 
-        await CloudDataHandler.DownloadImages(currentScene.entities.Select(e => e.entityName).ToList());
+            await CloudDataHandler.DownloadImages(currentScene.entities.Select(e => e.entityName).ToList());
         
-        Debug.Log("Images downloaded!");
+            Debug.Log("Images downloaded!");
 
-        SceneHandler.LoadEntities();
+            SceneHandler.LoadEntities();
         
-        Debug.Log("Finished Download");
-        
+            Debug.Log("Entities loaded!");
+
+            await CloudDataHandler.DownloadMap(currentScene.name);
+            
+            Debug.Log("Map downloaded!");
+            
+            SceneHandler.LoadMap();
+            
+            Debug.Log("Map loaded!");
+        }
+
         waitingScreenObj.SetActive(!value);
         isPlaying = value;
     }
 
     void OnClientConnected(ulong clientId) {
-        
+        if (isPlaying) {
+            SetUpClient(currentScene.name, isPlaying);
+        }
     }
 
     public override void OnNetworkDespawn() {
@@ -114,22 +127,6 @@ public class GameManager : NetworkBehaviour
     public override void OnNetworkSpawn() {
         if (IsServer) {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-        }
-    }
-
-    public class EntityName : INetworkSerializable
-    {
-        public string name;
-        
-        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
-            if (serializer.IsWriter)
-            {
-                serializer.GetFastBufferWriter().WriteValueSafe(name);
-            }
-            else
-            {
-                serializer.GetFastBufferReader().ReadValueSafe(out name);
-            }
         }
     }
 }

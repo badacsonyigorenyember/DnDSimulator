@@ -21,4 +21,10 @@ public class Entity : NetworkBehaviour
         
         GameManager.Instance.entities.Add(this);
     }
+
+    public override void OnNetworkDespawn() {
+        base.OnNetworkDespawn();
+
+        GameManager.Instance.entities.Remove(this);
+    }
 }
