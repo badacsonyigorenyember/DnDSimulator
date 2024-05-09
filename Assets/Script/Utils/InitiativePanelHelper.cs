@@ -1,25 +1,27 @@
+/*
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InitiativePanelHelper : MonoBehaviour
 {
-    public Button removeEntityButton;
-    public Entity entity;
+    public Button removeCreatureButton;
+    public Creature creature;
     public int place;
 
     private void Start() {
-        removeEntityButton.onClick.AddListener(() => {
-            InitiativeHandler.Instance.RemoveEntityFromList(entity);
+        removeCreatureButton.onClick.AddListener(() => {
+            InitiativeHandler.Instance.RemoveEntityFromList(creature);
             Destroy(gameObject);
         });
     }
 
-    public void Init(Entity entity, int place, bool isCurrentEntity) {
-        this.entity = entity;
+    public void Init(Creature creature, int place, bool isCurrentEntity) {
+        this.creature = creature;
         this.place = place;
         TextMeshProUGUI textMeshPro = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        textMeshPro.text = this.place + ". - " + this.entity.name;
+        textMeshPro.text = this.place + ". - " + this.creature.creatureName;
         textMeshPro.color = isCurrentEntity ? Color.green : Color.black;
     }
 }
+*/

@@ -49,18 +49,18 @@ public class SceneHandler : NetworkBehaviour
     void SaveScene() {
         if (GameManager.Instance.currentScene == null) return;
 
-        List<EntityDto> entities = new();
+        List<CreatureDto> creatures = new();
 
-        foreach (var entity in FindObjectsOfType<Entity>().ToList()) {
-            entity.position = entity.transform.position;
-            entities.Add(EntityWriterHelper.EntityToEntityDto(entity));
+        foreach (var creature in FindObjectsOfType<Creature>().ToList()) {
+            creature.position = creature.transform.position;
+            creatures.Add(CreatureDtoHandler.CreatureToCreatureDto(creature));
 
-            if (!GameManager.Instance.entities.Contains(entity)) {
-                GameManager.Instance.entities.Add(entity);
+            if (!GameManager.Instance.creatures.Contains(creature)) {
+                GameManager.Instance.creatures.Add(creature);
             }
         }
 
-        GameManager.Instance.currentScene.entities = entities;
+        GameManager.Instance.currentScene.creatures = creatures;
 
         File.WriteAllText(GameManager.SCENE_PATH + $"/{GameManager.Instance.currentScene.name}.json", JsonUtility.ToJson(GameManager.Instance.currentScene));
         
@@ -79,9 +79,9 @@ public class SceneHandler : NetworkBehaviour
         
         _sceneNameTextField.text = GameManager.Instance.currentScene.name;
         
-        foreach (var entityDto in GameManager.Instance.currentScene.entities) {
-            var obj = Instantiate(Resources.Load<GameObject>($"Prefabs/EntityPrefab"));
-            obj.name = entityDto.entityName;
+        foreach (var creatureDto in GameManager.Instance.currentScene.creatures) {
+            var obj = Instantiate(Resources.Load<GameObject>($"Prefabs/CreaturePrefab"));
+            obj.name = creatureDto.creatureName;
 
             NetworkObject netObj = obj.GetComponent<NetworkObject>();
 
@@ -98,15 +98,15 @@ public class SceneHandler : NetworkBehaviour
         
         GameManager.Instance.map = mapObj;
 
-        LoadEntities();
+        LoadCreatures();
         LoadMap();
     }
 
     void ClearScene() {
-        for (int i = GameManager.Instance.entities.Count - 1; i >= 0; i--) {
-            Destroy(GameManager.Instance.entities[i].gameObject);
+        for (int i = GameManager.Instance.creatures.Count - 1; i >= 0; i--) {
+            Destroy(GameManager.Instance.creatures[i].gameObject);
         }
-        GameManager.Instance.entities.Clear();
+        GameManager.Instance.creatures.Clear();
 
         if (sceneContainer.transform.GetChild(1).childCount > 0) {
             Destroy(sceneContainer.transform.GetChild(1).GetChild(0).gameObject);
@@ -138,15 +138,15 @@ public class SceneHandler : NetworkBehaviour
         }
     }
 
-    public static void LoadEntities() {
-        for (int i = 0; i < GameManager.Instance.entities.Count; i++) {
-            Entity entity = GameManager.Instance.entities[i];
+    public static void LoadCreatures() {
+        for (int i = 0; i < GameManager.Instance.creatures.Count; i++) {
+            Creature creature = GameManager.Instance.creatures[i];
             
-            EntityWriterHelper.EntityDtoToEntity(entity, GameManager.Instance.currentScene.entities[i]);
+            CreatureDtoHandler.CreatureDtoToCreature(creature, GameManager.Instance.currentScene.creatures[i]);
 
-            entity.transform.position = entity.position;
+            creature.transform.position = creature.position;
 
-            string imgPath = GameManager.ENTITY_IMG_PATH + $"/{entity.entityName}.png";
+            string imgPath = GameManager.CREATURE_IMG_PATH + $"/{creature.creatureName}.png";
 
             if (File.Exists(imgPath)) {
                 byte[] imgBytes = File.ReadAllBytes(imgPath);
@@ -154,7 +154,7 @@ public class SceneHandler : NetworkBehaviour
                 Texture2D texture = new Texture2D(1, 1);
                 texture.LoadImage(imgBytes);
 
-                entity.gameObject.GetComponent<SpriteRenderer>().sprite
+                creature.gameObject.GetComponent<SpriteRenderer>().sprite
                     = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f, 200f);
 
             }

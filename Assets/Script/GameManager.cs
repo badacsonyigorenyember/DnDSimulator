@@ -12,7 +12,7 @@ public class GameManager : NetworkBehaviour
 {
     public Button startStopButton;
 
-    public List<Entity> entities = new();
+    public List<Creature> creatures = new();
     public GameObject map;
 
     public bool isPlaying;
@@ -23,8 +23,8 @@ public class GameManager : NetworkBehaviour
     public static GameManager Instance;
 
     public GameObject waitingScreenObj;
-    public static string ENTITY_IMG_PATH;
-    public static string ENTITY_DATA_PATH;
+    public static string CREATURE_IMG_PATH;
+    public static string CREATURE_DATA_PATH;
     public static string MAP_PATH;
     public static string SCENE_PATH;
 
@@ -33,13 +33,13 @@ public class GameManager : NetworkBehaviour
     }
 
     private void Start() {
-        ENTITY_IMG_PATH = Application.dataPath + "/Resources/Images/Entities";
-        ENTITY_DATA_PATH = Application.dataPath + "/Resources/Data/Entities";
+        CREATURE_IMG_PATH = Application.dataPath + "/Resources/Images/Creatures";
+        CREATURE_DATA_PATH = Application.dataPath + "/Resources/Data/Creatures";
         MAP_PATH = Application.dataPath + "/Resources/Images/Maps";
         SCENE_PATH = Application.dataPath + "/Resources/Data/Scenes";
 
-        Directory.CreateDirectory(ENTITY_IMG_PATH);
-        Directory.CreateDirectory(ENTITY_DATA_PATH);
+        Directory.CreateDirectory(CREATURE_IMG_PATH);
+        Directory.CreateDirectory(CREATURE_DATA_PATH);
         Directory.CreateDirectory(MAP_PATH);
         Directory.CreateDirectory(SCENE_PATH);
 
@@ -89,11 +89,11 @@ public class GameManager : NetworkBehaviour
         
             Debug.Log("Current scene set!");
 
-            await CloudDataHandler.DownloadImages(currentScene.entities.Select(e => e.entityName).ToList());
+            await CloudDataHandler.DownloadImages(currentScene.creatures.Select(e => e.creatureName).ToList());
         
             Debug.Log("Images downloaded!");
 
-            SceneHandler.LoadEntities();
+            SceneHandler.LoadCreatures();
         
             Debug.Log("Entities loaded!");
 

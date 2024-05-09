@@ -10,26 +10,26 @@ using TMPro;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class EntityCreatingPanel : MonoBehaviour
+public class CreatureCreatingHandler : MonoBehaviour
 {
-	[SerializeField] private Button _entityCreatingButton;
+	[SerializeField] private Button _openCreatingButton;
 	
-	[SerializeField] private TMP_InputField _entityNameInputField;
-	[SerializeField] private TMP_InputField _maxHpInputField;
+	[SerializeField] private TMP_InputField _creatureNameInputField;
+	[SerializeField] private TMP_InputField _maxHPInputField;
 	[SerializeField] private TMP_InputField _initiativeModifierInputField;
-	[SerializeField] private Toggle _isCharacterInput;
-	[SerializeField] private Image _loadedImage;
+	[SerializeField] private Toggle _isPlayerToggle;
+	[SerializeField] private Image _loadedCreatureImage;
 	
 	[SerializeField] private Button _selectImageButton;
-	[SerializeField] private Button _cancelEntityCreatingButton;
-	[SerializeField] private Button _saveEntityButton;
+	[SerializeField] private Button _cancelCreatureButton;
+	[SerializeField] private Button _saveCreatureButton;
 	
 	[SerializeField] private TextMeshProUGUI _consol;
 	[SerializeField] private GameObject _overWritePanel;
 	
 	private byte[] _image;
 	
-	private List<string> _exampleInputs = new List<string>()
+	private List<string> _exampleNames = new List<string>()
 	{
 		"Goblin",
 		"Orc",
@@ -49,41 +49,41 @@ public class EntityCreatingPanel : MonoBehaviour
 		FileBrowser.SetExcludedExtensions( ".lnk", ".tmp", ".zip", ".rar", ".exe" );
 		FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
 
-		_entityCreatingButton.onClick.AddListener(Init);
-		_saveEntityButton.onClick.AddListener(SaveEntity);
-		_cancelEntityCreatingButton.onClick.AddListener(ClosePanel);
+		_openCreatingButton.onClick.AddListener(Init);
+		_saveCreatureButton.onClick.AddListener(SaveCreature);
+		_cancelCreatureButton.onClick.AddListener(ClosePanel);
 		_selectImageButton.onClick.AddListener(SelectImage);
 	}
 
 	void Init() {
 		transform.GetChild(0).gameObject.SetActive(true);
-		_entityCreatingButton.gameObject.SetActive(false);
+		_openCreatingButton.gameObject.SetActive(false);
 		
-		int rand = Random.Range(0, _exampleInputs.Count);
+		int rand = Random.Range(0, _exampleNames.Count);
 
-		_entityNameInputField.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text =
-			_exampleInputs[rand];
+		_creatureNameInputField.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text =
+			_exampleNames[rand];
 		_consol.text = "";
 	}
 
 	void ClearPanel() {
-		_entityNameInputField.text = "";
-		_maxHpInputField.text = "";
+		_creatureNameInputField.text = "";
+		_maxHPInputField.text = "";
 		_initiativeModifierInputField.text = "";
-		_isCharacterInput.isOn = false;
-		_loadedImage.sprite = null;
+		_isPlayerToggle.isOn = false;
+		_loadedCreatureImage.sprite = null;
 	}
 
 	void ClosePanel() {
 		ClearPanel();
 		
 		transform.GetChild(0).gameObject.SetActive(false);
-		_entityCreatingButton.gameObject.SetActive(true);
+		_openCreatingButton.gameObject.SetActive(true);
 	}
 
 	void SelectImage() {
 		_consol.text = "";
-		_loadedImage.rectTransform.localScale = Vector3.one;
+		_loadedCreatureImage.rectTransform.localScale = Vector3.one;
 		
 		FileBrowser.ShowLoadDialog(
 			(path) => {
@@ -94,31 +94,31 @@ public class EntityCreatingPanel : MonoBehaviour
 
 				if (texture.width is not (280 or 560) || texture.height is not (280 or 560)) {
 					_consol.text = $"Bad image size! Should be 280x280 or 560x560, but it's {texture.width}x{texture.height}!";
-					_loadedImage.sprite = null;
+					_loadedCreatureImage.sprite = null;
 					return;
 				}
 
 				if (texture.width != texture.height) {
 					_consol.text = $"Image is not square shaped, it's {texture.width}x{texture.height}!";
-					_loadedImage.sprite = null;
+					_loadedCreatureImage.sprite = null;
 					return;
 				}
 				
-				_loadedImage.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
+				_loadedCreatureImage.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
 					Vector2.one / 2f, 200f);
 				
-				_loadedImage.rectTransform.localScale = Vector3.one * texture.width / 280;
+				_loadedCreatureImage.rectTransform.localScale = Vector3.one * texture.width / 280;
 			},
 			() => {
 				Debug.Log("Canceled");
 			}, 
 			FileBrowser.PickMode.Files, false, null, 
-			null, "Select image for entity", "Select");
+			null, "Select image for creature!", "Select");
 	}
 	
 
-	async void SaveEntity() {
-		if (!Regex.IsMatch(_entityNameInputField.text, @"^[a-zA-Z\s]{3,}$")) {
+	async void SaveCreature() {
+		if (!Regex.IsMatch(_creatureNameInputField.text, @"^[a-zA-Z\s]{3,}$")) {
 			_consol.text = "Bad name format. Name can't contain any number and must be at least 3 character long!";
 			return;
 		}
@@ -128,15 +128,15 @@ public class EntityCreatingPanel : MonoBehaviour
 			return;
 		}
 
-		EntityData data = new EntityData
+		CreatureData data = new CreatureData
 		{
-			entityName = _entityNameInputField.text,
-			maxHp = string.IsNullOrEmpty(_maxHpInputField.text) ? 0 : Convert.ToInt32(_maxHpInputField.text),
-			isCharacter = _isCharacterInput.isOn,
+			creatureName = _creatureNameInputField.text,
+			maxHp = string.IsNullOrEmpty(_maxHPInputField.text) ? 0 : Convert.ToInt32(_maxHPInputField.text),
+			isPlayer = _isPlayerToggle.isOn,
 			initiativeModifier = string.IsNullOrEmpty(_initiativeModifierInputField.text) ? 0 : Convert.ToInt32(_initiativeModifierInputField.text)
 		};
 		
-		string path = GameManager.ENTITY_DATA_PATH + $"/{data.entityName}.json";
+		string path = GameManager.CREATURE_DATA_PATH + $"/{data.creatureName}.json";
 		
 		if (File.Exists(path)) {
 			GameObject obj = Instantiate(_overWritePanel, transform);
@@ -154,7 +154,7 @@ public class EntityCreatingPanel : MonoBehaviour
 
 		Task.WaitAll(
 		File.WriteAllTextAsync(path, json), 
-			File.WriteAllBytesAsync(GameManager.ENTITY_IMG_PATH + $"/{data.entityName}.png", _image)
+			File.WriteAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{data.creatureName}.png", _image)
 		);
 		
 		Debug.Log("Successful save!");

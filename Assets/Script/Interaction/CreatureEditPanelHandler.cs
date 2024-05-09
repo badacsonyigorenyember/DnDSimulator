@@ -4,14 +4,14 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EntityEditPanelHandler : MonoBehaviour
+public class CreatureEditPanelHandler : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI hpText;
     public TMP_InputField currentHpModifyInput;
     public TMP_InputField maxHpModifyInput;
     public TMP_InputField initiativeInput;
-    public Entity entityInfo;
+    public Creature creatureInfo;
 
     public Button hpModifyButton;
     public Button statModifyButtin;
@@ -21,14 +21,14 @@ public class EntityEditPanelHandler : MonoBehaviour
         statModifyButtin.onClick.AddListener(StatModify);
     }
 
-    public void Init(Entity e) {
-        entityInfo = e;
-        nameText.text = e.name;
+    public void Init(Creature c) {
+        creatureInfo = c;
+        nameText.text = c.creatureName;
         SetHpText();
     }
 
     void SetHpText() {
-        hpText.text = entityInfo.currentHp + "/" + entityInfo.maxHp;
+        hpText.text = creatureInfo.currentHp + "/" + creatureInfo.maxHp;
     }
 
     void StatModify() {
@@ -36,7 +36,7 @@ public class EntityEditPanelHandler : MonoBehaviour
         if (stringValue == "") return;
 
         int intValue = int.Parse(stringValue);
-        entityInfo.maxHp += intValue;
+        creatureInfo.maxHp += intValue;
         
         //TODO initiative!!
     }
@@ -46,22 +46,22 @@ public class EntityEditPanelHandler : MonoBehaviour
         if (stringValue == "") return;
 
         int intValue = int.Parse(stringValue);
-        entityInfo.currentHp += intValue;
+        creatureInfo.currentHp += intValue;
 
-        if (entityInfo.currentHp <= 0) {
-            entityInfo.currentHp = 0;
+        if (creatureInfo.currentHp <= 0) {
+            creatureInfo.currentHp = 0;
 
-            if (!entityInfo.isCharacter) KillEntity();
+            if (!creatureInfo.isPlayer) KillCreature();
             return;
         }
         
         SetHpText();
     }
 
-    void KillEntity() {
+    void KillCreature() {
         //InitiativeHandler.Instance.RemoveEntityFromList(entityInfo);
-        entityInfo.GetComponent<NetworkObject>().Despawn();
-        entityInfo = null;
+        creatureInfo.GetComponent<NetworkObject>().Despawn();
+        creatureInfo = null;
         gameObject.SetActive(false);
     }
 }

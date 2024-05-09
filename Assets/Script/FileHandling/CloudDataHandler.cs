@@ -14,13 +14,13 @@ public static class CloudDataHandler
     public static async Task UploadImages() {
         List<Task> uploadTasks = new List<Task>();
         
-        var entityImages = Directory.GetFiles(GameManager.ENTITY_IMG_PATH);
+        string[] creatureImages = Directory.GetFiles(GameManager.CREATURE_IMG_PATH);
 
-        foreach (var entityImage in entityImages) {
-            string entityName = Path.GetFileNameWithoutExtension(entityImage);
+        foreach (var creatureImage in creatureImages) {
+            string creatureName = Path.GetFileNameWithoutExtension(creatureImage);
 
-            if (GameManager.Instance.entities.Any(e => e.entityName == entityName)) {
-                uploadTasks.Add(UploadImageAsync(entityName));
+            if (GameManager.Instance.creatures.Any(e => e.creatureName == creatureName)) {
+                uploadTasks.Add(UploadImageAsync(creatureName));
             }
         }
 
@@ -28,13 +28,13 @@ public static class CloudDataHandler
     }
 
     static async Task UploadImageAsync(string name) {
-        StorageReference uploadReference = storageReference.Child($"Images/Entities/{name}.png");
+        StorageReference uploadReference = storageReference.Child($"Images/Creatures/{name}.png");
         
         try {
             await uploadReference.GetDownloadUrlAsync();
         }
         catch {
-            byte[] bytes = await File.ReadAllBytesAsync(GameManager.ENTITY_IMG_PATH + $"/{name}.png");
+            byte[] bytes = await File.ReadAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{name}.png");
             
             var uploadTask = uploadReference.PutBytesAsync(bytes);
             await uploadTask;
@@ -45,14 +45,14 @@ public static class CloudDataHandler
         }
     }
     
-    public static async Task DownloadImages(List<string> entityNames) {
+    public static async Task DownloadImages(List<string> creatureNames) {
         List<Task> downloadTasks = new List<Task>();
 
-        Directory.CreateDirectory(GameManager.ENTITY_IMG_PATH);
+        Directory.CreateDirectory(GameManager.CREATURE_IMG_PATH);
 
-        foreach (var entity in entityNames) {
-            if (!File.Exists(GameManager.ENTITY_IMG_PATH + $"/{entity}.png")) {
-                downloadTasks.Add(DownloadImageAsync(entity));
+        foreach (var creature in creatureNames) {
+            if (!File.Exists(GameManager.CREATURE_IMG_PATH + $"/{creature}.png")) {
+                downloadTasks.Add(DownloadImageAsync(creature));
             }
         }
         
@@ -60,7 +60,7 @@ public static class CloudDataHandler
     }
 
     static async Task DownloadImageAsync(string name) {
-        StorageReference imageReference = storageReference.Child($"Images/Entities/{name}.png");
+        StorageReference imageReference = storageReference.Child($"Images/Creatures/{name}.png");
 
         var downloadTask = imageReference.GetBytesAsync(10_000_000);
         try {
@@ -71,7 +71,7 @@ public static class CloudDataHandler
             return;
         }
         
-        await File.WriteAllBytesAsync(GameManager.ENTITY_IMG_PATH + $"/{name}.png", downloadTask.Result);
+        await File.WriteAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{name}.png", downloadTask.Result);
     }
     
     public static async Task UploadMap(string name) {

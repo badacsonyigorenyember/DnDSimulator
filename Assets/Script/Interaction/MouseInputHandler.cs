@@ -7,17 +7,17 @@ using UnityEngine.UI;
 
 public class MouseInputHandler : MonoBehaviour
 {
-    public float cellSize = 1.101f;
+    /*public float cellSize = 1.101f;
     public Vector2 offset = new Vector2(-0.449f, 0.3f);
     
     public MouseHandlingState state;
     
     private Vector2 _mouseSnappedPosition;
-    private bool _canMoveEntities;
+    private bool _canMoveCreatures;
     private Vector2 _previousMouseSnappedPosition;
     private Vector2 _mousePositionDifference;
     
-    public List<GameObject> _entitiesToMove;
+    public List<GameObject> _creaturesToMove;
 
     //public GameObject mousecursor;
     //public GameObject selectionPrefab;
@@ -34,7 +34,7 @@ public class MouseInputHandler : MonoBehaviour
 
     private void Start() {
         _cam = Camera.main;
-        _entitiesToMove = new List<GameObject>();
+        _creaturesToMove = new List<GameObject>();
         validClick = true;
     }
 
@@ -44,7 +44,7 @@ public class MouseInputHandler : MonoBehaviour
         switch (state) {
             case MouseHandlingState.InitiativeSelect:
             case MouseHandlingState.CharacterMove:
-                GetEntityOnClick();
+                GetCreatureOnClick();
                 break;
             case MouseHandlingState.WallEdit:
                 GetWallPositionOnClick();
@@ -65,47 +65,47 @@ public class MouseInputHandler : MonoBehaviour
 
     
 
-    #region EntityHandle
+    #region CreatureHandle
     
-    void GetEntityOnClick() {
+    void GetCreatureOnClick() {
         if(!validClick) return;
         
         if (Input.GetMouseButtonDown(0)) {
             var hit = Physics2D.Raycast(GetMouseWorldPosition(), Vector2.zero);
             
             if (hit.collider == null) {
-                ClearEntitisToMove();
+                ClearCreaturesToMove();
                 return;
             }
             
             GameObject hitObj = hit.collider.gameObject;
 
-            if (hitObj.layer == LayerMask.NameToLayer("Entity")) {
+            if (hitObj.layer == LayerMask.NameToLayer("Creature")) {
                 if (state == MouseHandlingState.InitiativeSelect) {
-                    InitiativeHandler.Instance.AddEntity(hitObj.GetComponent<Entity>());
+                    InitiativeHandler.Instance.AddCreature(hitObj.GetComponent<Creature>());
                     state = MouseHandlingState.CharacterMove;
                     return;
                 }
                 if (Input.GetKey(KeyCode.LeftShift)) {
-                    AddEntityToEntitiesToMove(hitObj);
+                    AddCreatureToCreaturesToMove(hitObj);
                 }
                 else {
-                    if (_entitiesToMove.Count > 0) {
-                        if (!_entitiesToMove.Contains(hitObj)) {
-                            ClearEntitisToMove();
+                    if (_creaturesToMove.Count > 0) {
+                        if (!_creaturesToMove.Contains(hitObj)) {
+                            ClearCreaturesToMove();
                             
                         }
                     }
                     
-                    AddEntityToEntitiesToMove(hitObj);
-                    _canMoveEntities = true;
+                    AddCreatureToCreaturesToMove(hitObj);
+                    _canMoveCreatures = true;
                     _previousMouseSnappedPosition = _mouseSnappedPosition;
                 }
             }
             else {
-                ClearEntitisToMove();
-                _canMoveEntities = false;
-                EntityInteractionHandler.Instance.CancelEntityPanel();
+                ClearCreaturesToMove();
+                _canMoveCreatures = false;
+                CreatureInteractionHandler.Instance.CancelCreaturePanel();
 
                 if (hitObj.layer == LayerMask.NameToLayer("Door")) {
                     hitObj.transform.parent.GetComponent<Door>().OpenCloseClientRpc();
@@ -116,51 +116,51 @@ public class MouseInputHandler : MonoBehaviour
             
         }
 
-        if (_canMoveEntities && Input.GetMouseButton(0)) {
-            MoveEntities();
+        if (_canMoveCreatures && Input.GetMouseButton(0)) {
+            MoveCreatures();
         }
         
-        if (_canMoveEntities && Input.GetMouseButtonUp(0)) {
-            _canMoveEntities = false;
+        if (_canMoveCreatures && Input.GetMouseButtonUp(0)) {
+            _canMoveCreatures = false;
         }
 
         if (Input.GetMouseButtonDown(1)) {
             var hit = Physics2D.Raycast(GetMouseWorldPosition(), Vector2.zero);
 
             if (hit.collider == null) {
-                EntityInteractionHandler.Instance.CancelEntityPanel();
+                CreatureInteractionHandler.Instance.CancelCreaturePanel();
                 return;
             }
 
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Entity")) {
-                EntityInteractionHandler.Instance.OpenEntityPanel(hit.collider.gameObject.GetComponent<Entity>());
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Creature")) {
+                CreatureInteractionHandler.Instance.OpenCreaturePanel(hit.collider.gameObject.GetComponent<Creature>());
             }
             else {
-                EntityInteractionHandler.Instance.CancelEntityPanel();
+                CreatureInteractionHandler.Instance.CancelCreaturePanel();
             }
         }
     }
 
-    void AddEntityToEntitiesToMove(GameObject entity) {
-        if (!_entitiesToMove.Contains(entity)) {
-            _entitiesToMove.Add(entity);
-            //Instantiate(selectionPrefab, entity.transform);
+    void AddCreatureToCreaturesToMove(GameObject creature) {
+        if (!_creaturesToMove.Contains(creature)) {
+            _creaturesToMove.Add(creature);
+            //Instantiate(selectionPrefab, creature.transform);
         }
     }
 
-    void ClearEntitisToMove() {
-        foreach (var entity in _entitiesToMove) {
-            foreach (Transform child in entity.transform) {
+    void ClearCreaturesToMove() {
+        foreach (var creature in _creaturesToMove) {
+            foreach (Transform child in creature.transform) {
                 //if(child.name == selectionPrefab.name + "(Clone)")
                     //Destroy(child.gameObject);
             }
         }
         
-        _entitiesToMove.Clear();
+        _creaturesToMove.Clear();
     }
 
-    void MoveEntities() {
-        if (!_canMoveEntities) return;
+    void MoveCreatures() {
+        if (!_canMoveCreatures) return;
 
         _mousePositionDifference = _mouseSnappedPosition - _previousMouseSnappedPosition;
 
@@ -169,10 +169,10 @@ public class MouseInputHandler : MonoBehaviour
         _previousMouseSnappedPosition = _mouseSnappedPosition;
 
 
-        foreach (var entity in _entitiesToMove) {
-            Vector2 entityPosition = entity.transform.position;
-            entityPosition += _mousePositionDifference;
-            entity.transform.position = entityPosition;
+        foreach (var creature in _creaturesToMove) {
+            Vector2 creaturePosition = creature.transform.position;
+            creaturePosition += _mousePositionDifference;
+            creature.transform.position = creaturePosition;
             
         }
         
@@ -233,5 +233,5 @@ public enum MouseHandlingState
 {
     CharacterMove,
     WallEdit,
-    InitiativeSelect
+    InitiativeSelect*/
 }

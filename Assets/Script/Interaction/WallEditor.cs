@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -50,7 +50,7 @@ public class WallEditor : NetworkBehaviour
         
         FogOfWar.Instance.RefreshClientRpc();
     }
-*/
+#1#
     private void FixedUpdate() {
         MoveDoor();
     }
@@ -243,4 +243,4 @@ public class WallEditor : NetworkBehaviour
 
 
     
-}
+}*/

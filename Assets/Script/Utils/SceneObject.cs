@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public class SceneObject
 {
     public string name;
-    public List<EntityDto> entities;
+    public List<CreatureDto> creatures;
 
     public SceneObject(string name) {
         this.name = name;
-        entities = new List<EntityDto>();
+        creatures = new List<CreatureDto>();
     }
 }
