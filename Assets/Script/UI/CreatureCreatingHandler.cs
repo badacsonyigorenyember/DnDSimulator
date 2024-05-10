@@ -72,6 +72,7 @@ public class CreatureCreatingHandler : MonoBehaviour
 		_initiativeModifierInputField.text = "";
 		_isPlayerToggle.isOn = false;
 		_loadedCreatureImage.sprite = null;
+		_image = null;
 	}
 
 	void ClosePanel() {
@@ -160,6 +161,8 @@ public class CreatureCreatingHandler : MonoBehaviour
 		Debug.Log("Successful save!");
 		
 		ClearPanel();
+		
+		InfoPanelHandler.RefreshAction.Invoke();
 
 	}
 
