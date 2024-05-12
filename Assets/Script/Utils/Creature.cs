@@ -15,6 +15,20 @@ public class Creature : NetworkBehaviour
     private void Start() {
         gameObject.AddComponent<CircleCollider2D>();
     }
+    
+    public void Init(CreatureData data) {
+        this.creatureName = data.creatureName;
+        this.currentHp = data.maxHp;
+        this.maxHp = data.maxHp;
+        this.isPlayer = data.isPlayer;
+        this.position = transform.position;
+        this.initiativeModifier = data.initiativeModifier;
+    }
+
+    public void SetImage(Texture2D texture) {
+        GetComponent<SpriteRenderer>().sprite = Sprite.Create(
+            texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f, 200f);
+    }
 
     public override void OnNetworkSpawn() {
         base.OnNetworkSpawn();
@@ -27,4 +41,6 @@ public class Creature : NetworkBehaviour
 
         GameManager.Instance.creatures.Remove(this);
     }
+
+    
 }

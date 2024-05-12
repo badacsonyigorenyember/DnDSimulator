@@ -103,8 +103,6 @@ public class InfoPanelHandler : NetworkBehaviour
             yield return null;
         }
     }
-    
-    
 
     enum SelectedList
     {
