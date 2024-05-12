@@ -22,7 +22,7 @@ public class CreatureCreatingHandler : MonoBehaviour
 	
 	[SerializeField] private Button _selectImageButton;
 	[SerializeField] private Button _cancelCreatureButton;
-	[SerializeField] private Button _saveCreatureButton;
+	[SerializeField] private Button _CreateCreatureButton;
 	
 	[SerializeField] private TextMeshProUGUI _consol;
 	[SerializeField] private GameObject _overWritePanel;
@@ -54,7 +54,7 @@ public class CreatureCreatingHandler : MonoBehaviour
 				Init();
 			}
 		});
-		_saveCreatureButton.onClick.AddListener(SaveCreature);
+		_CreateCreatureButton.onClick.AddListener(SaveCreature);
 		_cancelCreatureButton.onClick.AddListener(ClosePanel);
 		_selectImageButton.onClick.AddListener(SelectImage);
 	}
