@@ -8,6 +8,11 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public string content;
 
     private Coroutine _delay;
+
+    public void Init(string header, string content = "") {
+        this.header = header;
+        this.content = content;
+    }
     
     public void OnPointerEnter(PointerEventData eventData) {
         _delay = StartCoroutine(Call());

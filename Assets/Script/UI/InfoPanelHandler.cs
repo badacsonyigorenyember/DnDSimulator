@@ -9,15 +9,14 @@ public class InfoPanelHandler : NetworkBehaviour
 {
     [SerializeField] private Button _sceneListButton;
     [SerializeField] private Button _creatureListButton;
-    
+    [SerializeField] private CreateButton _createButton;
+
     [SerializeField] private GameObject _infoPanel;
     [SerializeField] private Transform _container;
     [SerializeField] private float _panelMovementTime;
 
     [SerializeField] private GameObject _creatureListElementPrefab;
     [SerializeField] private GameObject _sceneListElementPrefab;
-    
-    [SerializeField] private GameObject _listElementNameTextBoxPrefab;
 
     private bool _isOpen;
     private SelectedList _selectedList;
@@ -55,6 +54,8 @@ public class InfoPanelHandler : NetworkBehaviour
 
         string[] files;
         _selectedList = listType;
+        _createButton.SetType(listType);
+        _createButton.GetComponent<TooltipTrigger>().Init("Create " + _selectedList.ToString().ToLower());
 
         switch (listType) {
             case SelectedList.Creature:
@@ -84,7 +85,8 @@ public class InfoPanelHandler : NetworkBehaviour
     
     void ClearList() {
         foreach (Transform child in _container) {
-            Destroy(child.gameObject);
+            if(child.GetComponent<CreatureListElement>() != null)
+                Destroy(child.gameObject);
         }
     }
 
@@ -104,10 +106,12 @@ public class InfoPanelHandler : NetworkBehaviour
         }
     }
 
-    enum SelectedList
-    {
-        NotSelected,
-        Scene,
-        Creature
-    }
+    
+}
+
+public enum SelectedList
+{
+    NotSelected,
+    Scene,
+    Creature
 }

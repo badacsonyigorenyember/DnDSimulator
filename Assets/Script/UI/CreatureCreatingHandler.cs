@@ -28,7 +28,7 @@ public class CreatureCreatingHandler : MonoBehaviour
 	[SerializeField] private GameObject _overWritePanel;
 	
 	private byte[] _image;
-	
+
 	private List<string> _exampleNames = new List<string>()
 	{
 		"Goblin",
@@ -47,9 +47,13 @@ public class CreatureCreatingHandler : MonoBehaviour
 		FileBrowser.SetFilters( true, new FileBrowser.Filter( "Images", ".png" ));
 		FileBrowser.SetDefaultFilter( ".png" );
 		FileBrowser.SetExcludedExtensions( ".lnk", ".tmp", ".zip", ".rar", ".exe" );
-		FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
+		FileBrowser.AddQuickLink( "Users", "C:\\Users");
 
-		_openCreatingButton.onClick.AddListener(Init);
+		_openCreatingButton.onClick.AddListener(() => {
+			if (_openCreatingButton.GetComponent<CreateButton>().selected == SelectedList.Creature) {
+				Init();
+			}
+		});
 		_saveCreatureButton.onClick.AddListener(SaveCreature);
 		_cancelCreatureButton.onClick.AddListener(ClosePanel);
 		_selectImageButton.onClick.AddListener(SelectImage);
@@ -57,7 +61,7 @@ public class CreatureCreatingHandler : MonoBehaviour
 
 	void Init() {
 		transform.GetChild(0).gameObject.SetActive(true);
-		_openCreatingButton.gameObject.SetActive(false);
+		//_openCreatingButton.gameObject.SetActive(false);
 		
 		int rand = Random.Range(0, _exampleNames.Count);
 
@@ -114,7 +118,7 @@ public class CreatureCreatingHandler : MonoBehaviour
 				Debug.Log("Canceled");
 			}, 
 			FileBrowser.PickMode.Files, false, null, 
-			null, "Select image for creature!", "Select");
+			null, "Select image for creature!");
 	}
 	
 
