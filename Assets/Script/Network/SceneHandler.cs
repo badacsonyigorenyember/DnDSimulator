@@ -27,7 +27,7 @@ public class SceneHandler : MonoBehaviour
     private void Update() {
         timer += Time.deltaTime;
 
-        if (timer >= autosaveInSeconds || Input.GetKeyDown(KeyCode.S)) {
+        if (timer >= autosaveInSeconds) {
             timer = 0;
             SaveScene();
         }

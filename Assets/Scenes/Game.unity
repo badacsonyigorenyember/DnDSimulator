@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -6979350, y: 0}
+  m_AnchoredPosition: {x: -7010400, y: 0}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &21967576
@@ -3320,7 +3320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &781020247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7260,6 +7260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _creaturePrefab: {fileID: 2232566447712330940, guid: 7dca7f469ac9a43ac96a1e773fee2862, type: 3}
+  _creatureContainer: {fileID: 0}
 --- !u!1 &1826486199
 GameObject:
   m_ObjectHideFlags: 0
@@ -7710,6 +7711,7 @@ GameObject:
   - component: {fileID: 2004787805}
   - component: {fileID: 2004787804}
   - component: {fileID: 2004787803}
+  - component: {fileID: 2004787806}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7791,6 +7793,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2004787806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004787802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ba9136db05f446698bf37b862abf666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementSpeed: 10
+  _zoomSpeed: 10
+  _minZoomScale: 1
+  _maxZoomScale: 20
 --- !u!1 &2031017121
 GameObject:
   m_ObjectHideFlags: 0
