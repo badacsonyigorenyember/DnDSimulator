@@ -12,7 +12,7 @@ public class OverWriteConfirm : MonoBehaviour
 
     private void Start() {
         _yes.onClick.AddListener(() => _tcs.SetResult(true));
-        _no.onClick.AddListener(() => _tcs.SetResult(true));
+        _no.onClick.AddListener(() => _tcs.SetResult(false));
     }
 
     public Task<bool> GetResult() {

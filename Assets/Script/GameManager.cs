@@ -13,16 +13,13 @@ public class GameManager : NetworkBehaviour
     public Button startStopButton;
 
     public List<Creature> creatures = new();
-    public GameObject map;
-
     public bool isPlaying;
-    public bool isSceneLoaded;
-
     public SceneObject currentScene;
 
     public static GameManager Instance;
 
     public GameObject waitingScreenObj;
+    
     public static string CREATURE_IMG_PATH;
     public static string CREATURE_DATA_PATH;
     public static string MAP_PATH;
@@ -47,6 +44,8 @@ public class GameManager : NetworkBehaviour
             waitingScreenObj.transform.parent.gameObject.SetActive(true);
             return;
         }
+
+        currentScene = null;
 
         startStopButton.onClick.AddListener(StartStopGame);
     }
@@ -93,7 +92,7 @@ public class GameManager : NetworkBehaviour
         
             Debug.Log("Images downloaded!");
 
-            SceneHandler.LoadCreatures();
+            /*SceneHandler.LoadCreatures();*/
         
             Debug.Log("Entities loaded!");
 
@@ -101,7 +100,7 @@ public class GameManager : NetworkBehaviour
             
             Debug.Log("Map downloaded!");
             
-            SceneHandler.LoadMap();
+            /*SceneHandler.LoadMap();*/
             
             Debug.Log("Map loaded!");
         }
@@ -112,7 +111,7 @@ public class GameManager : NetworkBehaviour
 
     void OnClientConnected(ulong clientId) {
         if (isPlaying) {
-            SetUpClient(currentScene.name, isPlaying);
+            //SetUpClient(currentScene.name, isPlaying);
         }
     }
 
@@ -121,12 +120,6 @@ public class GameManager : NetworkBehaviour
 
         if (IsServer) {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
-        }
-    }
-
-    public override void OnNetworkSpawn() {
-        if (IsServer) {
-            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         }
     }
 }

@@ -9,7 +9,6 @@ public class Creature : NetworkBehaviour
     public int currentHp;
     public int maxHp;
     public bool isPlayer;
-    public Vector2 position;
     public int initiativeModifier;
 
     private void Start() {
@@ -21,7 +20,6 @@ public class Creature : NetworkBehaviour
         this.currentHp = data.maxHp;
         this.maxHp = data.maxHp;
         this.isPlayer = data.isPlayer;
-        this.position = transform.position;
         this.initiativeModifier = data.initiativeModifier;
     }
 

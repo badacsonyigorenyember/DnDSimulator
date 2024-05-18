@@ -1,34 +1,134 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using TMPro;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class SceneHandler : NetworkBehaviour
+public class SceneHandler : MonoBehaviour
 {
-    [SerializeField] private Button _saveSceneButton;
-    [SerializeField] private Button _createSceneButton;
-    [SerializeField] private TMP_InputField _sceneNameInputField;
-    [SerializeField] private TextMeshProUGUI _sceneNameTextField;
-
-    public GameObject sceneListElementPrefab;
-    public GameObject sceneListContainer;
-    public GameObject sceneContainer;
+    [SerializeField] private Transform _creatureContainer;
     
-    private List<GameObject> sceneListElemets = new();
+    [SerializeField] private GameObject _creaturePrefab;
+    [SerializeField] private GameObject sceneObject;
+    
+    public float autosaveInSeconds;
 
-    private void Start() {
-        _saveSceneButton.onClick.AddListener(SaveScene);
-        _createSceneButton.onClick.AddListener(CreateNewScene);
-        _sceneNameTextField.text = "";
-        GameManager.Instance.currentScene = null;
-        
-        LoadSavedScenes();
+    private float timer;
+    
+    public static SceneHandler Instance;
+
+    private SceneObject asd;
+
+    private void Awake() {
+        Instance = this;
     }
 
-    void CreateNewScene() {
+    private void Update() {
+        timer += Time.deltaTime;
+
+        if (timer >= autosaveInSeconds || Input.GetKeyDown(KeyCode.S)) {
+            timer = 0;
+            SaveScene();
+        }
+    }
+
+    public async void LoadScene(string sceneName) {
+        if (GameManager.Instance.currentScene != null && GameManager.Instance.currentScene.name == sceneName) return;
+        
+        SaveScene();
+        ClearScene();
+        
+        string path = GameManager.SCENE_PATH + $"/{sceneName}.json";
+        if (File.Exists(path)) {
+            string json = await File.ReadAllTextAsync(path);
+            SceneObject scene = JsonUtility.FromJson<SceneObject>(json);
+            GameManager.Instance.currentScene = scene;
+
+            LoadMap(sceneName);
+
+            List<Task> tasks = new List<Task>();
+
+            for(int i = 0; i < scene.creatures.Count; i++) {
+                CreateCreature();
+                tasks.Add(LoadCreature(GameManager.Instance.creatures[i], scene.creatures[i]));
+            }
+
+            await Task.WhenAll(tasks);
+            Debug.Log("Scene loaded!");
+        }
+        else {
+            Debug.LogError($"No such scene at {path}!");
+        }
+    }
+    
+    public void LoadMap(string sceneName) {
+        string imgPath = GameManager.MAP_PATH + $"/{sceneName}.png";
+        
+        if (File.Exists(imgPath)) {
+            byte[] imgBytes = File.ReadAllBytes(imgPath);
+            Texture2D texture = new Texture2D(1, 1);
+            texture.LoadImage(imgBytes);
+
+            sceneObject.GetComponent<SpriteRenderer>().sprite 
+                = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f, 100f);
+        }
+        else {
+            Debug.LogError($"No such image at {imgPath}");
+        }
+    }
+
+    void CreateCreature() {
+        GameObject obj = Instantiate(_creaturePrefab, _creatureContainer);
+        
+        obj.GetComponent<NetworkObject>().Spawn();
+    }
+
+    public async Task LoadCreature(Creature creature,CreatureDto creatureDto) {
+        CreatureDtoHandler.CreatureDtoToCreature(creature, creatureDto);
+
+        creature.transform.position = creatureDto.position;
+
+        byte[] bytes = await File.ReadAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{creatureDto.creatureName}.png");
+        Texture2D texture = new Texture2D(1, 1);
+        texture.LoadImage(bytes);
+
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), 
+            Vector2.one * 0.5f, 200f);
+        creature.GetComponent<SpriteRenderer>().sprite = sprite;
+    }
+
+    public async void SaveScene() {
+        if (GameManager.Instance.currentScene == null) {
+            Debug.LogError("NULL scene at save!");
+            return;
+        }
+        
+        SceneObject scene = GameManager.Instance.currentScene;
+
+        foreach (var creature in GameManager.Instance.creatures) {
+            scene.creatures.Add(CreatureDtoHandler.CreatureToCreatureDto(creature));    
+        }
+
+        string json = JsonUtility.ToJson(scene);
+        await File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{scene.name}.json", json);
+        
+        Debug.Log("Saved!");
+    }
+
+    void ClearScene() {
+        sceneObject.GetComponent<SpriteRenderer>().sprite = null;
+
+        foreach (Transform child in _creatureContainer) {
+            Destroy(child.gameObject);
+        }
+
+        GameManager.Instance.currentScene = null;
+    }
+    
+    
+
+    /*void CreateNewScene() {
         ClearScene();
         
         if(GameManager.Instance.currentScene != null)
@@ -68,7 +168,7 @@ public class SceneHandler : NetworkBehaviour
     }
     
 
-    void LoadScene(string name) {
+    void LasdoadScene(string name) {
         if(!IsServer)
             return;
         
@@ -163,27 +263,9 @@ public class SceneHandler : NetworkBehaviour
             }
         }
     }
+    */
 
-    public static void LoadMap() {
-        GameObject map = GameManager.Instance.map;
-
-        string imgPath = GameManager.MAP_PATH + $"/{GameManager.Instance.currentScene.name}.png";
-        
-        Debug.Log(imgPath);
-        if (File.Exists(imgPath)) {
-            byte[] imgBytes = File.ReadAllBytes(imgPath);
-            Texture2D texture = new Texture2D(1, 1);
-            texture.LoadImage(imgBytes);
-
-            map.GetComponent<SpriteRenderer>().sprite 
-                = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f, 100f);
-        }
-        else {
-            Debug.LogError("No Image!");
-        }
-        
-        
-    }
+    
     
     
     

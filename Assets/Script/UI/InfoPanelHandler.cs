@@ -34,6 +34,7 @@ public class InfoPanelHandler : NetworkBehaviour
 
         RefreshAction += () => {
             ListElements(_selectedList, false);
+            Debug.Log("Refreshed!");
         };
     }
 
@@ -72,12 +73,15 @@ public class InfoPanelHandler : NetworkBehaviour
                 }
                 break;
             case SelectedList.Scene:
-                files = Directory.GetFiles(GameManager.CREATURE_IMG_PATH);
+                files = Directory.GetFiles(GameManager.SCENE_PATH);
         
                 foreach (var file in files) {
                     if(Path.GetExtension(file) != ".json") continue;
+
+                    string sceneName = Path.GetFileNameWithoutExtension(file);
                     
-                    
+                    GameObject obj = Instantiate(_sceneListElementPrefab, _container);
+                    obj.GetComponent<SceneListElement>().SetCreature(sceneName);
                 }
                 break;
         }

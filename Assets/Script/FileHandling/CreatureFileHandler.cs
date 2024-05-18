@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,5 +45,7 @@ public class CreatureFileHandler : MonoBehaviour
 
         creature.Init(creatureDataTask.Result);
         creature.SetImage(creatureImageTask.Result);
+
+        creatureObj.GetComponent<NetworkObject>().Spawn();
     }
 }

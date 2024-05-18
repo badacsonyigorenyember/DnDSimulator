@@ -2,7 +2,7 @@ public static class CreatureDtoHandler
 {
     public static CreatureDto CreatureToCreatureDto(Creature creature) {
         CreatureDto cdto = new CreatureDto(creature.creatureName, creature.currentHp, 
-            creature.maxHp, creature.isPlayer, creature.position, creature.initiativeModifier);
+            creature.maxHp, creature.isPlayer, creature.transform.position, creature.initiativeModifier);
 
         return cdto;
     } 
@@ -12,7 +12,8 @@ public static class CreatureDtoHandler
         creature.currentHp = creatureDto.currentHp;
         creature.maxHp = creatureDto.maxHp;
         creature.isPlayer = creatureDto.isCharacter;
-        creature.position = creatureDto.position;
         creature.initiativeModifier = creatureDto.initiativeModifier;
+        
+        creature.gameObject.name = creatureDto.creatureName;
     } 
 }

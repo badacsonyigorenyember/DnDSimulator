@@ -22,9 +22,9 @@ public class CreatureCreatingHandler : MonoBehaviour
 	
 	[SerializeField] private Button _selectImageButton;
 	[SerializeField] private Button _cancelCreatureButton;
-	[SerializeField] private Button _CreateCreatureButton;
+	[SerializeField] private Button _createCreatureButton;
 	
-	[SerializeField] private TextMeshProUGUI _consol;
+	[SerializeField] private TextMeshProUGUI _console;
 	[SerializeField] private GameObject _overWritePanel;
 	
 	private byte[] _image;
@@ -53,41 +53,29 @@ public class CreatureCreatingHandler : MonoBehaviour
 			if (_openCreatingButton.GetComponent<CreateButton>().selected == SelectedList.Creature) {
 				Init();
 			}
+			else {
+				ClosePanel();
+			}
 		});
-		_CreateCreatureButton.onClick.AddListener(SaveCreature);
+		_createCreatureButton.onClick.AddListener(CreateCreature);
 		_cancelCreatureButton.onClick.AddListener(ClosePanel);
 		_selectImageButton.onClick.AddListener(SelectImage);
 	}
 
 	void Init() {
 		transform.GetChild(0).gameObject.SetActive(true);
-		//_openCreatingButton.gameObject.SetActive(false);
-		
+
 		int rand = Random.Range(0, _exampleNames.Count);
 
 		_creatureNameInputField.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text =
 			_exampleNames[rand];
-		_consol.text = "";
-	}
+		_console.text = "";
 
-	void ClearPanel() {
-		_creatureNameInputField.text = "";
-		_maxHPInputField.text = "";
-		_initiativeModifierInputField.text = "";
-		_isPlayerToggle.isOn = false;
 		_loadedCreatureImage.sprite = null;
-		_image = null;
-	}
-
-	void ClosePanel() {
-		ClearPanel();
-		
-		transform.GetChild(0).gameObject.SetActive(false);
-		_openCreatingButton.gameObject.SetActive(true);
 	}
 
 	void SelectImage() {
-		_consol.text = "";
+		_console.text = "";
 		_loadedCreatureImage.rectTransform.localScale = Vector3.one;
 		
 		FileBrowser.ShowLoadDialog(
@@ -98,13 +86,13 @@ public class CreatureCreatingHandler : MonoBehaviour
 				texture.LoadImage(_image);
 
 				if (texture.width is not (280 or 560) || texture.height is not (280 or 560)) {
-					_consol.text = $"Bad image size! Should be 280x280 or 560x560, but it's {texture.width}x{texture.height}!";
+					_console.text = $"Bad image size! Should be 280x280 or 560x560, but it's {texture.width}x{texture.height}!";
 					_loadedCreatureImage.sprite = null;
 					return;
 				}
 
 				if (texture.width != texture.height) {
-					_consol.text = $"Image is not square shaped, it's {texture.width}x{texture.height}!";
+					_console.text = $"Image is not square shaped, it's {texture.width}x{texture.height}!";
 					_loadedCreatureImage.sprite = null;
 					return;
 				}
@@ -121,15 +109,14 @@ public class CreatureCreatingHandler : MonoBehaviour
 			null, "Select image for creature!");
 	}
 	
-
-	async void SaveCreature() {
+	async void CreateCreature() {
 		if (!Regex.IsMatch(_creatureNameInputField.text, @"^[a-zA-Z\s]{3,}$")) {
-			_consol.text = "Bad name format. Name can't contain any number and must be at least 3 character long!";
+			_console.text = "Bad name format. Name can't contain any number and must be at least 3 character long!";
 			return;
 		}
 
 		if (_image == null) {
-			_consol.text = "Please select an image!";
+			_console.text = "Please select an image!";
 			return;
 		}
 
@@ -165,11 +152,22 @@ public class CreatureCreatingHandler : MonoBehaviour
 		Debug.Log("Successful save!");
 		
 		ClearPanel();
-		
 		InfoPanelHandler.RefreshAction.Invoke();
 
 	}
 
+	void ClearPanel() {
+		_creatureNameInputField.text = "";
+		_maxHPInputField.text = "";
+		_initiativeModifierInputField.text = "";
+		_isPlayerToggle.isOn = false;
+		_loadedCreatureImage.sprite = null;
+		_image = null;
+	}
 
-
+	void ClosePanel() {
+		ClearPanel();
+		
+		transform.GetChild(0).gameObject.SetActive(false);
+	}
 }
