@@ -92,15 +92,17 @@ public class GameManager : NetworkBehaviour
         
             Debug.Log("Images downloaded!");
 
-            /*SceneHandler.LoadCreatures();*/
+            for (int i = 0; i < creatures.Count; i++) {
+                SceneHandler.Instance.LoadCreature(creatures[i], currentScene.creatures[i]);
+            }
         
-            Debug.Log("Entities loaded!");
+            Debug.Log("Creatures loaded!");
 
             await CloudDataHandler.DownloadMap(currentScene.name);
             
             Debug.Log("Map downloaded!");
             
-            /*SceneHandler.LoadMap();*/
+            SceneHandler.Instance.LoadMap(currentScene.name);
             
             Debug.Log("Map loaded!");
         }

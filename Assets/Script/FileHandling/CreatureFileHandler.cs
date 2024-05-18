@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class CreatureFileHandler : MonoBehaviour
 {
     [SerializeField] private GameObject _creaturePrefab;
+    
+    [SerializeField] private Transform _creatureContainer;
 
     public static CreatureFileHandler Instance;
 
@@ -47,5 +49,11 @@ public class CreatureFileHandler : MonoBehaviour
         creature.SetImage(creatureImageTask.Result);
 
         creatureObj.GetComponent<NetworkObject>().Spawn();
+
+        if (!_creatureContainer.GetComponent<NetworkObject>().IsSpawned) {
+            _creatureContainer.GetComponent<NetworkObject>().Spawn();
+        }
+
+        creatureObj.GetComponent<NetworkObject>().TrySetParent(_creatureContainer);
     }
 }

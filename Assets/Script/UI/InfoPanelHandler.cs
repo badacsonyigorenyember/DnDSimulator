@@ -89,7 +89,7 @@ public class InfoPanelHandler : NetworkBehaviour
     
     void ClearList() {
         foreach (Transform child in _container) {
-            if(child.GetComponent<CreatureListElement>() != null)
+            if(child.GetComponent<CreatureListElement>() != null || child.GetComponent<SceneListElement>() != null)
                 Destroy(child.gameObject);
         }
     }
