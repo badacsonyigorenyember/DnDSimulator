@@ -83,7 +83,7 @@ public class DragCreatureListElementHandler : MonoBehaviour
 
         if (validRelease && instantiate) {
             Vector3 position = _cam.ScreenToWorldPoint(Input.mousePosition);
-            position.z = 90;
+            position.z = 0;
 
             await CreatureFileHandler.Instance.SpawnCreature(_selectedCreature.name, position);
         }

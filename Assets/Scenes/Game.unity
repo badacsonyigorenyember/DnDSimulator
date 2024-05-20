@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -7010400, y: 0}
+  m_AnchoredPosition: {x: -7578270, y: 0}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &21967576
@@ -1522,6 +1522,7 @@ Transform:
   - {fileID: 530574607}
   - {fileID: 1854890000}
   - {fileID: 1785853984}
+  - {fileID: 1679043300}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &376170682
@@ -5051,7 +5052,7 @@ GameObject:
   - component: {fileID: 1207603741}
   - component: {fileID: 1207603740}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: WaitingCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6416,6 +6417,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 376170681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1679043299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1679043300}
+  - component: {fileID: 1679043301}
+  m_Layer: 0
+  m_Name: MoveCreatureHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1679043300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679043299}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 376170681}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1679043301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679043299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08bd7a43d6694c48bbb0be62487e3f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cam: {fileID: 2004787804}
+  movementSpeed: 20
 --- !u!1 &1687631557
 GameObject:
   m_ObjectHideFlags: 0
@@ -7260,7 +7307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _creaturePrefab: {fileID: 2232566447712330940, guid: 7dca7f469ac9a43ac96a1e773fee2862, type: 3}
-  _creatureContainer: {fileID: 0}
+  _creatureContainer: {fileID: 104144859}
 --- !u!1 &1826486199
 GameObject:
   m_ObjectHideFlags: 0
@@ -8842,7 +8889,7 @@ Transform:
   m_GameObject: {fileID: 1539517414163062185}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
