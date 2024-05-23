@@ -48,6 +48,8 @@ public class GameManager : NetworkBehaviour
         currentScene = null;
 
         startStopButton.onClick.AddListener(StartStopGame);
+        
+        //SceneHandler.Instance.LoadScene("Ruins");
     }
 
     async void StartStopGame() {
@@ -60,14 +62,16 @@ public class GameManager : NetworkBehaviour
 
         List<Task> tasks = new();
 
+        await SceneHandler.Instance.SaveScene();
+        
         if (isPlaying) {
-             tasks.Add(CloudDataHandler.UploadImages());
-             tasks.Add(CloudDataHandler.UploadMap(currentScene.name));
-             tasks.Add(CloudDataHandler.UploadSceneData(currentScene.name));
+            tasks.Add(CloudDataHandler.UploadImages());
+            tasks.Add(CloudDataHandler.UploadMap(currentScene.name));
+            tasks.Add(CloudDataHandler.UploadSceneData(currentScene.name));
              
-             await Task.WhenAll(tasks);
-             
-             Debug.Log("Finished uploading!");
+            await Task.WhenAll(tasks);
+            
+            Debug.Log("Finished uploading!");
         }
         
         StartGameClientRpc(isPlaying, currentScene.name);
@@ -92,6 +96,8 @@ public class GameManager : NetworkBehaviour
         
             Debug.Log("Images downloaded!");
 
+            Debug.Log(creatures.Count + " " + currentScene.creatures.Count);
+            
             for (int i = 0; i < creatures.Count; i++) {
                 SceneHandler.Instance.LoadCreature(creatures[i], currentScene.creatures[i]);
             }

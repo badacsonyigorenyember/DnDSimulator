@@ -111,15 +111,15 @@ public static class CloudDataHandler
         StorageReference uploadReference = storageReference.Child($"Data/Scenes/{name}.json");
 
         try {
-            await uploadReference.GetDownloadUrlAsync();
-        }
-        catch {
             var uploadTask = uploadReference.PutFileAsync(GameManager.SCENE_PATH + $"/{name}.json");
             await uploadTask;
 
             if (uploadTask.Exception != null) {
                 Debug.LogError($"Failed to upload: {uploadTask.Exception}");
             }
+        }
+        catch (Exception e){
+            Debug.LogError(e.Message);
         }
     }
 

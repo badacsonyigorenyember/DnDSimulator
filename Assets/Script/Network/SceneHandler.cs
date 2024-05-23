@@ -104,11 +104,13 @@ public class SceneHandler : MonoBehaviour
         creature.GetComponent<SpriteRenderer>().sprite = sprite;
     }
 
-    async Task SaveScene() {
+    public async Task SaveScene() {
         if (GameManager.Instance.currentScene == null) {
             Debug.Log("NULL scene at save!");
             return;
         }
+        
+        Debug.Log("Creatures count " + GameManager.Instance.creatures.Count);
         
         SceneObject scene = GameManager.Instance.currentScene;
         scene.creatures.Clear();
@@ -120,7 +122,7 @@ public class SceneHandler : MonoBehaviour
         string json = JsonUtility.ToJson(scene);
         await File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{scene.name}.json", json);
         
-        Debug.Log("Saved!");
+        Debug.Log("Saved at: " + GameManager.SCENE_PATH + $"/{scene.name}.json");
     }
 
     void ClearScene() {
