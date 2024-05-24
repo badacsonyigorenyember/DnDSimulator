@@ -11,8 +11,12 @@ public class Creature : NetworkBehaviour
     public bool isPlayer;
     public int initiativeModifier;
 
+    public bool visible;
+
     private void Start() {
         gameObject.AddComponent<CircleCollider2D>();
+
+        visible = true;
     }
     
     public void Init(CreatureData data) {
@@ -40,5 +44,25 @@ public class Creature : NetworkBehaviour
         GameManager.Instance.creatures.Remove(this);
     }
 
-    
+    [ClientRpc]
+    public void SetVisibleClientRpc(bool value) {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        var tempColor = sr.color;
+        
+        if (value) {
+            tempColor.a = 1f;
+            sr.color = tempColor;
+        }
+        else {
+            if (IsServer) {
+                tempColor.a = 0.5f;
+                sr.color = tempColor;
+            }
+            else {
+                tempColor.a = 0f;
+                sr.color = tempColor;
+            }
+        }
+    }
+
 }

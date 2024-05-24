@@ -15,11 +15,8 @@ public class SceneHandler : MonoBehaviour
     public float autosaveInSeconds;
 
     private float timer;
-    
     public static SceneHandler Instance;
-
-    private SceneObject asd;
-
+    
     private void Awake() {
         Instance = this;
     }
@@ -27,7 +24,7 @@ public class SceneHandler : MonoBehaviour
     private void Update() {
         timer += Time.deltaTime;
 
-        if (timer >= autosaveInSeconds) {
+        if (timer >= autosaveInSeconds || Input.GetKeyDown(KeyCode.Period)) {
             timer = 0;
             SaveScene();
         }
@@ -42,8 +39,10 @@ public class SceneHandler : MonoBehaviour
         string path = GameManager.SCENE_PATH + $"/{sceneName}.json";
         if (File.Exists(path)) {
             string json = await File.ReadAllTextAsync(path);
-            SceneObject scene = JsonUtility.FromJson<SceneObject>(json);
+            SceneData scene = JsonUtility.FromJson<SceneData>(json);
             GameManager.Instance.currentScene = scene;
+            Camera.main.transform.position = new Vector3(scene.camPosition.x, scene.camPosition.y, -10);
+            Camera.main.orthographicSize = scene.zoomScale;
 
             LoadMap(sceneName);
 
@@ -110,14 +109,16 @@ public class SceneHandler : MonoBehaviour
             return;
         }
         
-        Debug.Log("Creatures count " + GameManager.Instance.creatures.Count);
-        
-        SceneObject scene = GameManager.Instance.currentScene;
+        SceneData scene = GameManager.Instance.currentScene;
         scene.creatures.Clear();
         
         foreach (var creature in GameManager.Instance.creatures) {
             scene.creatures.Add(CreatureDtoHandler.CreatureToCreatureDto(creature));    
         }
+
+        scene.camPosition = Camera.main.transform.position;
+        Debug.Log(Camera.main.orthographicSize);
+        scene.zoomScale = Camera.main.orthographicSize;
 
         string json = JsonUtility.ToJson(scene);
         await File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{scene.name}.json", json);

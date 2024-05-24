@@ -10,7 +10,7 @@ public class CreatureDto
     public bool isCharacter;
     public Vector2 position;
     public int initiativeModifier;
-    
+
     public CreatureDto(string creatureName, int currentHp, int maxHp, bool isCharacter, Vector2 position, int initiativeModifier){
         this.creatureName = creatureName;
         this.currentHp = currentHp;

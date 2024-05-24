@@ -14,7 +14,7 @@ public class GameManager : NetworkBehaviour
 
     public List<Creature> creatures = new();
     public bool isPlaying;
-    public SceneObject currentScene;
+    public SceneData currentScene;
 
     public static GameManager Instance;
 
@@ -49,7 +49,7 @@ public class GameManager : NetworkBehaviour
 
         startStopButton.onClick.AddListener(StartStopGame);
         
-        //SceneHandler.Instance.LoadScene("Ruins");
+        SceneHandler.Instance.LoadScene("Ruins");
     }
 
     async void StartStopGame() {
@@ -88,7 +88,7 @@ public class GameManager : NetworkBehaviour
     async void SetUpClient(string sceneName, bool value) {
         if (value) {
             string json = await CloudDataHandler.DownloadSceneData(sceneName);
-            currentScene = JsonUtility.FromJson<SceneObject>(json);
+            currentScene = JsonUtility.FromJson<SceneData>(json);
         
             Debug.Log("Current scene set!");
 

@@ -119,7 +119,7 @@ public class SceneCreatingHandler : MonoBehaviour
             }
         }
         
-        SceneObject scene = new SceneObject(sceneName);
+        SceneData scene = new SceneData(sceneName);
 
         await Task.WhenAll(new[]
         {
