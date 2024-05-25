@@ -62,7 +62,6 @@ public class ModifyCreatureHandler : NetworkBehaviour
         else {
             _creature.initiativeModifier = string.IsNullOrEmpty(_initiativeInputField.text) 
                 ? 0 : Convert.ToInt32(_initiativeInputField.text);
-            _creature.visible = _visibleToggle.isOn;
         
             _creature.SetVisibleClientRpc(_visibleToggle.isOn);
         }

@@ -3,9 +3,8 @@ using UnityEngine;
 public static class CreatureDtoHandler
 {
     public static CreatureDto CreatureToCreatureDto(Creature creature) {
-        Debug.Log(creature.transform.position);
         CreatureDto cdto = new CreatureDto(creature.creatureName, creature.currentHp, 
-            creature.maxHp, creature.isPlayer, creature.transform.position, creature.initiativeModifier);
+            creature.maxHp, creature.isPlayer, creature.transform.position, creature.initiativeModifier, creature.visible);
 
         return cdto;
     } 
@@ -16,7 +15,8 @@ public static class CreatureDtoHandler
         creature.maxHp = creatureDto.maxHp;
         creature.isPlayer = creatureDto.isCharacter;
         creature.initiativeModifier = creatureDto.initiativeModifier;
-        
+
         creature.gameObject.name = creatureDto.creatureName;
+        creature.SetVisibleClientRpc(creatureDto.visible);
     } 
 }

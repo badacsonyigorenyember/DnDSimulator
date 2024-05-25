@@ -10,13 +10,12 @@ public class Creature : NetworkBehaviour
     public int maxHp;
     public bool isPlayer;
     public int initiativeModifier;
+    public int armorClass;
 
     public bool visible;
 
     private void Start() {
         gameObject.AddComponent<CircleCollider2D>();
-
-        visible = true;
     }
     
     public void Init(CreatureData data) {
@@ -25,6 +24,7 @@ public class Creature : NetworkBehaviour
         this.maxHp = data.maxHp;
         this.isPlayer = data.isPlayer;
         this.initiativeModifier = data.initiativeModifier;
+        this.visible = true;
     }
 
     public void SetImage(Texture2D texture) {
@@ -55,7 +55,7 @@ public class Creature : NetworkBehaviour
         }
         else {
             if (IsServer) {
-                tempColor.a = 0.5f;
+                tempColor.a = 0.7f;
                 sr.color = tempColor;
             }
             else {
@@ -63,6 +63,8 @@ public class Creature : NetworkBehaviour
                 sr.color = tempColor;
             }
         }
+
+        this.visible = value;
     }
 
 }
