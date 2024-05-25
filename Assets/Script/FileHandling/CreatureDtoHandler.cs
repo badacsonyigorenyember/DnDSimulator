@@ -1,6 +1,9 @@
+using UnityEngine;
+
 public static class CreatureDtoHandler
 {
     public static CreatureDto CreatureToCreatureDto(Creature creature) {
+        Debug.Log(creature.transform.position);
         CreatureDto cdto = new CreatureDto(creature.creatureName, creature.currentHp, 
             creature.maxHp, creature.isPlayer, creature.transform.position, creature.initiativeModifier);
 

@@ -117,7 +117,6 @@ public class SceneHandler : MonoBehaviour
         }
 
         scene.camPosition = Camera.main.transform.position;
-        Debug.Log(Camera.main.orthographicSize);
         scene.zoomScale = Camera.main.orthographicSize;
 
         string json = JsonUtility.ToJson(scene);
