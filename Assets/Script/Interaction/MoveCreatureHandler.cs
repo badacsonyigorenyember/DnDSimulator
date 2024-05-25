@@ -77,12 +77,16 @@ public class MoveCreatureHandler : MonoBehaviour
     void SelectCreature(Transform creature) {
         _movingCreatures.Add(creature);
 
-        creature.GetComponent<SpriteRenderer>().color = Color.yellow;
+        Color color = creature.GetComponent<SpriteRenderer>().color;
+
+        creature.GetComponent<SpriteRenderer>().color = new Color(255, 255, 0, color.a);
     }
 
     void DeselectCreatures() {
         foreach (var creature in _movingCreatures) { 
-            creature.GetComponent<SpriteRenderer>().color = Color.white;
+            Color color = creature.GetComponent<SpriteRenderer>().color;
+
+            creature.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, color.a);
         }
         
         _movingCreatures.Clear();

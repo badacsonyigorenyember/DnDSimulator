@@ -48,8 +48,6 @@ public class GameManager : NetworkBehaviour
         currentScene = null;
 
         startStopButton.onClick.AddListener(StartStopGame);
-        
-        SceneHandler.Instance.LoadScene("Ruins");
     }
 
     async void StartStopGame() {
