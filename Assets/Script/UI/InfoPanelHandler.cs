@@ -36,6 +36,15 @@ public class InfoPanelHandler : NetworkBehaviour
             ListElements(_selectedList, false);
             Debug.Log("Refreshed!");
         };
+
+
+        RectTransform rect = _infoPanel.GetComponent<RectTransform>();
+        
+        if (rect.localScale.x > 0) {
+            Debug.Log("rect");
+            rect.localScale = Vector3.zero;
+        }
+        
     }
 
     void ListElements(SelectedList listType, bool activatePanel = true) {

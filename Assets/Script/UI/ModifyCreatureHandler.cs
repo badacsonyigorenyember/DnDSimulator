@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.Netcode;
 using Unity.VisualScripting.FullSerializer;
@@ -9,13 +10,12 @@ public class ModifyCreatureHandler : NetworkBehaviour
 {
     [SerializeField] private TextMeshProUGUI _pageTitle;
     [SerializeField] private TMP_InputField _nameInputField;
-    [SerializeField] private TMP_InputField _currentHpInputField;
-    [SerializeField] private TMP_InputField _maxHpInputField;
-    [SerializeField] private TMP_InputField _initiativeInputField;
+    [SerializeField] private TextMeshProUGUI _currentHPText;
+    [SerializeField] private TextMeshProUGUI _maxHPText;
+    [SerializeField] private TextMeshProUGUI _initiativeModifierText;
     [SerializeField] private Toggle _visibleToggle;
     
     [SerializeField] private Button _cancelButton;
-    [SerializeField] private Button _saveButton;
     
     [SerializeField] private Camera _cam;
     
@@ -23,7 +23,6 @@ public class ModifyCreatureHandler : NetworkBehaviour
 
     private void Start() {
         _cancelButton.onClick.AddListener(ClosePanel);
-        _saveButton.onClick.AddListener(SaveCreature);
     }
 
     private void Update() {
@@ -42,39 +41,42 @@ public class ModifyCreatureHandler : NetworkBehaviour
         
         _creature = creature;
         _pageTitle.text = _creature.creatureName + " modifying";
+        
         _nameInputField.text = _creature.creatureName;
-        _currentHpInputField.text = _creature.currentHp.ToString();
-        _maxHpInputField.text = _creature.maxHp.ToString();
-        _initiativeInputField.text = _creature.initiativeModifier.ToString();
+        _nameInputField.onValueChanged.AddListener((value) => _creature.creatureName = value);
+        
+        _currentHPText.text = _creature.currentHp.ToString();
+        _maxHPText.text = _creature.maxHp.ToString();
+        _initiativeModifierText.text = _creature.initiativeModifier.ToString();
+        
         _visibleToggle.isOn = _creature.visible;
+        _visibleToggle.onValueChanged.AddListener((value) => _creature.SetVisibleClientRpc(value));
     }
 
-    void SaveCreature() {
-        _creature.creatureName = _nameInputField.text;
-        _creature.currentHp = string.IsNullOrEmpty(_currentHpInputField.text)
-            ? 0 : Convert.ToInt32(_currentHpInputField.text);
-        _creature.maxHp = string.IsNullOrEmpty(_maxHpInputField.text) 
-            ? 0 : Convert.ToInt32(_maxHpInputField.text);
-
-        if (_creature.currentHp <= 0) {
-            _creature.GetComponent<NetworkObject>().Despawn();
+    public void ModifyValue(string modifyVariable, int value) {
+        switch (modifyVariable) {
+            case "maxHP":
+                _creature.maxHp = Mathf.Max(0, _creature.maxHp + value);
+                _maxHPText.text = _creature.maxHp.ToString();
+                break;
+            case "currentHP":
+                _creature.currentHp = Mathf.Max(0, _creature.currentHp + value);
+                _currentHPText.text = _creature.currentHp.ToString();
+                break;
+            case "initiative":
+                _creature.initiativeModifier = Mathf.Max(0, _creature.initiativeModifier + value);
+                _initiativeModifierText.text = _creature.initiativeModifier.ToString();
+                break;
         }
-        else {
-            _creature.initiativeModifier = string.IsNullOrEmpty(_initiativeInputField.text) 
-                ? 0 : Convert.ToInt32(_initiativeInputField.text);
         
-            _creature.SetVisibleClientRpc(_visibleToggle.isOn);
-        }
-        
-        ClosePanel();
     }
-    
+
     void ClearPanel() {
         _pageTitle.text = "";
         _nameInputField.text = "";
-        _currentHpInputField.text = "";
-        _maxHpInputField.text = "";
-        _initiativeInputField.text = "";
+        _currentHPText.text = "";
+        _maxHPText.text = "";
+        _initiativeModifierText.text = "";
         _visibleToggle.isOn = true;
     }
 
