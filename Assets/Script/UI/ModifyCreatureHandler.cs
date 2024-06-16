@@ -12,6 +12,7 @@ public class ModifyCreatureHandler : NetworkBehaviour
     [SerializeField] private TMP_InputField _nameInputField;
     [SerializeField] private TextMeshProUGUI _currentHPText;
     [SerializeField] private TextMeshProUGUI _maxHPText;
+    [SerializeField] private TextMeshProUGUI _armorClassText;
     [SerializeField] private TextMeshProUGUI _initiativeModifierText;
     [SerializeField] private Toggle _visibleToggle;
     
@@ -47,6 +48,7 @@ public class ModifyCreatureHandler : NetworkBehaviour
         
         _currentHPText.text = _creature.currentHp.ToString();
         _maxHPText.text = _creature.maxHp.ToString();
+        _armorClassText.text = _creature.armorClass.ToString(); 
         _initiativeModifierText.text = _creature.initiativeModifier.ToString();
         
         _visibleToggle.isOn = _creature.visible;
@@ -62,6 +64,10 @@ public class ModifyCreatureHandler : NetworkBehaviour
             case "currentHP":
                 _creature.currentHp = Mathf.Max(0, _creature.currentHp + value);
                 _currentHPText.text = _creature.currentHp.ToString();
+                break;
+            case "armor":
+                _creature.armorClass = Mathf.Max(0, _creature.armorClass + value);
+                _armorClassText.text = _creature.armorClass.ToString();
                 break;
             case "initiative":
                 _creature.initiativeModifier = Mathf.Max(0, _creature.initiativeModifier + value);

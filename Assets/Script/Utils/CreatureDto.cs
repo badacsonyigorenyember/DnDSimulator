@@ -11,15 +11,17 @@ public class CreatureDto
     public Vector2 position;
     public int initiativeModifier;
     public bool visible;
+    public int armorClass;
 
-    public CreatureDto(string creatureName, int currentHp, int maxHp, bool isCharacter, Vector2 position, int initiativeModifier, bool visible){
-        this.creatureName = creatureName;
-        this.currentHp = currentHp;
-        this.maxHp = maxHp;
-        this.isCharacter = isCharacter;
-        this.position = position;
-        this.initiativeModifier = initiativeModifier;
-        this.visible = visible;
+    public CreatureDto(Creature entity){
+        this.creatureName = entity.creatureName;
+        this.currentHp = entity.currentHp;
+        this.maxHp = entity.maxHp;
+        this.isCharacter = entity.isPlayer;
+        this.position = entity.transform.position;
+        this.initiativeModifier = entity.initiativeModifier;
+        this.visible = entity.visible;
+        this.armorClass = entity.armorClass;
 
     }
  

@@ -113,7 +113,7 @@ public class SceneHandler : MonoBehaviour
         scene.creatures.Clear();
         
         foreach (var creature in GameManager.Instance.creatures) {
-            scene.creatures.Add(CreatureDtoHandler.CreatureToCreatureDto(creature));    
+            scene.creatures.Add(new CreatureDto(creature));    
         }
 
         scene.camPosition = Camera.main.transform.position;

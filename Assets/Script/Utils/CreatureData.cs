@@ -4,4 +4,5 @@ public struct CreatureData
     public int maxHp;
     public bool isPlayer;
     public int initiativeModifier;
+    public int armorClass;
 }

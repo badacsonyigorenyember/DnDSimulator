@@ -17,6 +17,7 @@ public class CreatureCreatingHandler : MonoBehaviour
 	[SerializeField] private TMP_InputField _creatureNameInputField;
 	[SerializeField] private TMP_InputField _maxHPInputField;
 	[SerializeField] private TMP_InputField _initiativeModifierInputField;
+	[SerializeField] private TMP_InputField _armorClassInputField;
 	[SerializeField] private Toggle _isPlayerToggle;
 	[SerializeField] private Image _loadedCreatureImage;
 	
@@ -125,7 +126,8 @@ public class CreatureCreatingHandler : MonoBehaviour
 			creatureName = _creatureNameInputField.text,
 			maxHp = string.IsNullOrEmpty(_maxHPInputField.text) ? 0 : Convert.ToInt32(_maxHPInputField.text),
 			isPlayer = _isPlayerToggle.isOn,
-			initiativeModifier = string.IsNullOrEmpty(_initiativeModifierInputField.text) ? 0 : Convert.ToInt32(_initiativeModifierInputField.text)
+			initiativeModifier = string.IsNullOrEmpty(_initiativeModifierInputField.text) ? 0 : Convert.ToInt32(_initiativeModifierInputField.text),
+			armorClass = string.IsNullOrEmpty(_armorClassInputField.text) ? 0 : Convert.ToInt32(_armorClassInputField.text)
 		};
 		
 		string path = GameManager.CREATURE_DATA_PATH + $"/{data.creatureName}.json";

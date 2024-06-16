@@ -25,6 +25,7 @@ public class Creature : NetworkBehaviour
         this.isPlayer = data.isPlayer;
         this.initiativeModifier = data.initiativeModifier;
         this.visible = true;
+        this.armorClass = data.armorClass;
     }
 
     public void SetImage(Texture2D texture) {
