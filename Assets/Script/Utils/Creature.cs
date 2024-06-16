@@ -13,10 +13,6 @@ public class Creature : NetworkBehaviour
     public int armorClass;
 
     public bool visible;
-
-    private void Start() {
-        gameObject.AddComponent<CircleCollider2D>();
-    }
     
     public void Init(CreatureData data) {
         this.creatureName = data.creatureName;
@@ -31,6 +27,8 @@ public class Creature : NetworkBehaviour
     public void SetImage(Texture2D texture) {
         GetComponent<SpriteRenderer>().sprite = Sprite.Create(
             texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f, 200f);
+        
+        GetComponent<CircleCollider2D>().radius = 0.7f * (texture.width / 280);
     }
 
     public override void OnNetworkSpawn() {

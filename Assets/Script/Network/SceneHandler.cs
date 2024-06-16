@@ -98,12 +98,10 @@ public class SceneHandler : MonoBehaviour
         Texture2D texture = new Texture2D(1, 1);
         texture.LoadImage(bytes);
 
-        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), 
-            Vector2.one * 0.5f, 200f);
-        creature.GetComponent<SpriteRenderer>().sprite = sprite;
+        creature.SetImage(texture);
     }
 
-    public async Task SaveScene() {
+    public async Task SaveScene() {     
         if (GameManager.Instance.currentScene == null) {
             Debug.Log("NULL scene at save!");
             return;
