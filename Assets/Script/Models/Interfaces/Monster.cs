@@ -8,6 +8,8 @@ namespace Script.Models.Interfaces
         public string Name { get; set; }
         public int MaxHealth { get; set; }
         public int CurrentHealth { get; set; }
+        public int InitiativeModifier { get; set; }
+        public int ArmorClass { get; set; }
 
         /**
          * Alkalmazza a paraméterben kapott sebzést
@@ -36,6 +38,10 @@ namespace Script.Models.Interfaces
             }
 
             return CurrentHealth;
+        }
+
+        public void GetDataByUuid() {//TODO: kiolvasni mappából
+            throw new NotImplementedException("Script.Models.Interfaces.Monster GetDataByUuid is not implemented yet");
         }
     }
 }
