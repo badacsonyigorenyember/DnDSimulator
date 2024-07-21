@@ -7,6 +7,7 @@ namespace Script.Models
     public class Creature : Monster
     {
         public Vector2 Position { get; set; }
+        public bool Visible { get; set; }
 
         public Creature(string uuid, Vector2 position) {
             Uuid = uuid;
