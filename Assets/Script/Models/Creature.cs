@@ -4,7 +4,7 @@ using Script.Models.Interfaces;
 
 namespace Script.Models
 {
-    public class Creature : Monster
+    public class Creature : Monster, IEntity
     {
         public Vector2 Position { get; set; }
         public bool Visible { get; set; }
