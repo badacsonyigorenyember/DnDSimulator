@@ -1,8 +1,10 @@
-public struct CreatureData
+using System.Numerics;
+
+namespace Script.Utils
 {
-    public string creatureName;
-    public int maxHp;
-    public bool isPlayer;
-    public int initiativeModifier;
-    public int armorClass;
+    public struct CreatureData
+    {
+        public string uuid;
+        public Vector2 postion;
+    }
 }
