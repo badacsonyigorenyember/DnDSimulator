@@ -78,3 +78,18 @@ crashlytics-build.properties
 
 **/.DS_Store
 **/.idea
+
+# VS config
+/.vsconfig
+
+# Plugins folder
+/[Aa]ssets/[Pp]lugins/*
+
+# Meta files
+/[Aa]ssets/Plugins.meta
+
+# C# meta files
+*.cs.meta
+
+# Tooltip meta
+/[Aa]ssets/[Ss]cript/UI/Tooltip.meta
