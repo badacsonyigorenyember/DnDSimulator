@@ -5,6 +5,6 @@ namespace Script.Utils
     public struct CreatureData
     {
         public string uuid;
-        public Vector2 postion;
+        public Vector2 position;
     }
 }
