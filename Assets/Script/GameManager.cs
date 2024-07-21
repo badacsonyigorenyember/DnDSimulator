@@ -61,33 +61,30 @@ public class GameManager : NetworkBehaviour
 
         await SceneHandler.Instance.SaveScene();
 
+        GameStateDto gameState = new GameStateDto();
         if (isPlaying) {
-            tasks.Add(CloudDataHandler.UploadImages());
-            tasks.Add(CloudDataHandler.UploadMap(currentScene.name));
-            tasks.Add(CloudDataHandler.UploadSceneData(currentScene.name));
-
-            await Task.WhenAll(tasks);
+            gameState = await CloudDataHandler.GetGameStateDto(currentScene.name);
 
             Debug.Log("Finished uploading!");
         }
 
-        StartGameClientRpc(isPlaying, currentScene.name);
+        StartGameClientRpc(isPlaying, currentScene.name, gameState);
     }
-
+    
     [ClientRpc]
-    void StartGameClientRpc(bool value, string sceneName) {
+    void StartGameClientRpc(bool isPlaying, string sceneName, GameStateDto gameState) {
         if (IsServer) return;
 
-        SetUpClient(sceneName, value);
+        SetUpClient(sceneName, isPlaying, gameState);
     }
 
-    async void SetUpClient(string sceneName, bool value) {
-        if (value) {
-            string json = await CloudDataHandler.DownloadSceneData(sceneName);
-            currentScene = JsonUtility.FromJson<SceneData>(json);
+    async void SetUpClient(string sceneName, bool isPlaying, GameStateDto gameState) {
+        if (isPlaying) {
+            currentScene = JsonUtility.FromJson<SceneData>(gameState.GetSceneData());
 
             Debug.Log("Current scene set!");
 
+            await CloudDataHandler.SaveCreatureImages(currentScene.creatures.Select(e => e.creatureName).ToList(), gameState.GetCreaturePictures());
             await CloudDataHandler.DownloadImages(currentScene.creatures.Select(e => e.creatureName).ToList());
 
             Debug.Log("Images downloaded!");
@@ -108,8 +105,8 @@ public class GameManager : NetworkBehaviour
             Debug.Log("Map loaded!");
         }
 
-        waitingScreenObj.SetActive(!value);
-        isPlaying = value;
+        waitingScreenObj.SetActive(!isPlaying);
+        this.isPlaying = isPlaying;
     }
 
     void OnClientConnected(ulong clientId) {
