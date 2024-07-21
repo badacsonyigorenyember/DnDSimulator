@@ -9,11 +9,11 @@ namespace Script.Models
         public Vector2 Position { get; set; }
         public bool Visible { get; set; }
 
-        public Creature(string uuid, Vector2 position) {
+        public Creature(string uuid, Vector2 position, bool visible) {
             Uuid = uuid;
             GetDataByUuid();
-
             Position = position;
+            Visible = visible;
         }
 
         public void Serialize() {
