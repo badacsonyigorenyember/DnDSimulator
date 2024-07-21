@@ -10,6 +10,8 @@ namespace Script.Models
         public int CurrentHealth { get; set; }
         public int InitiativeModifier { get; set; }
         public int ArmorClass { get; set; }
+        public bool Visible { get; set; }
+
         public int DoDamage(int damage) {
             CurrentHealth -= damage;
             if (CurrentHealth < 0) {
