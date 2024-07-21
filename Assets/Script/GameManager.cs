@@ -84,19 +84,20 @@ public class GameManager : NetworkBehaviour
 
             Debug.Log("Current scene set!");
 
-            await CloudDataHandler.SaveCreatureImages(currentScene.creatures.Select(e => e.creatureName).ToList(), gameState.GetCreaturePictures());
-            await CloudDataHandler.DownloadImages(currentScene.creatures.Select(e => e.creatureName).ToList());
+            await CloudDataHandler.SaveCreatureImages(currentScene.creatures.Select(e => e.creatureName).ToList(), gameState);
 
             Debug.Log("Images downloaded!");
 
+            List<Task> loadCreatureTasks = new List<Task>();
             foreach (var creature in creatures) {
-                SceneHandler.Instance.LoadCreature(creature,
-                    currentScene.creatures.Find(c => c.position == (Vector2)creature.transform.position));
+                loadCreatureTasks.Add(SceneHandler.Instance.LoadCreature(creature, 
+                    currentScene.creatures.Find(c => c.position == (Vector2)creature.transform.position)));
             }
+            await Task.WhenAll(loadCreatureTasks);
 
             Debug.Log("Creatures loaded!");
 
-            await CloudDataHandler.DownloadMap(currentScene.name);
+            await CloudDataHandler.DownloadMap(currentScene.name, gameState);
 
             Debug.Log("Map downloaded!");
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -16,33 +15,21 @@ public class GameStateDto : INetworkSerializable
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
         serializer.SerializeValue(ref mapPicture);
         serializer.SerializeValue(ref sceneData);
-        serializer.SerializeValue<Dictionary<string, byte>>(ref creaturePictures, new FastBufferWriter.ForPrimitives());
         
-        /*int count = creaturePictures?.Count ?? 0;
-        serializer.SerializeValue(ref count);
-        if (serializer.IsWriter && creaturePictures != null) {
-            foreach (var creaturePicture in creaturePictures) {
-                var asd = creaturePicture;
-                serializer.SerializeValue(asd);
-            }
-            for (int i = 0; i < count; i++) {
-                byte[] creaturePicture = creaturePictures[];
-                serializer.SerializeValue(ref creaturePicture);
-            }
-        } else {
-            creaturePictures = new List<byte[]>(count);
-            for (int i = 0; i < count; i++) {
-                byte[] creaturePicture = null;
-                serializer.SerializeValue(ref creaturePicture);
-                creaturePictures.Add(creaturePicture);
-            }
-        }*/
+        string creaturePictureJson = "";
+        if (serializer.IsWriter) {
+            creaturePictureJson = JsonUtility.ToJson(creaturePictures);
+        }
+        serializer.SerializeValue(ref creaturePictureJson);
+        if (serializer.IsReader) {
+            creaturePictures = JsonUtility.FromJson<Dictionary<string, byte[]>>(creaturePictureJson);
+        }
     }
 
     public GameStateDto() {
     }
 
-    public GameStateDto(byte[] mapPicture, List<byte[]> creaturePictures, string sceneData) {
+    public GameStateDto(byte[] mapPicture, Dictionary<string, byte[]> creaturePictures, string sceneData) {
         this.mapPicture = mapPicture;
         this.creaturePictures = creaturePictures;
         this.sceneData = sceneData;
@@ -52,7 +39,7 @@ public class GameStateDto : INetworkSerializable
         return mapPicture;
     }
 
-    public List<byte[]> GetCreaturePictures() {
+    public Dictionary<string, byte[]> GetCreaturePictures() {
         return creaturePictures;
     }
 
