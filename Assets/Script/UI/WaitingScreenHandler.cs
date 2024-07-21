@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -12,7 +10,7 @@ public class WaitingScreenHandler : NetworkBehaviour
     public Image image;
     public TextMeshProUGUI waitingText;
     public float seconds;
-    
+
     public List<Texture2D> _textures;
     private int currentIndex = -1;
 
@@ -21,7 +19,7 @@ public class WaitingScreenHandler : NetworkBehaviour
             gameObject.SetActive(false);
             return;
         }
-        
+
         StartCoroutine(DisplayTextures());
     }
 
@@ -33,7 +31,7 @@ public class WaitingScreenHandler : NetworkBehaviour
             else {
                 currentIndex = 0;
             }
-            
+
             Texture2D currentTexture = _textures[currentIndex];
             image.sprite = Sprite.Create(currentTexture, new Rect(0, 0, currentTexture.width, currentTexture.height), Vector2.zero);
 
@@ -44,7 +42,7 @@ public class WaitingScreenHandler : NetworkBehaviour
             yield return new WaitForSeconds(seconds);
         }
     }
-    
+
     IEnumerator FadeOutImage(Image image, float duration)
     {
         float elapsedTime = 0f;
@@ -52,9 +50,9 @@ public class WaitingScreenHandler : NetworkBehaviour
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            
+
             Color color = Color.Lerp(Color.white, Color.black, elapsedTime / duration);
-            
+
             image.color = color;
             waitingText.color = color;
             yield return null;
@@ -70,9 +68,9 @@ public class WaitingScreenHandler : NetworkBehaviour
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            
+
             Color color = Color.Lerp(Color.black, Color.white, elapsedTime / duration);
-            
+
             image.color = color;
             waitingText.color = color;
             yield return null;
@@ -80,5 +78,4 @@ public class WaitingScreenHandler : NetworkBehaviour
 
         image.color = Color.white;
     }
-
 }

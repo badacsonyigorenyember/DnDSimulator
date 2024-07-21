@@ -1,8 +1,5 @@
-using System;
-using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.Netcode;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,11 +12,11 @@ public class ModifyCreatureHandler : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI _armorClassText;
     [SerializeField] private TextMeshProUGUI _initiativeModifierText;
     [SerializeField] private Toggle _visibleToggle;
-    
+
     [SerializeField] private Button _cancelButton;
-    
+
     [SerializeField] private Camera _cam;
-    
+
     private Creature _creature;
 
     private void Start() {
@@ -36,21 +33,21 @@ public class ModifyCreatureHandler : NetworkBehaviour
             }
         }
     }
-    
+
     void Init(Creature creature) {
         transform.GetChild(0).gameObject.SetActive(true);
-        
+
         _creature = creature;
         _pageTitle.text = _creature.creatureName + " modifying";
-        
+
         _nameInputField.text = _creature.creatureName;
         _nameInputField.onValueChanged.AddListener((value) => _creature.creatureName = value);
-        
+
         _currentHPText.text = _creature.currentHp.ToString();
         _maxHPText.text = _creature.maxHp.ToString();
-        _armorClassText.text = _creature.armorClass.ToString(); 
+        _armorClassText.text = _creature.armorClass.ToString();
         _initiativeModifierText.text = _creature.initiativeModifier.ToString();
-        
+
         _visibleToggle.isOn = _creature.visible;
         _visibleToggle.onValueChanged.AddListener((value) => _creature.SetVisibleClientRpc(value));
     }
@@ -74,7 +71,6 @@ public class ModifyCreatureHandler : NetworkBehaviour
                 _initiativeModifierText.text = _creature.initiativeModifier.ToString();
                 break;
         }
-        
     }
 
     void ClearPanel() {
@@ -88,11 +84,7 @@ public class ModifyCreatureHandler : NetworkBehaviour
 
     void ClosePanel() {
         ClearPanel();
-		
+
         transform.GetChild(0).gameObject.SetActive(false);
     }
-    
-    
-
-    
 }

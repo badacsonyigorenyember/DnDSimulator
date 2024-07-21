@@ -13,11 +13,9 @@ public class CreatureInteractionHandler : MonoBehaviour
     public void OpenCreaturePanel(Creature c) {
         creaturePanel.SetActive(true);
         creaturePanel.GetComponent<CreatureEditPanelHandler>().Init(c);
-
     }
 
     public void CancelCreaturePanel() {
         creaturePanel.SetActive(false);
     }
-    
 }

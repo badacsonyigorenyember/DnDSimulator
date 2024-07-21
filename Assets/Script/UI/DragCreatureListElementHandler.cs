@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,11 +7,11 @@ public class DragCreatureListElementHandler : MonoBehaviour
 {
     [SerializeField] private Camera _cam;
     [SerializeField] private GraphicRaycaster _gr;
-    
+
     [SerializeField] private int distance;
-    
+
     [SerializeField] private GameObject _creaturePrefab;
-    
+
     private static bool validRelease;
 
     private GameObject _selectedCreature;
@@ -63,21 +60,21 @@ public class DragCreatureListElementHandler : MonoBehaviour
 
         if (_instantiatedCreature == null) {
             if (!(Vector2.Distance(_startPosition, Input.mousePosition) > distance)) return;
-            
+
             _instantiatedCreature = Instantiate(_selectedCreature, transform.parent);
             Destroy(_instantiatedCreature.GetComponent<BoxCollider2D>());
             _instantiatedCreature.GetComponent<Image>().raycastTarget = false;
         }
-        
+
         Vector3 position = _cam.ScreenToWorldPoint(Input.mousePosition);
         position.z = 90;
-        
+
         _instantiatedCreature.transform.position = position;
     }
 
     async void ReleaseCreature(bool instantiate = true) {
         if (_selectedCreature == null || _instantiatedCreature == null) return;
-        
+
         Destroy(_instantiatedCreature);
         _instantiatedCreature = null;
 
@@ -87,7 +84,7 @@ public class DragCreatureListElementHandler : MonoBehaviour
 
             await CreatureFileHandler.Instance.SpawnCreature(_selectedCreature.name, position);
         }
-        
+
         _selectedCreature = null;
     }
 

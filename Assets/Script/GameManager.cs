@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,7 +18,7 @@ public class GameManager : NetworkBehaviour
     public static GameManager Instance;
 
     public GameObject waitingScreenObj;
-    
+
     public static string CREATURE_IMG_PATH;
     public static string CREATURE_DATA_PATH;
     public static string MAP_PATH;
@@ -52,28 +51,27 @@ public class GameManager : NetworkBehaviour
 
     async void StartStopGame() {
         if (currentScene == null) return;
-        
+
         isPlaying = !isPlaying;
-        
+
         TextMeshProUGUI text = startStopButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         text.text = isPlaying ? "Stop" : "Start";
 
         List<Task> tasks = new();
 
         await SceneHandler.Instance.SaveScene();
-        
+
         if (isPlaying) {
             tasks.Add(CloudDataHandler.UploadImages());
             tasks.Add(CloudDataHandler.UploadMap(currentScene.name));
             tasks.Add(CloudDataHandler.UploadSceneData(currentScene.name));
-             
+
             await Task.WhenAll(tasks);
-            
+
             Debug.Log("Finished uploading!");
         }
-        
+
         StartGameClientRpc(isPlaying, currentScene.name);
-        
     }
 
     [ClientRpc]
@@ -87,11 +85,11 @@ public class GameManager : NetworkBehaviour
         if (value) {
             string json = await CloudDataHandler.DownloadSceneData(sceneName);
             currentScene = JsonUtility.FromJson<SceneData>(json);
-        
+
             Debug.Log("Current scene set!");
 
             await CloudDataHandler.DownloadImages(currentScene.creatures.Select(e => e.creatureName).ToList());
-        
+
             Debug.Log("Images downloaded!");
 
             foreach (var creature in creatures) {
@@ -102,11 +100,11 @@ public class GameManager : NetworkBehaviour
             Debug.Log("Creatures loaded!");
 
             await CloudDataHandler.DownloadMap(currentScene.name);
-            
+
             Debug.Log("Map downloaded!");
-            
+
             SceneHandler.Instance.LoadMap(currentScene.name);
-            
+
             Debug.Log("Map loaded!");
         }
 
@@ -128,5 +126,3 @@ public class GameManager : NetworkBehaviour
         }
     }
 }
-
-

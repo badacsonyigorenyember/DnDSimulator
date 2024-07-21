@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +13,7 @@ public class ModifyingButtonHandler : MonoBehaviour
         _increaseButton.onClick.AddListener(() => {
             handler.ModifyValue(variable, 1);
         });
-        
+
         _decreaseButton.onClick.AddListener(() => {
             handler.ModifyValue(variable, -1);
         });

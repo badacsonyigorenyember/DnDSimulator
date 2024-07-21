@@ -4,33 +4,31 @@ using System.Threading.Tasks;
 using SimpleFileBrowser;
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class SceneCreatingHandler : MonoBehaviour
 {
     public int maxImageSize;
-    
+
     [SerializeField] private Button _openCreatingButton;
-    
+
     [SerializeField] private TMP_InputField _sceneNameInputField;
     [SerializeField] private Image _loadedSceneImage;
-    
+
     [SerializeField] private Button _selectImageButton;
     [SerializeField] private Button _cancelCreatureButton;
     [SerializeField] private Button _createSceneButton;
-    
+
     [SerializeField] private TextMeshProUGUI _console;
     [SerializeField] private GameObject _overWritePanel;
 
     private byte[] _image;
-    
-    void Start()
-    {
-        FileBrowser.SetFilters( true, new FileBrowser.Filter( "Images", ".png" ));
-        FileBrowser.SetDefaultFilter( ".png" );
-        FileBrowser.SetExcludedExtensions( ".lnk", ".tmp", ".zip", ".rar", ".exe" );
-        FileBrowser.AddQuickLink( "Users", "C:\\Users");
+
+    void Start() {
+        FileBrowser.SetFilters(true, new FileBrowser.Filter("Images", ".png"));
+        FileBrowser.SetDefaultFilter(".png");
+        FileBrowser.SetExcludedExtensions(".lnk", ".tmp", ".zip", ".rar", ".exe");
+        FileBrowser.AddQuickLink("Users", "C:\\Users");
 
         _openCreatingButton.onClick.AddListener(() => {
             if (_openCreatingButton.GetComponent<CreateButton>().selected == SelectedList.Scene) {
@@ -47,14 +45,14 @@ public class SceneCreatingHandler : MonoBehaviour
 
     void Init() {
         transform.GetChild(0).gameObject.SetActive(true);
-        
+
         ClearPanel();
     }
 
     void SelectImage() {
         _console.text = "";
         _loadedSceneImage.rectTransform.localScale = Vector3.one;
-		
+
         FileBrowser.ShowLoadDialog(
             (path) => {
                 _image = File.ReadAllBytes(path.First());
@@ -74,7 +72,7 @@ public class SceneCreatingHandler : MonoBehaviour
                     Vector2.one / 2f);
 
                 float modifier;
-                
+
                 if (texture.width / texture.height > 16 / 9) {
                     modifier = _loadedSceneImage.rectTransform.sizeDelta.x / texture.width;
                 }
@@ -88,10 +86,10 @@ public class SceneCreatingHandler : MonoBehaviour
             () => {
                 Debug.Log("Canceled");
             }, 
-            FileBrowser.PickMode.Files, false, null, 
+            FileBrowser.PickMode.Files, false, null,
             null, "Select image for creature!");
     }
-    
+
     async void CreateScene() {
         if (string.IsNullOrWhiteSpace(_sceneNameInputField.text) || _sceneNameInputField.text.Length < 3) {
             _console.text = "Scene name is incorrect! It must be at least 3 character long!";
@@ -103,10 +101,10 @@ public class SceneCreatingHandler : MonoBehaviour
             _console.text = "Please select an image!";
             return;
         }
-        
+
         string sceneName = _sceneNameInputField.text;
         string path = GameManager.SCENE_PATH + $"/{sceneName}.json";
-        
+
         if (File.Exists(path)) {
             GameObject obj = Instantiate(_overWritePanel, transform);
             OverWriteConfirm confirm = obj.GetComponent<OverWriteConfirm>();
@@ -118,7 +116,7 @@ public class SceneCreatingHandler : MonoBehaviour
                 return;
             }
         }
-        
+
         SceneData scene = new SceneData(sceneName);
 
         await Task.WhenAll(new[]
@@ -126,24 +124,24 @@ public class SceneCreatingHandler : MonoBehaviour
             File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{sceneName}.json", JsonUtility.ToJson(scene)),
             File.WriteAllBytesAsync(GameManager.MAP_PATH + $"/{sceneName}.png", _image)
         });
-        
-        
+
+
         SceneHandler.Instance.LoadMap(sceneName);
 
         ClosePanel();
         InfoPanelHandler.RefreshAction.Invoke();
     }
-    
+
     void ClearPanel() {
         _sceneNameInputField.text = "";
         _console.text = "";
         _loadedSceneImage.sprite = null;
         _loadedSceneImage.rectTransform.localScale *= 0;
     }
-    
+
     void ClosePanel() {
         ClearPanel();
-		
+
         transform.GetChild(0).gameObject.SetActive(false);
     }
 }

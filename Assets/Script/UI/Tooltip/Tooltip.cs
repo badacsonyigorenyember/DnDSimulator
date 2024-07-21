@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -12,14 +11,14 @@ public class Tooltip : MonoBehaviour
 
     [SerializeField] private LayoutElement _layoutElement;
     [SerializeField] private CanvasGroup gp;
-    
+
     [SerializeField] private int _characterWrapLimit;
 
     [SerializeField] private float _fadeDuration;
-    
+
     public void SetText(string header, string content = "") {
         _headerText.text = header;
-        
+
         if (!string.IsNullOrEmpty(content)) {
             _contentText.gameObject.SetActive(true);
             _contentText.text = content;
@@ -27,13 +26,11 @@ public class Tooltip : MonoBehaviour
         else {
             _contentText.gameObject.SetActive(false);
         }
-        
+
         int headerLength = _headerText.text.Length;
         int contentLength = _contentText.text.Length;
 
         _layoutElement.enabled = headerLength > _characterWrapLimit || contentLength > _characterWrapLimit;
-
-        
     }
 
     public void StartFade(bool value) {
@@ -54,5 +51,4 @@ public class Tooltip : MonoBehaviour
 
         gp.alpha = end;
     }
-    
 }
