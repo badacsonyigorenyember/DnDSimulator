@@ -13,7 +13,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         this.header = header;
         this.content = content;
     }
-    
+
     public void OnPointerEnter(PointerEventData eventData) {
         _delay = StartCoroutine(Call());
     }
@@ -25,7 +25,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     IEnumerator Call() {
         yield return new WaitForSeconds(0.75f);
-        
+
         TooltipSystem.Show(header, content, transform.position);
     }
 }

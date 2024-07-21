@@ -13,7 +13,7 @@ public class Creature : NetworkBehaviour
     public int armorClass;
 
     public bool visible;
-    
+
     public void Init(CreatureData data) {
         this.creatureName = data.creatureName;
         this.currentHp = data.maxHp;
@@ -27,13 +27,13 @@ public class Creature : NetworkBehaviour
     public void SetImage(Texture2D texture) {
         GetComponent<SpriteRenderer>().sprite = Sprite.Create(
             texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f, 200f);
-        
+
         GetComponent<CircleCollider2D>().radius = 0.7f * (texture.width / 280);
     }
 
     public override void OnNetworkSpawn() {
         base.OnNetworkSpawn();
-        
+
         GameManager.Instance.creatures.Add(this);
     }
 
@@ -47,7 +47,7 @@ public class Creature : NetworkBehaviour
     public void SetVisibleClientRpc(bool value) {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         var tempColor = sr.color;
-        
+
         if (value) {
             tempColor.a = 1f;
             sr.color = tempColor;
@@ -65,5 +65,4 @@ public class Creature : NetworkBehaviour
 
         this.visible = value;
     }
-
 }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class TooltipSystem : MonoBehaviour
@@ -15,7 +14,7 @@ public class TooltipSystem : MonoBehaviour
         Instance._tooltip.SetText(header, content);
 
         Instance._tooltip.transform.position = position;
-        
+
         Instance._tooltip.StartFade(true);
     }
 

@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -37,7 +36,7 @@ public class CreatureEditPanelHandler : MonoBehaviour
 
         int intValue = int.Parse(stringValue);
         creatureInfo.maxHp += intValue;
-        
+
         //TODO initiative!!
     }
 
@@ -54,7 +53,7 @@ public class CreatureEditPanelHandler : MonoBehaviour
             if (!creatureInfo.isPlayer) KillCreature();
             return;
         }
-        
+
         SetHpText();
     }
 

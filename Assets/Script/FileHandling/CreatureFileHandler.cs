@@ -1,14 +1,12 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CreatureFileHandler : MonoBehaviour
 {
     [SerializeField] private GameObject _creaturePrefab;
-    
+
     [SerializeField] private Transform _creatureContainer;
 
     public static CreatureFileHandler Instance;
@@ -37,9 +35,9 @@ public class CreatureFileHandler : MonoBehaviour
     public async Task SpawnCreature(string creatureName, Vector3 position) {
         Task<CreatureData> creatureDataTask = LoadCreatureDataAsync(creatureName);
         Task<Texture2D> creatureImageTask = LoadCreatureImageAsync(creatureName);
-        
+
         await Task.WhenAll(creatureDataTask, creatureImageTask);
-        
+
         GameObject creatureObj = Instantiate(_creaturePrefab, position, Quaternion.identity);
         creatureObj.name = creatureName;
 

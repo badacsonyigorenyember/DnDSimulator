@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 [Serializable]
 public class CreatureDto
@@ -13,7 +13,7 @@ public class CreatureDto
     public bool visible;
     public int armorClass;
 
-    public CreatureDto(Creature entity){
+    public CreatureDto(Creature entity) {
         this.creatureName = entity.creatureName;
         this.currentHp = entity.currentHp;
         this.maxHp = entity.maxHp;
@@ -22,7 +22,5 @@ public class CreatureDto
         this.initiativeModifier = entity.initiativeModifier;
         this.visible = entity.visible;
         this.armorClass = entity.armorClass;
-
     }
- 
 }

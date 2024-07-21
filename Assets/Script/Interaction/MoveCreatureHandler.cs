@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using UnityEngine;
 
 public class MoveCreatureHandler : MonoBehaviour
@@ -13,15 +12,15 @@ public class MoveCreatureHandler : MonoBehaviour
     private Vector2 _previousMousePosition;
 
     private void Update() {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
             SelectCreatureToMove();
 
-        if(Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0))
             MoveCreature();
 
         if (Input.GetMouseButtonUp(0))
             ReleaseCreature();
-        
+
         _previousMousePosition = _cam.ScreenToWorldPoint(Input.mousePosition);
     }
 
@@ -32,10 +31,10 @@ public class MoveCreatureHandler : MonoBehaviour
         if (hit.collider == null) {
             DeselectCreatures();
             return;
-        } 
-        
-        Transform creature = hit.collider.transform; 
-        
+        }
+
+        Transform creature = hit.collider.transform;
+
         if (Input.GetKey(KeyCode.LeftShift)) {
             if (!_movingCreatures.Contains(creature)) {
                 SelectCreature(creature);
@@ -46,31 +45,31 @@ public class MoveCreatureHandler : MonoBehaviour
                 if (_movingCreatures.Count > 0) {
                     DeselectCreatures();
                 }
-            
+
                 SelectCreature(creature);
             }
-            
+
             _canMove = true;
         }
     }
 
     void MoveCreature() {
-        if(_movingCreatures.Count == 0) return;
-        
+        if (_movingCreatures.Count == 0) return;
+
         Vector2 mousePositionInWorldSpace = _cam.ScreenToWorldPoint(Input.mousePosition);
         Vector2 diffVector = mousePositionInWorldSpace - _previousMousePosition;
 
         foreach (var creature in _movingCreatures) {
             Vector2 creaturePosition = creature.position;
             creaturePosition += diffVector;
-            
+
             creature.position = creaturePosition;
         }
     }
 
     void ReleaseCreature() {
         if (!_canMove) return;
-        
+
         _canMove = false;
     }
 
@@ -83,12 +82,12 @@ public class MoveCreatureHandler : MonoBehaviour
     }
 
     void DeselectCreatures() {
-        foreach (var creature in _movingCreatures) { 
+        foreach (var creature in _movingCreatures) {
             Color color = creature.GetComponent<SpriteRenderer>().color;
 
             creature.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, color.a);
         }
-        
+
         _movingCreatures.Clear();
     }
 }

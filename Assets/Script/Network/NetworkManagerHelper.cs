@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using TMPro;
@@ -17,7 +15,7 @@ public class NetworkManagerHelper : MonoBehaviour
     private static NetworkManager manager;
 
     [SerializeField] private TMP_InputField _ipInput;
-    
+
     void Awake() {
         hostButton.onClick.AddListener(() => ConnectToGame(true));
         joinButton.onClick.AddListener(() => ConnectToGame(false));
@@ -31,7 +29,6 @@ public class NetworkManagerHelper : MonoBehaviour
         else {
             StartClient();
         }
-        
     }
 
     void StartHost() {
@@ -43,7 +40,8 @@ public class NetworkManagerHelper : MonoBehaviour
                 return;
             }
         }
-        throw new System.Exception("No network adapters with an IPv4 address in the system!");
+
+        throw new Exception("No network adapters with an IPv4 address in the system!");
     }
 
     void StartClient() {
@@ -51,6 +49,4 @@ public class NetworkManagerHelper : MonoBehaviour
         transport.ConnectionData.Address = _ipInput.text;
         NetworkManager.Singleton.StartClient();
     }
-    
-    
 }

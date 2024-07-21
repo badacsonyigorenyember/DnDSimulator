@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public static class CreatureDtoHandler
 {
     public static void CreatureDtoToCreature(Creature creature, CreatureDto creatureDto) {
@@ -11,5 +9,5 @@ public static class CreatureDtoHandler
 
         creature.gameObject.name = creatureDto.creatureName;
         creature.SetVisibleClientRpc(creatureDto.visible);
-    } 
+    }
 }
