@@ -2,7 +2,7 @@
 
 namespace Script.Models.Interfaces
 {
-    public abstract class Monster
+    public abstract class Monster : IEntity
     {
         public string Uuid { get; set; }
         public string Name { get; set; }
