@@ -1,3 +1,4 @@
+using Script.Utils;
 using UnityEngine;
 
 public class CreatureInteractionHandler : MonoBehaviour
@@ -10,7 +11,7 @@ public class CreatureInteractionHandler : MonoBehaviour
         Instance = this;
     }
 
-    public void OpenCreaturePanel(Creature c) {
+    public void OpenCreaturePanel(CreatureBehaviour c) {
         creaturePanel.SetActive(true);
         creaturePanel.GetComponent<CreatureEditPanelHandler>().Init(c);
     }

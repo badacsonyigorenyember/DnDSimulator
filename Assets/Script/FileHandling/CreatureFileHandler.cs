@@ -1,5 +1,6 @@
 using System.IO;
 using System.Threading.Tasks;
+using Script.Utils;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -41,10 +42,10 @@ public class CreatureFileHandler : MonoBehaviour
         GameObject creatureObj = Instantiate(_creaturePrefab, position, Quaternion.identity);
         creatureObj.name = creatureName;
 
-        Creature creature = creatureObj.GetComponent<Creature>();
+        CreatureBehaviour creatureBehaviour = creatureObj.GetComponent<CreatureBehaviour>();
 
-        creature.Init(creatureDataTask.Result);
-        creature.SetImage(creatureImageTask.Result);
+        creatureBehaviour.Init(creatureDataTask.Result);
+        creatureBehaviour.SetImage(creatureImageTask.Result);
 
         creatureObj.GetComponent<NetworkObject>().Spawn();
 

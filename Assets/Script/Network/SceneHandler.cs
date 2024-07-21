@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Script.Utils;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -88,16 +89,16 @@ public class SceneHandler : MonoBehaviour
         obj.GetComponent<NetworkObject>().TrySetParent(_creatureContainer);
     }
 
-    public async Task LoadCreature(Creature creature, CreatureDto creatureDto) {
-        CreatureDtoHandler.CreatureDtoToCreature(creature, creatureDto);
+    public async Task LoadCreature(CreatureBehaviour creatureBehaviour, CreatureDto creatureDto) {
+        CreatureDtoHandler.CreatureDtoToCreature(creatureBehaviour, creatureDto);
 
-        creature.transform.position = creatureDto.position;
+        creatureBehaviour.transform.position = creatureDto.position;
 
         byte[] bytes = await File.ReadAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{creatureDto.creatureName}.png");
         Texture2D texture = new Texture2D(1, 1);
         texture.LoadImage(bytes);
 
-        creature.SetImage(texture);
+        creatureBehaviour.SetImage(texture);
     }
 
     public async Task SaveScene() {

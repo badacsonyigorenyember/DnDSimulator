@@ -1,13 +1,15 @@
+using Script.Utils;
+
 public static class CreatureDtoHandler
 {
-    public static void CreatureDtoToCreature(Creature creature, CreatureDto creatureDto) {
-        creature.creatureName = creatureDto.creatureName;
-        creature.currentHp = creatureDto.currentHp;
-        creature.maxHp = creatureDto.maxHp;
-        creature.isPlayer = creatureDto.isCharacter;
-        creature.initiativeModifier = creatureDto.initiativeModifier;
+    public static void CreatureDtoToCreature(CreatureBehaviour creatureBehaviour, CreatureDto creatureDto) {
+        creatureBehaviour.creatureName = creatureDto.creatureName;
+        creatureBehaviour.currentHp = creatureDto.currentHp;
+        creatureBehaviour.maxHp = creatureDto.maxHp;
+        creatureBehaviour.isPlayer = creatureDto.isCharacter;
+        creatureBehaviour.initiativeModifier = creatureDto.initiativeModifier;
 
-        creature.gameObject.name = creatureDto.creatureName;
-        creature.SetVisibleClientRpc(creatureDto.visible);
+        creatureBehaviour.gameObject.name = creatureDto.creatureName;
+        creatureBehaviour.SetVisibleClientRpc(creatureDto.visible);
     }
 }

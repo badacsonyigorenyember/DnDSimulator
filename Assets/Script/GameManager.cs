@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Script.Utils;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class GameManager : NetworkBehaviour
 {
     public Button startStopButton;
 
-    public List<Creature> creatures = new();
+    public List<CreatureBehaviour> creatures = new();
     public bool isPlaying;
     public SceneData currentScene;
 

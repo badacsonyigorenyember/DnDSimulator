@@ -1,4 +1,5 @@
 using System;
+using Script.Utils;
 using UnityEngine;
 
 [Serializable]
@@ -13,7 +14,7 @@ public class CreatureDto
     public bool visible;
     public int armorClass;
 
-    public CreatureDto(Creature entity) {
+    public CreatureDto(CreatureBehaviour entity) {
         this.creatureName = entity.creatureName;
         this.currentHp = entity.currentHp;
         this.maxHp = entity.maxHp;

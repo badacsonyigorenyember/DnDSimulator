@@ -1,6 +1,8 @@
+using Script.Utils;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CreatureEditPanelHandler : MonoBehaviour
@@ -10,7 +12,7 @@ public class CreatureEditPanelHandler : MonoBehaviour
     public TMP_InputField currentHpModifyInput;
     public TMP_InputField maxHpModifyInput;
     public TMP_InputField initiativeInput;
-    public Creature creatureInfo;
+    [FormerlySerializedAs("creatureInfo")] public CreatureBehaviour creatureBehaviourInfo;
 
     public Button hpModifyButton;
     public Button statModifyButtin;
@@ -20,14 +22,14 @@ public class CreatureEditPanelHandler : MonoBehaviour
         statModifyButtin.onClick.AddListener(StatModify);
     }
 
-    public void Init(Creature c) {
-        creatureInfo = c;
+    public void Init(CreatureBehaviour c) {
+        creatureBehaviourInfo = c;
         nameText.text = c.creatureName;
         SetHpText();
     }
 
     void SetHpText() {
-        hpText.text = creatureInfo.currentHp + "/" + creatureInfo.maxHp;
+        hpText.text = creatureBehaviourInfo.currentHp + "/" + creatureBehaviourInfo.maxHp;
     }
 
     void StatModify() {
@@ -35,7 +37,7 @@ public class CreatureEditPanelHandler : MonoBehaviour
         if (stringValue == "") return;
 
         int intValue = int.Parse(stringValue);
-        creatureInfo.maxHp += intValue;
+        creatureBehaviourInfo.maxHp += intValue;
 
         //TODO initiative!!
     }
@@ -45,12 +47,12 @@ public class CreatureEditPanelHandler : MonoBehaviour
         if (stringValue == "") return;
 
         int intValue = int.Parse(stringValue);
-        creatureInfo.currentHp += intValue;
+        creatureBehaviourInfo.currentHp += intValue;
 
-        if (creatureInfo.currentHp <= 0) {
-            creatureInfo.currentHp = 0;
+        if (creatureBehaviourInfo.currentHp <= 0) {
+            creatureBehaviourInfo.currentHp = 0;
 
-            if (!creatureInfo.isPlayer) KillCreature();
+            if (!creatureBehaviourInfo.isPlayer) KillCreature();
             return;
         }
 
@@ -59,8 +61,8 @@ public class CreatureEditPanelHandler : MonoBehaviour
 
     void KillCreature() {
         //InitiativeHandler.Instance.RemoveEntityFromList(entityInfo);
-        creatureInfo.GetComponent<NetworkObject>().Despawn();
-        creatureInfo = null;
+        creatureBehaviourInfo.GetComponent<NetworkObject>().Despawn();
+        creatureBehaviourInfo = null;
         gameObject.SetActive(false);
     }
 }
