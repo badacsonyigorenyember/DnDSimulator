@@ -15,6 +15,3 @@ Tiszta és érthető leírás egy lehetséges megoldásról.
 
 **Alternatív megoldások (opcionális)**
 Tiszta és érthető leírás alternatív megoldásokról.
-
-**További kontextus (opcionális)**
-Ide írhatsz további információkat
