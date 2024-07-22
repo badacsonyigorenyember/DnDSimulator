@@ -1,5 +1,5 @@
 ---
-name: Bug report
+name: Új bug
 about: Visszajelzés létrehozása
 title: ''
 labels: bug
@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **Bug leírása**
-Tiszta és érthető rövid leírása a bug-nak
+Tiszta és érthető rövid leírása a bug-nak.
 
 **Hogyan idézhető elő**
 Lépések az előidézéshez:
@@ -18,10 +18,10 @@ Lépések az előidézéshez:
 4. ...
 
 **Elvárt viselkedés**
-Tiszta és érthető jellemzése az elvárt működésnek/viselkedésnek
+Tiszta és érthető jellemzése az elvárt működésnek/viselkedésnek.
 
 **Screenshot-ok (opcionális)**
-Screenshot-ok hozzáadása
+Screenshot-ok hozzáadása.
 
 **További kontextus (opcionális)**
-Ide írhatsz további információkat
+Ide írhatsz további információkat.
