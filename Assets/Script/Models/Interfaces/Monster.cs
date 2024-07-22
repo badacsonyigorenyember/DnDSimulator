@@ -40,7 +40,7 @@ namespace Script.Models.Interfaces
             return CurrentHealth;
         }
 
-        public void GetDataByUuid() {//TODO: kiolvasni mappából
+        public void GetDataByUuid(string uuid) {//TODO: kiolvasni mappából
             throw new NotImplementedException("Script.Models.Interfaces.Monster GetDataByUuid is not implemented yet");
         }
     }
