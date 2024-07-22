@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Script.Utils;
+using Script.Utils.Interfaces;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class GameManager : NetworkBehaviour
 {
     public Button startStopButton;
 
-    public List<CreatureBehaviour> creatures = new();
+    public List<EntityBehaviour> creatures = new();
     public bool isPlaying;
     public SceneData currentScene;
 
@@ -94,7 +95,7 @@ public class GameManager : NetworkBehaviour
             Debug.Log("Images downloaded!");
 
             foreach (var creature in creatures) {
-                SceneHandler.Instance.LoadCreature(creature,
+                await SceneHandler.Instance.LoadCreature((CreatureBehaviour) creature,
                     currentScene.creatures.Find(c => c.position == (Vector2)creature.transform.position));
             }
 
