@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,13 +49,17 @@ public class GameManager : NetworkBehaviour
         currentScene = null;
 
         startStopButton.onClick.AddListener(StartStopGame);
+        
+        //TODO
+        NetworkManager.CustomMessagingManager.RegisterNamedMessageHandler("GetGameStateData", ReceiveMessage);
+
     }
 
     async void StartStopGame() {
         if (currentScene == null) return;
 
         isPlaying = !isPlaying;
-
+        
         TextMeshProUGUI text = startStopButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         text.text = isPlaying ? "Stop" : "Start";
 
@@ -68,7 +74,27 @@ public class GameManager : NetworkBehaviour
             Debug.Log("Finished uploading!");
         }
 
-        StartGameClientRpc(isPlaying, currentScene.name, gameState);
+        //TODO beállítani, hogy a GameStateDto-t küldje el
+        var data = await File.ReadAllBytesAsync(GameManager.MAP_PATH + $"/{currentScene.name}.png");
+        var asd = new FastBufferWriter(data.Length, Allocator.Temp);
+        if (asd.TryBeginWrite(data.Length)) {
+            asd.WriteBytes(data);
+            NetworkManager.CustomMessagingManager.SendNamedMessageToAll("GetGameStateData", asd);
+        }
+
+        //StartGameClientRpc(isPlaying, currentScene.name, gameState);
+    }
+    
+    //TODO beállítani a GameStateDto-nak megfelelően
+    void ReceiveMessage(ulong senderId, FastBufferReader reader) {
+        int length = reader.Length - reader.Position;
+
+        if (reader.TryBeginRead(length)) {
+            byte[] s = new byte[length];
+            reader.ReadBytes(ref s, length);
+            Debug.Log(s.Length);
+        }
+        
     }
     
     [ClientRpc]
