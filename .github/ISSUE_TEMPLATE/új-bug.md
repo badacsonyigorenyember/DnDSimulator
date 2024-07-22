@@ -2,7 +2,7 @@
 name: Új bug
 about: Visszajelzés létrehozása
 title: ''
-labels: bug
+labels: bug, új
 assignees: ''
 
 ---

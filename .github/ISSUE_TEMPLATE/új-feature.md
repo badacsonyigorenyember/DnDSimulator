@@ -2,7 +2,7 @@
 name: Új feature
 about: Lehetséges feature a projekthez
 title: ''
-labels: feature
+labels: feature, új
 assignees: ''
 
 ---
