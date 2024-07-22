@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using Script.Models.Interfaces;
+using Script.Utils.Data;
 
 namespace Script.Models
 {
@@ -9,10 +10,10 @@ namespace Script.Models
         public Vector2 Position { get; set; }
         public bool Visible { get; set; }
 
-        public Creature(string uuid, Vector2 position, bool visible) {
-            Uuid = uuid;
-            GetDataByUuid();
-            Position = position;
+        public Creature(CreatureData data, bool visible) {
+            Uuid = data.uuid;
+            GetDataByUuid(data.uuid);
+            Position = data.position;
             Visible = visible;
         }
 
