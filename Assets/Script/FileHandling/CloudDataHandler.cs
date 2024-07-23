@@ -13,7 +13,7 @@ public static class CloudDataHandler
 
         foreach (var creature in creatureNames) {
             if (!File.Exists(GameManager.CREATURE_IMG_PATH + $"/{creature}.png")) {
-                byte[] creaturePicture = gameState.GetCreaturePictures()[creature];
+                byte[] creaturePicture = gameState.creaturePictures[creature];
                 downloadTasks.Add(File.WriteAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{creature}.png", creaturePicture));
             }
         }
@@ -49,7 +49,7 @@ public static class CloudDataHandler
     }
 
     public static async Task DownloadMap(string name, GameStateDto gameState) {
-        await File.WriteAllBytesAsync(GameManager.MAP_PATH + $"/{name}.png", gameState.GetMapPicture());
+        await File.WriteAllBytesAsync(GameManager.MAP_PATH + $"/{name}.png", gameState.mapPicture);
     }
     
 }

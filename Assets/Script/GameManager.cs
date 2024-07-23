@@ -81,24 +81,29 @@ public class GameManager : NetworkBehaviour
 
     private void SendGameStateDataToClients(GameStateDto gameState) {
         byte isPlayingFlag = (byte)(isPlaying ? 1 : 0);
-        int gameStateSize = gameState.GetSize();
+        string gameStateJson = JsonConvert.SerializeObject(gameState);
+        int bufferSize = FastBufferWriter.GetWriteSize(gameStateJson, true) + sizeof(byte);
         
-        var fastBufferWriter = new FastBufferWriter(sizeof(byte) + gameStateSize, Allocator.Temp);
-        if (fastBufferWriter.TryBeginWrite(gameStateSize)) {
-            fastBufferWriter.WriteByte(isPlayingFlag);
-            fastBufferWriter.WriteNetworkSerializable(gameState);
-            NetworkManager.CustomMessagingManager.SendNamedMessageToAll("GetGameStateData", fastBufferWriter);
-            Debug.Log("Game state object sent!");
+        using (FastBufferWriter fastBufferWriter = new FastBufferWriter(bufferSize, Allocator.Temp)) {
+            if (fastBufferWriter.TryBeginWrite(bufferSize)) {
+                fastBufferWriter.WriteByteSafe(isPlayingFlag);
+                fastBufferWriter.WriteValueSafe(gameStateJson, true);
+                NetworkManager.CustomMessagingManager.SendNamedMessageToAll("GetGameStateData", fastBufferWriter);
+                Debug.Log("Game state object sent! (Bytes: " + bufferSize + ")");
+            } else {
+                throw new Exception("Could not write \"GetGameStateData\" message!");
+            }
         }
     }
     
     void ReceiveGetGameStateDataMessage(ulong senderId, FastBufferReader reader) {
         int length = reader.Length - reader.Position;
-
+        
         if (reader.TryBeginRead(length)) {
-            reader.ReadByte(out byte isPlayingByte);
-            reader.ReadNetworkSerializable(out GameStateDto gameStateDto);
-            SetUpClient(Convert.ToBoolean(isPlayingByte), gameStateDto);
+            reader.ReadByteSafe(out byte isPlayingByte);
+            reader.ReadValueSafe(out string gameStateJson, true);
+            Debug.Log("Game state object received! (Bytes: " + length + ")");
+            SetUpClient(Convert.ToBoolean(isPlayingByte), JsonConvert.DeserializeObject<GameStateDto>(gameStateJson));
         } else {
             throw new Exception("Could not read \"GetGameStateData\" message!");
         }
@@ -106,7 +111,7 @@ public class GameManager : NetworkBehaviour
 
     async void SetUpClient(bool isPlaying, GameStateDto gameState) {
         if (isPlaying) {
-            currentScene = JsonConvert.DeserializeObject<SceneData>(gameState.GetSceneData());
+            currentScene = JsonConvert.DeserializeObject<SceneData>(gameState.sceneData);
 
             Debug.Log("Current scene set!");
 
