@@ -649,7 +649,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 245888563}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b9dcf91b2b640af982f97dd9ff8bdff, type: 3}
+  m_Script: {fileID: 11500000, guid: d132e49876b5344a4b2c6410aee654f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _adventureContainer: {fileID: 149013299}
@@ -2608,7 +2608,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1234149229}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce87583ea8954ee6ac0d1a9c47b56d19, type: 3}
+  m_Script: {fileID: 11500000, guid: 76298357c0d3a4f09a1502c445a66b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   subPath: 
@@ -3305,7 +3305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1375132140}
   m_Layer: 5
-  m_Name: JoiningPage
+  m_Name: JoinAdventurePage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5688,7 +5688,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2119305094}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69a6e97a8695a474490e9fa2fba84379, type: 3}
+  m_Script: {fileID: 11500000, guid: b85229a6493784373a3b82450266a8be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _startAdventureButton: {fileID: 279194558}
