@@ -58,25 +58,8 @@ namespace Script.UI.Menu.MainMenu
 
         void CreateAdventure() {
             string adventureName = _adventureNameInputField.text;
-            string folderName = "";
 
-            foreach (var sub in adventureName.Split(' ')) {
-                folderName += sub[0];
-            }
-
-            string folderPath = path + folderName.ToLower();
-
-            int counter = 0;
-            string tempFolderPath = folderPath;
-            
-            while (Directory.Exists(tempFolderPath)) {
-                tempFolderPath = folderPath + " " + ++counter;
-            }
-
-            folderPath = tempFolderPath;
-
-            Directory.CreateDirectory(folderPath);
-            File.Create(folderPath + $"/.{adventureName}");
+            Directory.CreateDirectory(adventureName);
             
             CloseCreatingPanel();
             ListAdventures();
