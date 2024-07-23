@@ -20,15 +20,10 @@ namespace Script.UI.Menu.MainMenu
             _deleteButton.onClick.AddListener(DeleteAdventure);
             
             adventureSubPath = subPath;
-            
-            Debug.Log(subPath);
-            
-            string fileNamePath = Directory.GetFiles(subPath).First(file => Path.GetFileName(file).First() == '.');
-            _adventureNameText.text = Path.GetFileName(fileNamePath).Remove(0, 1);
-        }
+            }
 
         void StartGame() {
-            FileManager.Instance.subPath = $"/{adventureSubPath}";
+            FileManager.Instance.subPath = adventureSubPath;
             NetworkManagerHelper.Instance.StartHost();
         }
 
