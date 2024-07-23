@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
@@ -31,6 +33,8 @@ public class GameManager : NetworkBehaviour
     }
 
     private void Start() {
+        NetworkManager.Singleton.StartHost();
+        
         CREATURE_IMG_PATH = Application.dataPath + "/Resources/Images/Creatures";
         CREATURE_DATA_PATH = Application.dataPath + "/Resources/Data/Creatures";
         MAP_PATH = Application.dataPath + "/Resources/Images/Maps";
@@ -48,22 +52,20 @@ public class GameManager : NetworkBehaviour
 
         currentScene = null;
 
-        startStopButton.onClick.AddListener(StartStopGame);
-        
-        //TODO
-        NetworkManager.CustomMessagingManager.RegisterNamedMessageHandler("GetGameStateData", ReceiveMessage);
+        if (!IsServer) {
+            NetworkManager.CustomMessagingManager.RegisterNamedMessageHandler("GetGameStateData", ReceiveGetGameStateDataMessage);
+        }
 
+        startStopButton.onClick.AddListener(StartStopGame);
     }
 
     async void StartStopGame() {
         if (currentScene == null) return;
 
         isPlaying = !isPlaying;
-        
+
         TextMeshProUGUI text = startStopButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         text.text = isPlaying ? "Stop" : "Start";
-
-        List<Task> tasks = new();
 
         await SceneHandler.Instance.SaveScene();
 
@@ -71,42 +73,40 @@ public class GameManager : NetworkBehaviour
         if (isPlaying) {
             gameState = await CloudDataHandler.GetGameStateDto(currentScene.name);
 
-            Debug.Log("Finished uploading!");
+            Debug.Log("Game state object created!");
         }
 
-        //TODO beállítani, hogy a GameStateDto-t küldje el
-        var data = await File.ReadAllBytesAsync(GameManager.MAP_PATH + $"/{currentScene.name}.png");
-        var asd = new FastBufferWriter(data.Length, Allocator.Temp);
-        if (asd.TryBeginWrite(data.Length)) {
-            asd.WriteBytes(data);
-            NetworkManager.CustomMessagingManager.SendNamedMessageToAll("GetGameStateData", asd);
-        }
+        SendGameStateDataToClients(gameState);
+    }
 
-        //StartGameClientRpc(isPlaying, currentScene.name, gameState);
+    private void SendGameStateDataToClients(GameStateDto gameState) {
+        byte isPlayingFlag = (byte)(isPlaying ? 1 : 0);
+        int gameStateSize = gameState.GetSize();
+        
+        var fastBufferWriter = new FastBufferWriter(sizeof(byte) + gameStateSize, Allocator.Temp);
+        if (fastBufferWriter.TryBeginWrite(gameStateSize)) {
+            fastBufferWriter.WriteByte(isPlayingFlag);
+            fastBufferWriter.WriteNetworkSerializable(gameState);
+            NetworkManager.CustomMessagingManager.SendNamedMessageToAll("GetGameStateData", fastBufferWriter);
+            Debug.Log("Game state object sent!");
+        }
     }
     
-    //TODO beállítani a GameStateDto-nak megfelelően
-    void ReceiveMessage(ulong senderId, FastBufferReader reader) {
+    void ReceiveGetGameStateDataMessage(ulong senderId, FastBufferReader reader) {
         int length = reader.Length - reader.Position;
 
         if (reader.TryBeginRead(length)) {
-            byte[] s = new byte[length];
-            reader.ReadBytes(ref s, length);
-            Debug.Log(s.Length);
+            reader.ReadByte(out byte isPlayingByte);
+            reader.ReadNetworkSerializable(out GameStateDto gameStateDto);
+            SetUpClient(Convert.ToBoolean(isPlayingByte), gameStateDto);
+        } else {
+            throw new Exception("Could not read \"GetGameStateData\" message!");
         }
-        
-    }
-    
-    [ClientRpc]
-    void StartGameClientRpc(bool isPlaying, string sceneName, GameStateDto gameState) {
-        if (IsServer) return;
-
-        SetUpClient(sceneName, isPlaying, gameState);
     }
 
-    async void SetUpClient(string sceneName, bool isPlaying, GameStateDto gameState) {
+    async void SetUpClient(bool isPlaying, GameStateDto gameState) {
         if (isPlaying) {
-            currentScene = JsonUtility.FromJson<SceneData>(gameState.GetSceneData());
+            currentScene = JsonConvert.DeserializeObject<SceneData>(gameState.GetSceneData());
 
             Debug.Log("Current scene set!");
 

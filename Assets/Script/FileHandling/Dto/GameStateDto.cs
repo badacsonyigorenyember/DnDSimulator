@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Unity.Netcode;
-using UnityEngine;
+using Newtonsoft.Json;
 
 [Serializable]
 public class GameStateDto : INetworkSerializable
@@ -14,18 +14,37 @@ public class GameStateDto : INetworkSerializable
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
         serializer.SerializeValue(ref mapPicture);
-        serializer.SerializeValue(ref sceneData);
+        serializer.SerializeValue(ref sceneData, true);
         
         string creaturePictureJson = "";
         if (serializer.IsWriter) {
-            creaturePictureJson = JsonUtility.ToJson(creaturePictures);
+            creaturePictureJson = JsonConvert.SerializeObject(creaturePictures);
         }
-        serializer.SerializeValue(ref creaturePictureJson);
+        serializer.SerializeValue(ref creaturePictureJson, true);
         if (serializer.IsReader) {
-            creaturePictures = JsonUtility.FromJson<Dictionary<string, byte[]>>(creaturePictureJson);
+            creaturePictures = JsonConvert.DeserializeObject<Dictionary<string, byte[]>>(creaturePictureJson);
         }
     }
 
+    public int GetSize() {
+        int resultSize = 0; // Magic number
+    
+        // Size of mapPicture (byte array length + content)
+        resultSize += sizeof(int); // Length prefix for the byte array
+        resultSize += mapPicture.Length;
+
+        // Size of sceneData (string length + content)
+        resultSize += sizeof(int); // Length prefix for the string
+        resultSize += sceneData.Length;
+
+        // Size of creaturePictures (JSON string length + content)
+        string creaturePictureJson = JsonConvert.SerializeObject(creaturePictures);
+        resultSize += sizeof(int); // Length prefix for the JSON string
+        resultSize += creaturePictureJson.Length;
+
+        return resultSize;
+    }
+    
     public GameStateDto() {
     }
 
