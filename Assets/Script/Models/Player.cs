@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using Script.Models.Interfaces;
+using Script.Structs;
 using Script.Utils.Data;
 
 namespace Script.Models
@@ -16,6 +17,8 @@ namespace Script.Models
         public bool Visible { get; set; }
         public Vector2 Position { get; set; }
 
+        public Abilities Abilities { get; set; }
+        
         public Player(PlayerData data, bool visible) {
             GetDataByUuid(data.uuid);
             Position = data.position;

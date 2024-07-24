@@ -1,4 +1,5 @@
 ﻿using System;
+using Script.Structs;
 
 namespace Script.Models.Interfaces
 {
@@ -10,6 +11,8 @@ namespace Script.Models.Interfaces
         public int CurrentHealth { get; set; }
         public int InitiativeModifier { get; set; }
         public int ArmorClass { get; set; }
+
+        public Abilities Abilities { get; set; }
 
         /**
          * Alkalmazza a paraméterben kapott sebzést
