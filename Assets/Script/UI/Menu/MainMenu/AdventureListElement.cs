@@ -13,24 +13,24 @@ namespace Script.UI.Menu.MainMenu
         [SerializeField] private Button _deleteButton;
         [SerializeField] private TextMeshProUGUI _adventureNameText;
 
-        private string adventureSubPath;
+        private string adventurePath;
 
         public void Init(string path) {
             _playButton.onClick.AddListener(StartGame);
             _deleteButton.onClick.AddListener(DeleteAdventure);
             
-            adventureSubPath = path;
+            adventurePath = path;
 
             _adventureNameText.text = new DirectoryInfo(path).Name;
         }
 
         void StartGame() {
-            FileManager.Instance.path = adventureSubPath;
+            FileManager.Instance.path = adventurePath;
             NetworkManagerHelper.Instance.StartHost();
         }
 
         void DeleteAdventure() {
-            Directory.Delete(adventureSubPath, true);
+            Directory.Delete(adventurePath, true);
             Destroy(gameObject);
         }
     }

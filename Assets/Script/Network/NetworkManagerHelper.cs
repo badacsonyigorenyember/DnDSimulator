@@ -10,8 +10,6 @@ using UnityEngine.UI;
 
 public class NetworkManagerHelper : MonoBehaviour
 {
-    public Button hostButton;
-    public Button joinButton;
     private static NetworkManager manager;
 
     public static NetworkManagerHelper Instance;
