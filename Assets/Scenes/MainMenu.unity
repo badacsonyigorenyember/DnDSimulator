@@ -594,7 +594,7 @@ MonoBehaviour:
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -649,12 +649,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 245888563}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d132e49876b5344a4b2c6410aee654f6, type: 3}
+  m_Script: {fileID: 11500000, guid: ccda0c9699025469bbb24506e5c8f47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _adventureContainer: {fileID: 149013299}
   _creatingPanel: {fileID: 1683875815}
-  _adventureListElement: {fileID: 4257634537837857151, guid: ee660af71209c4ea58e228274e3dd303, type: 3}
+  _adventureListElement: {fileID: 0}
   _createAdventureButton: {fileID: 2018335117}
   _createAdventureInCreatePanelButton: {fileID: 1478186567}
   _cancelAdventureInCreatePanelButton: {fileID: 1269703534}
@@ -1252,7 +1252,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2119305098}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_TargetAssemblyTypeName: Script.UI.Menu.MainMenu.MainMenu, Assembly-CSharp
         m_MethodName: Back
         m_Mode: 1
         m_Arguments:
@@ -2608,7 +2608,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1234149229}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76298357c0d3a4f09a1502c445a66b12, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dd9bae596ef545b5b290fad3bde9556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   subPath: 
@@ -4557,7 +4557,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5bb6fb399ad6e47dcaf499b412b4c6b8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 26b552ab7709c4970b17de90303fe9bb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4698,7 +4698,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2119305098}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_TargetAssemblyTypeName: Script.UI.Menu.MainMenu.MainMenu, Assembly-CSharp
         m_MethodName: Back
         m_Mode: 1
         m_Arguments:
@@ -5429,7 +5429,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2119305098}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_TargetAssemblyTypeName: Script.UI.Menu.MainMenu.MainMenu, Assembly-CSharp
         m_MethodName: Back
         m_Mode: 1
         m_Arguments:
@@ -5688,7 +5688,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2119305094}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b85229a6493784373a3b82450266a8be, type: 3}
+  m_Script: {fileID: 11500000, guid: b2c1379b2977943df98ba672e73f62b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _startAdventureButton: {fileID: 279194558}
