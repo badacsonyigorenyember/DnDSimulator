@@ -9,7 +9,7 @@ namespace Script.FileHandling
 {
     public class FileManager : MonoBehaviour
     {
-        public string subPath;
+        public string path;
 
         public static FileManager Instance;
         

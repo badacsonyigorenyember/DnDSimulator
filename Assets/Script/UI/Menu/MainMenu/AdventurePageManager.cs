@@ -18,7 +18,7 @@ namespace Script.UI.Menu.MainMenu
         [SerializeField] private Button _cancelAdventureInCreatePanelButton;
         [SerializeField] private TMP_InputField _adventureNameInputField;
         
-        private string path = Application.dataPath + "/Resources/Adventures/";
+        private string path = Application.dataPath + "/Adventures/";
 
         private void Start() {
             _createAdventureButton.onClick.AddListener(OpenCreatingPanel);
@@ -59,8 +59,8 @@ namespace Script.UI.Menu.MainMenu
         void CreateAdventure() {
             string adventureName = _adventureNameInputField.text;
 
-            Directory.CreateDirectory(adventureName);
-            
+            Directory.CreateDirectory(path + adventureName);
+
             CloseCreatingPanel();
             ListAdventures();
         }

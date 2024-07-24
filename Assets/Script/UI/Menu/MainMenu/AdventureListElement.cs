@@ -15,15 +15,17 @@ namespace Script.UI.Menu.MainMenu
 
         private string adventureSubPath;
 
-        public void Init(string subPath) {
+        public void Init(string path) {
             _playButton.onClick.AddListener(StartGame);
             _deleteButton.onClick.AddListener(DeleteAdventure);
             
-            adventureSubPath = subPath;
-            }
+            adventureSubPath = path;
+
+            _adventureNameText.text = new DirectoryInfo(path).Name;
+        }
 
         void StartGame() {
-            FileManager.Instance.subPath = adventureSubPath;
+            FileManager.Instance.path = adventureSubPath;
             NetworkManagerHelper.Instance.StartHost();
         }
 

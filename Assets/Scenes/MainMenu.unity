@@ -654,7 +654,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _adventureContainer: {fileID: 149013299}
   _creatingPanel: {fileID: 1683875815}
-  _adventureListElement: {fileID: 0}
+  _adventureListElement: {fileID: 4134057617674015464, guid: a1f6329d22a3745d3a9f8e697909b600, type: 3}
   _createAdventureButton: {fileID: 2018335117}
   _createAdventureInCreatePanelButton: {fileID: 1478186567}
   _cancelAdventureInCreatePanelButton: {fileID: 1269703534}
