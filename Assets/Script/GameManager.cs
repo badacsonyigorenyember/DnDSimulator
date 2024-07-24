@@ -35,10 +35,10 @@ public class GameManager : NetworkBehaviour
     private void Start() {
         NetworkManager.Singleton.StartHost();
         
-        CREATURE_IMG_PATH = Application.dataPath + "/Resources/Images/Creatures";
-        CREATURE_DATA_PATH = Application.dataPath + "/Resources/Data/Creatures";
-        MAP_PATH = Application.dataPath + "/Resources/Images/Maps";
-        SCENE_PATH = Application.dataPath + "/Resources/Data/Scenes";
+        CREATURE_IMG_PATH = Application.dataPath + "/Adventures/Temp/Images/Creatures";
+        CREATURE_DATA_PATH = Application.dataPath + "/Adventures/Temp/Data/Creatures";
+        MAP_PATH = Application.dataPath + "/Adventures/Temp/Images/Maps";
+        SCENE_PATH = Application.dataPath + "/Adventures/Temp/Data/Scenes";
 
         Directory.CreateDirectory(CREATURE_IMG_PATH);
         Directory.CreateDirectory(CREATURE_DATA_PATH);
@@ -46,15 +46,13 @@ public class GameManager : NetworkBehaviour
         Directory.CreateDirectory(SCENE_PATH);
 
         if (!IsServer) {
+            NetworkManager.CustomMessagingManager.RegisterNamedMessageHandler("GetGameStateData", ReceiveGetGameStateDataMessage);
+            
             waitingScreenObj.transform.parent.gameObject.SetActive(true);
             return;
         }
 
         currentScene = null;
-
-        if (!IsServer) {
-            NetworkManager.CustomMessagingManager.RegisterNamedMessageHandler("GetGameStateData", ReceiveGetGameStateDataMessage);
-        }
 
         startStopButton.onClick.AddListener(StartStopGame);
     }
