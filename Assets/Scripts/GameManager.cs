@@ -33,8 +33,6 @@ public class GameManager : NetworkBehaviour
     }
 
     private void Start() {
-        NetworkManager.Singleton.StartHost();
-        
         CREATURE_IMG_PATH = Application.dataPath + "/Adventures/Temp/Images/Creatures";
         CREATURE_DATA_PATH = Application.dataPath + "/Adventures/Temp/Data/Creatures";
         MAP_PATH = Application.dataPath + "/Adventures/Temp/Images/Maps";
