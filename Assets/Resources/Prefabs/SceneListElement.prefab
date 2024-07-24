@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 2966347675015520193}
   - component: {fileID: 6839548227097077109}
   - component: {fileID: 5303309616078931324}
-  - component: {fileID: 2654933576076003212}
-  - component: {fileID: 5798916301098558424}
   - component: {fileID: 568829160654999663}
+  - component: {fileID: 6119123562457532841}
   m_Layer: 5
   m_Name: SceneListElement
   m_TagString: Untagged
@@ -93,32 +92,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 100, y: 100}
   m_EdgeRadius: 0
---- !u!114 &2654933576076003212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4234424478992764004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0d5ea7f4cae4ed78a9911c6351752f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5798916301098558424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4234424478992764004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68773c030df44c50824b62aa6a03e267, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  header: 
-  content: 
 --- !u!114 &568829160654999663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,3 +181,17 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6119123562457532841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4234424478992764004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 357ed1716e30a4a119c49d0eb748366b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  header: 
+  content: 
