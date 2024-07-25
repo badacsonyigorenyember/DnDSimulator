@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using Models;
 using UnityEngine;
 
-namespace Utils
+namespace Models
 {
-    public class SceneData
+    public class Scene
     {
         public string name;
         public List<Creature> creatures;
@@ -12,7 +11,7 @@ namespace Utils
         public float zoomScale;
         public Vector2 camPosition;
 
-        public SceneData(string name) {
+        public Scene(string name) {
             this.name = name;
             creatures = new List<Creature>();
             players = new List<Player>();
