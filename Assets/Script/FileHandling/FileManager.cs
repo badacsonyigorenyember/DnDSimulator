@@ -1,9 +1,4 @@
-using System;
-using System.Net;
-using System.Net.Sockets;
-using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Script.FileHandling
 {
@@ -18,6 +13,5 @@ namespace Script.FileHandling
             
             Instance = this;
         }
-
     }
 }
