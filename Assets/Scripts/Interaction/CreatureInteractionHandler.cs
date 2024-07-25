@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class CreatureInteractionHandler : MonoBehaviour
+namespace Interaction
 {
-    public GameObject creaturePanel;
+    public class CreatureInteractionHandler : MonoBehaviour
+    {
+        public GameObject creaturePanel;
 
-    public static CreatureInteractionHandler Instance;
+        public static CreatureInteractionHandler Instance;
 
-    private void Awake() {
-        Instance = this;
-    }
+        private void Awake() {
+            Instance = this;
+        }
 
-    public void OpenCreaturePanel(Creature c) {
-        creaturePanel.SetActive(true);
-        creaturePanel.GetComponent<CreatureEditPanelHandler>().Init(c);
-    }
+        public void OpenCreaturePanel(Creature c) {
+            creaturePanel.SetActive(true);
+            creaturePanel.GetComponent<CreatureEditPanelHandler>().Init(c);
+        }
 
-    public void CancelCreaturePanel() {
-        creaturePanel.SetActive(false);
+        public void CancelCreaturePanel() {
+            creaturePanel.SetActive(false);
+        }
     }
 }

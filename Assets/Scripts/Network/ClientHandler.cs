@@ -2,14 +2,17 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class ClientHandler : NetworkBehaviour
+namespace Network
 {
-    public List<GameObject> notVisibleForClients = new();
+    public class ClientHandler : NetworkBehaviour
+    {
+        public List<GameObject> notVisibleForClients = new();
 
-    private void Start() {
-        if (!IsServer) {
-            foreach (var obj in notVisibleForClients) {
-                obj.gameObject.SetActive(false);
+        private void Start() {
+            if (!IsServer) {
+                foreach (var obj in notVisibleForClients) {
+                    obj.gameObject.SetActive(false);
+                }
             }
         }
     }

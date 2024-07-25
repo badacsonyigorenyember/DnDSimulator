@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Script.UI
+namespace UI
 {
     public class MapScaler : MonoBehaviour
     {
