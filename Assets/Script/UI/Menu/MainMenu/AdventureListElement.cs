@@ -1,5 +1,4 @@
 using System.IO;
-using System.Linq;
 using Script.FileHandling;
 using TMPro;
 using UnityEngine;
@@ -20,7 +19,7 @@ namespace Script.UI.Menu.MainMenu
             _deleteButton.onClick.AddListener(DeleteAdventure);
             
             adventureSubPath = subPath;
-            }
+        }
 
         void StartGame() {
             FileManager.Instance.subPath = adventureSubPath;
