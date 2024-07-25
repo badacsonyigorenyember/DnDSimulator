@@ -1,93 +1,96 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveCreatureHandler : MonoBehaviour
+namespace Interaction
 {
-    [SerializeField] private Camera _cam;
+    public class MoveCreatureHandler : MonoBehaviour
+    {
+        [SerializeField] private Camera _cam;
 
-    [SerializeField] private float movementSpeed;
+        [SerializeField] private float movementSpeed;
 
-    private List<Transform> _movingCreatures = new();
-    private bool _canMove;
-    private Vector2 _previousMousePosition;
+        private List<Transform> _movingCreatures = new();
+        private bool _canMove;
+        private Vector2 _previousMousePosition;
 
-    private void Update() {
-        if (Input.GetMouseButtonDown(0))
-            SelectCreatureToMove();
+        private void Update() {
+            if (Input.GetMouseButtonDown(0))
+                SelectCreatureToMove();
 
-        if (Input.GetMouseButton(0))
-            MoveCreature();
+            if (Input.GetMouseButton(0))
+                MoveCreature();
 
-        if (Input.GetMouseButtonUp(0))
-            ReleaseCreature();
+            if (Input.GetMouseButtonUp(0))
+                ReleaseCreature();
 
-        _previousMousePosition = _cam.ScreenToWorldPoint(Input.mousePosition);
-    }
-
-    void SelectCreatureToMove() {
-        Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, LayerMask.GetMask("Creature"));
-
-        if (hit.collider == null) {
-            DeselectCreatures();
-            return;
+            _previousMousePosition = _cam.ScreenToWorldPoint(Input.mousePosition);
         }
 
-        Transform creature = hit.collider.transform;
+        void SelectCreatureToMove() {
+            Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, LayerMask.GetMask("Creature"));
 
-        if (Input.GetKey(KeyCode.LeftShift)) {
-            if (!_movingCreatures.Contains(creature)) {
-                SelectCreature(creature);
+            if (hit.collider == null) {
+                DeselectCreatures();
+                return;
             }
-        }
-        else {
-            if (!_movingCreatures.Contains(creature)) {
-                if (_movingCreatures.Count > 0) {
-                    DeselectCreatures();
+
+            Transform creature = hit.collider.transform;
+
+            if (Input.GetKey(KeyCode.LeftShift)) {
+                if (!_movingCreatures.Contains(creature)) {
+                    SelectCreature(creature);
+                }
+            }
+            else {
+                if (!_movingCreatures.Contains(creature)) {
+                    if (_movingCreatures.Count > 0) {
+                        DeselectCreatures();
+                    }
+
+                    SelectCreature(creature);
                 }
 
-                SelectCreature(creature);
+                _canMove = true;
             }
-
-            _canMove = true;
         }
-    }
 
-    void MoveCreature() {
-        if (_movingCreatures.Count == 0) return;
+        void MoveCreature() {
+            if (_movingCreatures.Count == 0) return;
 
-        Vector2 mousePositionInWorldSpace = _cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 diffVector = mousePositionInWorldSpace - _previousMousePosition;
+            Vector2 mousePositionInWorldSpace = _cam.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 diffVector = mousePositionInWorldSpace - _previousMousePosition;
 
-        foreach (var creature in _movingCreatures) {
-            Vector2 creaturePosition = creature.position;
-            creaturePosition += diffVector;
+            foreach (var creature in _movingCreatures) {
+                Vector2 creaturePosition = creature.position;
+                creaturePosition += diffVector;
 
-            creature.position = creaturePosition;
+                creature.position = creaturePosition;
+            }
         }
-    }
 
-    void ReleaseCreature() {
-        if (!_canMove) return;
+        void ReleaseCreature() {
+            if (!_canMove) return;
 
-        _canMove = false;
-    }
+            _canMove = false;
+        }
 
-    void SelectCreature(Transform creature) {
-        _movingCreatures.Add(creature);
+        void SelectCreature(Transform creature) {
+            _movingCreatures.Add(creature);
 
-        Color color = creature.GetComponent<SpriteRenderer>().color;
-
-        creature.GetComponent<SpriteRenderer>().color = new Color(255, 255, 0, color.a);
-    }
-
-    void DeselectCreatures() {
-        foreach (var creature in _movingCreatures) {
             Color color = creature.GetComponent<SpriteRenderer>().color;
 
-            creature.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, color.a);
+            creature.GetComponent<SpriteRenderer>().color = new Color(255, 255, 0, color.a);
         }
 
-        _movingCreatures.Clear();
+        void DeselectCreatures() {
+            foreach (var creature in _movingCreatures) {
+                Color color = creature.GetComponent<SpriteRenderer>().color;
+
+                creature.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, color.a);
+            }
+
+            _movingCreatures.Clear();
+        }
     }
 }

@@ -1,24 +1,27 @@
 using UnityEngine;
 
-public class TooltipSystem : MonoBehaviour
+namespace UI.Tooltip
 {
-    private static TooltipSystem Instance;
+    public class TooltipSystem : MonoBehaviour
+    {
+        private static TooltipSystem Instance;
 
-    [SerializeField] private Tooltip _tooltip;
+        [SerializeField] private Tooltip _tooltip;
 
-    private void Awake() {
-        Instance = this;
-    }
+        private void Awake() {
+            Instance = this;
+        }
 
-    public static void Show(string header, string content, Vector2 position) {
-        Instance._tooltip.SetText(header, content);
+        public static void Show(string header, string content, Vector2 position) {
+            Instance._tooltip.SetText(header, content);
 
-        Instance._tooltip.transform.position = position;
+            Instance._tooltip.transform.position = position;
 
-        Instance._tooltip.StartFade(true);
-    }
+            Instance._tooltip.StartFade(true);
+        }
 
-    public static void Hide() {
-        Instance._tooltip.StartFade(false);
+        public static void Hide() {
+            Instance._tooltip.StartFade(false);
+        }
     }
 }
