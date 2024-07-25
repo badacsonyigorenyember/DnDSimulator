@@ -52,13 +52,13 @@ namespace Tests.EditMode {
 
             // Basic field-ek
             Assert.That(_gameStateDto.sceneData == gameStateRecreated.sceneData);
-            Assert.That(Enumerable.SequenceEqual(_gameStateDto.mapPicture, gameStateRecreated.mapPicture));
+            Assert.That(_gameStateDto.mapPicture.SequenceEqual(gameStateRecreated.mapPicture));
 
             // Dictionary
             DictionaryEquals(_gameStateDto.creaturePictures, gameStateRecreated.creaturePictures);
         }
 
-        private void DictionaryEquals<TKey, TValue>(Dictionary<TKey, TValue> dict1, Dictionary<TKey, TValue> dict2) {
+        private static void DictionaryEquals<TKey, TValue>(Dictionary<TKey, TValue> dict1, Dictionary<TKey, TValue> dict2) {
             Assert.That(dict1, Is.Not.Null);
             Assert.That(dict2, Is.Not.Null);
             Assert.That(dict1.Count, Is.EqualTo(dict2.Count));
