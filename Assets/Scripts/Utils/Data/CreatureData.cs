@@ -1,7 +1,7 @@
 using System.Numerics;
-using Script.Utils.Interfaces;
+using Utils.Interfaces;
 
-namespace Script.Utils.Data
+namespace Utils.Data
 {
     public class CreatureData : IEntityData
     {

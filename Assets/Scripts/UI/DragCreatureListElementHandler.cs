@@ -1,9 +1,10 @@
 using System.Collections.Generic;
-using Script.Utils.Data;
 using FileHandling;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Utils;
+using Utils.Data;
 
 namespace UI
 {

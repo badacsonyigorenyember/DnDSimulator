@@ -1,4 +1,3 @@
-using Script.Utils;
 using UnityEngine;
 
 namespace Interaction

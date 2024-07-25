@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace Script.Models.Interfaces
+﻿namespace Models.Interfaces
 {
     public interface IEntity
     {

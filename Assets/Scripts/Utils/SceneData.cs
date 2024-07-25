@@ -1,15 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneData
+namespace Utils
 {
-    public string name;
-    public List<CreatureDto> creatures;
-    public float zoomScale;
-    public Vector2 camPosition;
+    public class SceneData
+    {
+        public string name;
+        public List<string> creatures;
+        public float zoomScale;
+        public Vector2 camPosition;
 
-    public SceneData(string name) {
-        this.name = name;
-        creatures = new List<CreatureDto>();
+        public SceneData(string name) {
+            this.name = name;
+            creatures = new List<string>();
+        }
     }
 }

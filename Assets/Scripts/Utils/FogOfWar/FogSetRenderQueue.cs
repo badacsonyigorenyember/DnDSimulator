@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FogOfWar
+namespace Utils.FogOfWar
 {
     public class FogSetRenderQueue : MonoBehaviour
     {

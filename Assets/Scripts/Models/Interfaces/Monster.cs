@@ -1,7 +1,7 @@
 ﻿using System;
 using Script.Structs;
 
-namespace Script.Models.Interfaces
+namespace Models.Interfaces
 {
     public abstract class Monster
     {

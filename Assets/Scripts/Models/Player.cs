@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Numerics;
-using Script.Models.Interfaces;
+using Models.Interfaces;
 using Script.Structs;
-using Script.Utils.Data;
+using Utils.Data;
 
-namespace Script.Models
+namespace Models
 {
     public class Player : IEntity
     {

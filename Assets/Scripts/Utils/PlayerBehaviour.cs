@@ -1,9 +1,9 @@
 ﻿using System;
-using Script.Models;
-using Script.Utils.Data;
-using Script.Utils.Interfaces;
+using Models;
+using Utils.Data;
+using Utils.Interfaces;
 
-namespace Script.Utils
+namespace Utils
 {
     [Serializable]
     public class PlayerBehaviour : EntityBehaviour

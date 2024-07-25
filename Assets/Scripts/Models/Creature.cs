@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Numerics;
-using Script.Models.Interfaces;
-using Script.Utils.Data;
+using Models.Interfaces;
+using Utils.Data;
 
-namespace Script.Models
+namespace Models
 {
     public class Creature : Monster, IEntity
     {

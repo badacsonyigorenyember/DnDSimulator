@@ -1,8 +1,8 @@
-﻿using Script.Models.Interfaces;
+﻿using Models.Interfaces;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace Script.Utils.Interfaces
+namespace Utils.Interfaces
 {
     public abstract class EntityBehaviour : NetworkBehaviour
     {
@@ -15,7 +15,7 @@ namespace Script.Utils.Interfaces
                 new Rect(0, 0, texture.width, texture.height), 
                 Vector2.one * 0.5f, 
                 200f
-                );
+            );
 
             GetComponent<CircleCollider2D>().radius = 0.7f * (texture.width / 280);
         }

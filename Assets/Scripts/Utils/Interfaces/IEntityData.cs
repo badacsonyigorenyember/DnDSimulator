@@ -1,4 +1,4 @@
-﻿namespace Script.Utils.Interfaces
+﻿namespace Utils.Interfaces
 {
     public interface IEntityData
     {
