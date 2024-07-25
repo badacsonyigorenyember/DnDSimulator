@@ -1,41 +1,42 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class NetworkManagerHelper : MonoBehaviour
+namespace Network
 {
-    private static NetworkManager manager;
+    public class NetworkManagerHelper : MonoBehaviour
+    {
+        private static NetworkManager manager;
 
-    public static NetworkManagerHelper Instance;
+        public static NetworkManagerHelper Instance;
 
-    private void Awake() {
-        Instance = this;
-    }
+        private void Awake() {
+            Instance = this;
+        }
     
-    public void StartHost() {
-        var host = Dns.GetHostEntry(Dns.GetHostName());
-        foreach (var ip in host.AddressList) {
-            if (ip.AddressFamily == AddressFamily.InterNetwork) {
-                Debug.Log(ip);
-                NetworkManager.Singleton.StartHost();
-                NetworkManager.Singleton.SceneManager.LoadScene("Game", LoadSceneMode.Single);
+        public void StartHost() {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList) {
+                if (ip.AddressFamily == AddressFamily.InterNetwork) {
+                    Debug.Log(ip);
+                    NetworkManager.Singleton.StartHost();
+                    NetworkManager.Singleton.SceneManager.LoadScene("Game", LoadSceneMode.Single);
                 
-                return;
+                    return;
+                }
             }
+
+            throw new Exception("No network adapters with an IPv4 address in the system!");
         }
 
-        throw new Exception("No network adapters with an IPv4 address in the system!");
-    }
-
-    public void StartClient(string ip) {
-        UnityTransport transport = GetComponent<UnityTransport>();
-        transport.ConnectionData.Address = ip;
-        NetworkManager.Singleton.StartClient();
+        public void StartClient(string ip) {
+            UnityTransport transport = GetComponent<UnityTransport>();
+            transport.ConnectionData.Address = ip;
+            NetworkManager.Singleton.StartClient();
+        }
     }
 }
