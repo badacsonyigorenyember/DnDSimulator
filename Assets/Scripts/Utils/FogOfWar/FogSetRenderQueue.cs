@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public class FogSetRenderQueue : MonoBehaviour
+namespace FogOfWar
 {
-    private void Start() {
-        GetComponent<MeshRenderer>().material.renderQueue = 3002;
+    public class FogSetRenderQueue : MonoBehaviour
+    {
+        private void Start() {
+            GetComponent<MeshRenderer>().material.renderQueue = 3002;
+        }
     }
 }

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Script.UI.Menu.MainMenu
+namespace UI.Menu.MainMenu
 {
     public class AdventurePageManager : MonoBehaviour
     {

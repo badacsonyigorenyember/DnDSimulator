@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class CreateButton : MonoBehaviour
+namespace UI
 {
-    public SelectedList selected;
+    public class CreateButton : MonoBehaviour
+    {
+        public SelectedList selected;
 
-    public void SetType(SelectedList type) {
-        selected = type;
+        public void SetType(SelectedList type) {
+            selected = type;
+        }
     }
 }

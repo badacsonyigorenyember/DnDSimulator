@@ -1,95 +1,99 @@
 using System.Collections.Generic;
 using Script.Utils.Data;
+using FileHandling;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DragCreatureListElementHandler : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Camera _cam;
-    [SerializeField] private GraphicRaycaster _gr;
+    public class DragCreatureListElementHandler : MonoBehaviour
+    {
+        [SerializeField] private Camera _cam;
+        [SerializeField] private GraphicRaycaster _gr;
 
-    [SerializeField] private int distance;
+        [SerializeField] private int distance;
 
-    [SerializeField] private GameObject _creaturePrefab;
+        [SerializeField] private GameObject _creaturePrefab;
 
-    private static bool validRelease;
+        private static bool validRelease;
 
-    private GameObject _selectedCreature;
-    private GameObject _instantiatedCreature;
-    private Vector2 _startPosition;
-    private CreatureData _creature;
-    private Texture2D _creatureImg;
+        private GameObject _selectedCreature;
+        private GameObject _instantiatedCreature;
+        private Vector2 _startPosition;
+        private CreatureData _creature;
+        private Texture2D _creatureImg;
 
-    private void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            SelectCreature();
-        }
+        private void Update() {
+            if (Input.GetMouseButtonDown(0)) {
+                SelectCreature();
+            }
 
-        if (Input.GetMouseButton(0)) {
-            MoveCreature();
-        }
+            if (Input.GetMouseButton(0)) {
+                MoveCreature();
+            }
 
-        if (Input.GetMouseButtonUp(0)) {
-            ReleaseCreature();
-        }
+            if (Input.GetMouseButtonUp(0)) {
+                ReleaseCreature();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            ReleaseCreature(false);
-        }
-    }
-
-    void SelectCreature() {
-        PointerEventData data = new PointerEventData(null)
-        {
-            position = Input.mousePosition
-        };
-
-        List<RaycastResult> results = new List<RaycastResult>();
-        _gr.Raycast(data, results);
-
-        foreach (var result in results) {
-            if (result.gameObject.GetComponent<CreatureListElement>() != null) {
-                _selectedCreature = result.gameObject;
-                _startPosition = result.screenPosition;
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                ReleaseCreature(false);
             }
         }
-    }
 
-    void MoveCreature() {
-        if (_selectedCreature == null) return;
+        void SelectCreature() {
+            PointerEventData data = new PointerEventData(null)
+            {
+                position = Input.mousePosition
+            };
 
-        if (_instantiatedCreature == null) {
-            if (!(Vector2.Distance(_startPosition, Input.mousePosition) > distance)) return;
+            List<RaycastResult> results = new List<RaycastResult>();
+            _gr.Raycast(data, results);
 
-            _instantiatedCreature = Instantiate(_selectedCreature, transform.parent);
-            Destroy(_instantiatedCreature.GetComponent<BoxCollider2D>());
-            _instantiatedCreature.GetComponent<Image>().raycastTarget = false;
+            foreach (var result in results) {
+                if (result.gameObject.GetComponent<CreatureListElement>() != null) {
+                    _selectedCreature = result.gameObject;
+                    _startPosition = result.screenPosition;
+                }
+            }
         }
 
-        Vector3 position = _cam.ScreenToWorldPoint(Input.mousePosition);
-        position.z = 90;
+        void MoveCreature() {
+            if (_selectedCreature == null) return;
 
-        _instantiatedCreature.transform.position = position;
-    }
+            if (_instantiatedCreature == null) {
+                if (!(Vector2.Distance(_startPosition, Input.mousePosition) > distance)) return;
 
-    async void ReleaseCreature(bool instantiate = true) {
-        if (_selectedCreature == null || _instantiatedCreature == null) return;
+                _instantiatedCreature = Instantiate(_selectedCreature, transform.parent);
+                Destroy(_instantiatedCreature.GetComponent<BoxCollider2D>());
+                _instantiatedCreature.GetComponent<Image>().raycastTarget = false;
+            }
 
-        Destroy(_instantiatedCreature);
-        _instantiatedCreature = null;
-
-        if (validRelease && instantiate) {
             Vector3 position = _cam.ScreenToWorldPoint(Input.mousePosition);
-            position.z = 0;
+            position.z = 90;
 
-            await CreatureFileHandler.Instance.SpawnCreature(_selectedCreature.name, position);
+            _instantiatedCreature.transform.position = position;
         }
 
-        _selectedCreature = null;
-    }
+        async void ReleaseCreature(bool instantiate = true) {
+            if (_selectedCreature == null || _instantiatedCreature == null) return;
 
-    public static void ValidRelease(bool value) {
-        validRelease = value;
+            Destroy(_instantiatedCreature);
+            _instantiatedCreature = null;
+
+            if (validRelease && instantiate) {
+                Vector3 position = _cam.ScreenToWorldPoint(Input.mousePosition);
+                position.z = 0;
+
+                await CreatureFileHandler.Instance.SpawnCreature(_selectedCreature.name, position);
+            }
+
+            _selectedCreature = null;
+        }
+
+        public static void ValidRelease(bool value) {
+            validRelease = value;
+        }
     }
 }

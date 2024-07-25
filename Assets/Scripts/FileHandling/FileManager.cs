@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Script.FileHandling
+namespace FileHandling
 {
     public class FileManager : MonoBehaviour
     {
