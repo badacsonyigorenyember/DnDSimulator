@@ -1,0 +1,33 @@
+{
+    "name": "EditMode",
+    "rootNamespace": "",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "Unity.Netcode.Components",
+        "Unity.Netcode.Editor",
+        "Unity.Netcode.Editor.CodeGen",
+        "Unity.Netcode.Editor.PackageChecker",
+        "Unity.Netcode.EditorTests",
+        "Unity.Netcode.Runtime",
+        "Unity.Netcode.RuntimeTests",
+        "Unity.Netcode.TestHelpers.Runtime",
+        "Scripts"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
