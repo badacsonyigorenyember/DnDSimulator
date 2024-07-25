@@ -5,7 +5,7 @@ namespace Script.Models.Interfaces
 {
     public abstract class Monster
     {
-        public string Uuid { get; set; }
+        public string MonsterId { get; set; }
         public string Name { get; set; }
         public int MaxHealth { get; set; }
         public int CurrentHealth { get; set; }

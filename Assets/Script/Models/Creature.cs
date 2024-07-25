@@ -7,12 +7,13 @@ namespace Script.Models
 {
     public class Creature : Monster, IEntity
     {
+        public string Uuid { get; set; }
         public Vector2 Position { get; set; }
         public bool Visible { get; set; }
 
         public Creature(CreatureData data, bool visible) {
-            Uuid = data.uuid;
-            GetDataByUuid(data.uuid);
+            MonsterId = data.uuid;
+            GetDataByUuid(MonsterId);
             Position = data.position;
             Visible = visible;
         }
