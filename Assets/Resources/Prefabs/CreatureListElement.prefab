@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8771536421476285447}
   - component: {fileID: 5303309616078931324}
   - component: {fileID: 7606246939386164130}
+  - component: {fileID: 6977282974545727715}
   m_Layer: 5
   m_Name: CreatureListElement
   m_TagString: Untagged
@@ -136,3 +137,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   header: 
   content: 
+--- !u!114 &6977282974545727715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4234424478992764004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49a6c69ee898241aea3221ffa387b542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
