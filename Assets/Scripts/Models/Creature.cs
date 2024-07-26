@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Numerics;
 using Models.Interfaces;
+using UnityEngine;
 using Utils.Data;
 
 namespace Models
@@ -11,15 +11,31 @@ namespace Models
         public Vector2 Position { get; set; }
         public bool Visible { get; set; }
 
-        public Creature(CreatureData data, bool visible) {
-            MonsterId = data.uuid;
-            GetDataByUuid(MonsterId);
+        public Creature(CreatureData data) {
+            Uuid = data.uuid;
+            Visible = data.visible;
             Position = data.position;
-            Visible = visible;
-        }
-
-        public void Serialize() {
-            throw new NotImplementedException("Script.Models.Creature Serialize is not implemented yet");
+            
+            GetMonsterDataById(data.monsterId);
+            
+            if (Convert.ToBoolean(data.name)) {
+                Name = data.name;
+            }
+            if (Convert.ToBoolean(data.maxHealth)) {
+                MaxHealth = data.maxHealth;
+            }
+            if (Convert.ToBoolean(data.currentHealth)) {
+                CurrentHealth = data.currentHealth;
+            }
+            if (Convert.ToBoolean(data.initiativeModifier)) {
+                InitiativeModifier = data.initiativeModifier;
+            }
+            if (Convert.ToBoolean(data.armorClass)) {
+                ArmorClass = data.armorClass;
+            }
+            if (Convert.ToBoolean(data.abilities)) {
+                Abilities = data.abilities;
+            }
         }
     }
 }

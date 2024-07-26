@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using FileHandling;
+using Newtonsoft.Json;
 using Script.Structs;
 
 namespace Models.Interfaces
@@ -43,8 +46,20 @@ namespace Models.Interfaces
             return CurrentHealth;
         }
 
-        public void GetDataByUuid(string uuid) {//TODO: kiolvasni mappából
-            throw new NotImplementedException("Script.Models.Interfaces.Monster GetDataByUuid is not implemented yet");
+        /**
+         * Kiolvassa a kapott monster adatait a json-ből
+         */
+        protected void GetMonsterDataById(string monsterId) {
+            Monster monster = JsonConvert.DeserializeObject<List<Monster>>(FileManager.MonsterManualPath)
+                .Find(monster => monster.MonsterId == monsterId);
+            
+            MonsterId = monster.MonsterId;
+            Name = monster.Name;
+            MaxHealth = monster.MaxHealth;
+            CurrentHealth = monster.CurrentHealth;
+            InitiativeModifier = monster.InitiativeModifier;
+            ArmorClass = monster.ArmorClass;
+            Abilities = monster.Abilities;
         }
     }
 }
