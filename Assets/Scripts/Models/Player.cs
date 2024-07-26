@@ -1,8 +1,7 @@
-﻿using System;
-using System.Numerics;
-using Models.Interfaces;
+﻿using Models.Interfaces;
 using Script.Structs;
 using Utils.Data;
+using Vector2 = UnityEngine.Vector2;
 
 namespace Models
 {
@@ -19,10 +18,16 @@ namespace Models
 
         public Abilities Abilities { get; set; }
         
-        public Player(PlayerData data, bool visible) {
-            GetDataByUuid(data.uuid);
+        public Player(PlayerData data) {
+            Uuid = data.uuid;
+            Name = data.name;
+            MaxHealth = data.maxHealth;
+            CurrentHealth = data.currentHealth;
+            InitiativeModifier = data.initiativeModifier;
+            ArmorClass = data.armorClass;
+            Visible = data.visible;
             Position = data.position;
-            Visible = visible;
+            Abilities = data.abilities;
         }
 
         public int DoDamage(int damage) {
@@ -41,10 +46,6 @@ namespace Models
             }
 
             return CurrentHealth;
-        }
-
-        public void GetDataByUuid(string uuid) {
-            throw new NotImplementedException();
         }
     }
 }
