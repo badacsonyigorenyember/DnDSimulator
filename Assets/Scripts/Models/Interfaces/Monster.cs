@@ -50,8 +50,7 @@ namespace Models.Interfaces
          * Kiolvassa a kapott monster adatait a json-ből
          */
         protected void GetMonsterDataById(string monsterId) {
-            Monster monster = JsonConvert.DeserializeObject<List<Monster>>(FileManager.MonsterManualPath)
-                .Find(monster => monster.MonsterId == monsterId);
+            Monster monster = JsonConvert.DeserializeObject<Dictionary<string, Monster>>(FileManager.MonsterManualPath)[monsterId];
             
             MonsterId = monster.MonsterId;
             Name = monster.Name;
