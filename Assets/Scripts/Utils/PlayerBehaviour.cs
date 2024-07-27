@@ -10,7 +10,7 @@ namespace Utils
     {
         public override void Init(IEntityData data) {
             PlayerData playerData = data as PlayerData;
-            Entity = new Player(playerData, true);
+            Entity = new Player(playerData);
         }
     }
 }

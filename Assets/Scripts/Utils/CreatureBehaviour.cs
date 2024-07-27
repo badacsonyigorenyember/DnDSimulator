@@ -10,7 +10,7 @@ namespace Utils
     {
         public override void Init(IEntityData data) {
             CreatureData creatureData = data as CreatureData;
-            Entity = new Creature(creatureData, true);
+            Entity = new Creature(creatureData);
         }
     }
 }
