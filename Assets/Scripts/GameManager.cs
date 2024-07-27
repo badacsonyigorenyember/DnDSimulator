@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FileHandling;
 using FileHandling.Dto;
+using Models;
 using Network;
 using Newtonsoft.Json;
 using TMPro;
@@ -12,22 +13,22 @@ using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
-using Utils;
 using Utils.Interfaces;
 
 public class GameManager : NetworkBehaviour
 {
     public Button startStopButton;
 
-    public List<EntityBehaviour> creatures = new();
+    public Dictionary<string, EntityBehaviour> entities = new();
     public bool isPlaying;
-    public SceneData currentScene;
+    public Scene currentScene;
 
     public static GameManager Instance;
 
     public GameObject waitingScreenObj;
 
     public static string CREATURE_IMG_PATH;
+    public static string PLAYER_IMG_PATH;
     public static string CREATURE_DATA_PATH;
     public static string MAP_PATH;
     public static string SCENE_PATH;
@@ -111,7 +112,7 @@ public class GameManager : NetworkBehaviour
 
     async void SetUpClient(bool isPlaying, GameStateDto gameState) {
         if (isPlaying) {
-            currentScene = JsonConvert.DeserializeObject<SceneData>(gameState.sceneData);
+            currentScene = JsonConvert.DeserializeObject<Scene>(gameState.sceneData);
 
             Debug.Log("Current scene set!");
 
@@ -120,8 +121,8 @@ public class GameManager : NetworkBehaviour
             Debug.Log("Images downloaded!");
 
             List<Task> loadCreatureTasks = new List<Task>();
-            foreach (var creature in creatures) {
-                loadCreatureTasks.Add(SceneHandler.Instance.LoadCreature(creature, 
+            foreach (var creature in entities) {
+                loadCreatureTasks.Add(SceneHandler.Instance.LoadEntity(creature, 
                     currentScene.creatures.Find(c => c.position == (Vector2)creature.transform.position)));
             }
             await Task.WhenAll(loadCreatureTasks);
