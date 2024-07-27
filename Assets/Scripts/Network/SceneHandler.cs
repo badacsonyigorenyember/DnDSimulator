@@ -123,11 +123,13 @@ namespace Network
             
             entity.transform.position = entityModel.Position;
 
-            /*byte[] bytes = await File.ReadAllBytesAsync(path + $"/{entityModel.Uuid}.png");
+            string imagePath = FileManager.MonsterManualImagesPath + $"{entityModel.Name}.png"; //TODO: lekezelni a custom képeket! 
+            
+            byte[] bytes = await File.ReadAllBytesAsync(imagePath);
             Texture2D texture = new Texture2D(1, 1);
             texture.LoadImage(bytes);
 
-            entity.SetImage(texture);*/ //TODO Image beállítása
+            entity.SetImage(texture);
         }
 
         public async Task SaveScene() {

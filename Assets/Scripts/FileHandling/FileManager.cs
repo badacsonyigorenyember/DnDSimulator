@@ -5,7 +5,8 @@ namespace FileHandling
     public class FileManager : MonoBehaviour
     {
         public static readonly string MonsterManualPath = Application.streamingAssetsPath + "/monster_manual.json";
-        
+        public static readonly string MonsterManualImagesPath = Application.streamingAssetsPath + "/monster_manual_images/";
+
         public string adventurePath;
         public string creaturePath;
         public string playerPath;
