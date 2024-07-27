@@ -17,12 +17,12 @@ namespace Utils.Data
             Players = new List<string>();
             
             Name = scene.name;
-            foreach (Creature creature in scene.creatures) {
-                Creatures.Add(creature.Uuid);
+            foreach (string uuid in scene.creatures.Keys) {
+                Creatures.Add(uuid);
             }
 
-            foreach (Player player in scene.players) {
-                Players.Add(player.Uuid);
+            foreach (string uuid in scene.players.Keys) {
+                Players.Add(uuid);
             }
         }
     }
