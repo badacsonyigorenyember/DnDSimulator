@@ -1,10 +1,18 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using FileHandling;
+using JetBrains.Annotations;
+using Models;
+using Models.Interfaces;
+using Newtonsoft.Json;
 using Unity.Netcode;
 using UnityEngine;
 using Utils;
+using Utils.Data;
+using Utils.Interfaces;
 
 namespace Network
 {
@@ -16,7 +24,7 @@ namespace Network
         [SerializeField] private GameObject sceneObject;
 
         public float autosaveInSeconds;
-
+        
         private float timer;
         public static SceneHandler Instance;
 
@@ -53,7 +61,7 @@ namespace Network
 
                 for (int i = 0; i < scene.creatures.Count; i++) {
                     CreateCreature();
-                    tasks.Add(LoadCreature(GameManager.Instance.creatures[i], scene.creatures[i]));
+                    tasks.Add(LoadCreature(GameManager.Instance.entities[i], scene.creatures[i]));
                 }
 
                 await Task.WhenAll(tasks);
@@ -92,7 +100,7 @@ namespace Network
             obj.GetComponent<NetworkObject>().TrySetParent(_creatureContainer);
         }
 
-        public async Task LoadCreature(Creature creature, CreatureDto creatureDto) {
+        public async Task LoadCreature(Creature creature, CreatureData creatureDto) {
             CreatureDtoHandler.CreatureDtoToCreature(creature, creatureDto);
 
             creature.transform.position = creatureDto.position;
@@ -110,27 +118,77 @@ namespace Network
                 return;
             }
 
-            SceneData scene = GameManager.Instance.currentScene;
-            scene.creatures.Clear();
+            SceneData sceneData = GameManager.Instance.currentScene;
+            sceneData.Creatures.Clear();
 
-            foreach (var creature in GameManager.Instance.creatures) {
-                scene.creatures.Add(new CreatureDto(creature));
+            List<Creature> creatures = new List<Creature>();
+            List<Player> players = new List<Player>();
+
+            foreach (var entityBehaviour in GameManager.Instance.entities) {
+                switch (entityBehaviour.Entity) {
+                    case Creature creature: {
+                        sceneData.Creatures.Add(entityBehaviour.Entity.Uuid);
+                        creatures.Add(creature);
+                        break;
+                    }
+                    case Player player: {
+                        sceneData.Players.Add(entityBehaviour.Entity.Uuid);
+                        players.Add(player);
+                        break;
+                    }
+                    default:
+                        throw new Exception("Nem megfelelő a reature típusa!");
+                }
             }
 
-            scene.camPosition = Camera.main.transform.position;
-            scene.zoomScale = Camera.main.orthographicSize;
+            List<Creature> creaturesInAdventure = JsonConvert.DeserializeObject<List<Creature>>(FileManager.creaturePath);
+            
+            string creaturesJson = JsonConvert.SerializeObject(GetAllEntities(creaturesInAdventure, creatures));
+            Task creatureWriteTask = File.WriteAllTextAsync(FileManager.creaturePath, creaturesJson);
+            creatureWriteTask.Start();
+            
+            List<Player> playersInAdventure = JsonConvert.DeserializeObject<List<Player>>(FileManager.playerPath);
+            
+            string playersJson = JsonConvert.SerializeObject(GetAllEntities(playersInAdventure, players));
+            Task playerWriteTask = File.WriteAllTextAsync(FileManager.playerPath, playersJson);
+            playerWriteTask.Start();
+            
+            sceneData.CamPosition = Camera.main.transform.position;
+            sceneData.ZoomScale = Camera.main.orthographicSize;
 
-            string json = JsonUtility.ToJson(scene);
-            await File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{scene.name}.json", json);
+            string sceneJson = JsonConvert.SerializeObject(sceneData);
+            Task sceneWriteTask = File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{sceneData.name}.json", json);
+            sceneWriteTask.Start();
 
-            Debug.Log("Saved at: " + GameManager.SCENE_PATH + $"/{scene.name}.json");
+            Task.WaitAll(creatureWriteTask, playerWriteTask, sceneWriteTask);
+
+            Debug.Log("Saved at: " + GameManager.SCENE_PATH + $"/{sceneData.name}.json");
+        }
+
+        public static List<T> GetAllEntities<T>(List<T> entitiesInAdventure, List<T> sceneEntities) where T : IEntity{
+            if (entitiesInAdventure != null) {
+                foreach (T entity in sceneEntities) {
+                    T matchingEntity = entitiesInAdventure.FirstOrDefault(e => e.Uuid == entity.Uuid);
+
+                    if (matchingEntity != null) {
+                        entitiesInAdventure.Remove(matchingEntity);
+                        entitiesInAdventure.Add(entity);
+                    } else {
+                        entitiesInAdventure.Add(entity);
+                    }
+                }
+            } else {
+                entitiesInAdventure = sceneEntities;
+            }
+
+            return entitiesInAdventure;
         }
 
         void ClearScene() {
             sceneObject.GetComponent<SpriteRenderer>().sprite = null;
 
-            for (int i = GameManager.Instance.creatures.Count - 1; i >= 0; i--) {
-                GameManager.Instance.creatures[i].GetComponent<NetworkObject>().Despawn();
+            for (int i = GameManager.Instance.entities.Count - 1; i >= 0; i--) {
+                GameManager.Instance.entities[i].GetComponent<NetworkObject>().Despawn();
             }
 
             GameManager.Instance.currentScene = null;
