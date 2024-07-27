@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 using Models;
 using Models.Interfaces;
 using FileHandling;
-using JetBrains.Annotations;
-using Models;
-using Models.Interfaces;
 using Newtonsoft.Json;
 using Unity.Netcode;
 using UnityEngine;
@@ -27,7 +24,7 @@ namespace Network
 
         public float autosaveInSeconds;
         
-        private float timer;
+        private float _timer;
         public static SceneHandler Instance;
 
         private void Awake() {
@@ -35,10 +32,10 @@ namespace Network
         }
 
         private void Update() {
-            timer += Time.deltaTime;
+            _timer += Time.deltaTime;
 
-            if (timer >= autosaveInSeconds || Input.GetKeyDown(KeyCode.Period)) {
-                timer = 0;
+            if (_timer >= autosaveInSeconds || Input.GetKeyDown(KeyCode.Period)) {
+                _timer = 0;
                 SaveScene();
             }
         }
@@ -49,24 +46,32 @@ namespace Network
             await SaveScene();
             ClearScene();
 
-            string path = GameManager.SCENE_PATH + $"/{sceneName}.json";
+            string path = FileManager.Instance.sceneFolderPath + $"{sceneName}.json";
+            
             if (File.Exists(path)) {
                 SceneData sceneData = JsonConvert.DeserializeObject<SceneData>(path);
                 Scene scene = new Scene(sceneData);
                 GameManager.Instance.currentScene = scene;
-                Camera.main.transform.position = new Vector3(scene.camPosition.x, scene.camPosition.y, -10);
-                Camera.main.orthographicSize = scene.zoomScale;
 
-                LoadMap(sceneName);
+                Camera mainCam = Camera.main;
+                mainCam.transform.position = new Vector3(scene.camPosition.x, scene.camPosition.y, -10);
+                mainCam.orthographicSize = scene.zoomScale;
 
-                List<Task> tasks = new List<Task>();
+                LoadMap(sceneName); //TODO: Map-hoz még hozzá se nyúltunk??
 
-                foreach ((string uuid, Creature creature) in scene.creatures) {   //TODO: player-eket is létre kell hozni
-                    CreateCreature();
-                    tasks.Add(LoadEntity(GameManager.Instance.entities[uuid], creature)); 
+                List<Task> loadTasks = new List<Task>();
+
+                foreach ((string uuid, Creature creature) in scene.creatures) {
+                    SpawnEntiyObject();
+                    loadTasks.Add(LoadEntityToObject(GameManager.Instance.entities[uuid], creature)); 
+                }
+                
+                foreach ((string uuid, Player player) in scene.players) {
+                    SpawnEntiyObject();
+                    loadTasks.Add(LoadEntityToObject(GameManager.Instance.entities[uuid], player)); 
                 }
 
-                await Task.WhenAll(tasks);
+                await Task.WhenAll(loadTasks);
                 Debug.Log("Scene loaded!");
             }
             else {
@@ -90,7 +95,7 @@ namespace Network
             }
         }
 
-        void CreateCreature() {
+        void SpawnEntiyObject() {
             GameObject obj = Instantiate(_creaturePrefab);
 
             obj.GetComponent<NetworkObject>().Spawn();
@@ -102,23 +107,27 @@ namespace Network
             obj.GetComponent<NetworkObject>().TrySetParent(_creatureContainer);
         }
 
-        public async Task LoadEntity<T>(EntityBehaviour entity, T entityModel) where T: IEntity {
-            bool isCreature = entityModel.GetType() == typeof(Creature);
-            entity = isCreature ? new CreatureBehaviour(entityModel) : new PlayerBehaviour(entityModel);    //TODO: ez itt kurvaszar, meg faszság
-
-            Vector2 pos = entityModel.Position;
+        public async Task LoadEntityToObject<T>(EntityBehaviour entity, T entityModel) where T: IEntity {
+            switch (entityModel) {
+                case Creature creature:
+                    CreatureBehaviour creatureBehaviour = entity.gameObject.AddComponent<CreatureBehaviour>();
+                    creatureBehaviour.Init(creature);
+                    break;
+                case Player player: 
+                    PlayerBehaviour playerBehaviour = entity.gameObject.AddComponent<PlayerBehaviour>();
+                    playerBehaviour.Init(player);
+                    break;
+                default:
+                    throw new Exception("Nem megfelelő típus!");
+            }
             
-            entity.transform.position = new Vector3(pos.x, pos.y);
+            entity.transform.position = entityModel.Position;
 
-            string path = isCreature
-                ? GameManager.CREATURE_IMG_PATH
-                : GameManager.PLAYER_IMG_PATH;
-
-            byte[] bytes = await File.ReadAllBytesAsync(path + $"/{entityModel.Uuid}.png");
+            /*byte[] bytes = await File.ReadAllBytesAsync(path + $"/{entityModel.Uuid}.png");
             Texture2D texture = new Texture2D(1, 1);
             texture.LoadImage(bytes);
 
-            entity.SetImage(texture);
+            entity.SetImage(texture);*/ //TODO Image beállítása
         }
 
         public async Task SaveScene() {
@@ -198,8 +207,8 @@ namespace Network
         void ClearScene() {
             sceneObject.GetComponent<SpriteRenderer>().sprite = null;
 
-            for (int i = GameManager.Instance.entities.Count - 1; i >= 0; i--) {
-                GameManager.Instance.entities[i].GetComponent<NetworkObject>().Despawn();
+            foreach ((_, EntityBehaviour entity) in GameManager.Instance.entities) {
+                entity.GetComponent<NetworkObject>().Despawn();
             }
 
             GameManager.Instance.currentScene = null;

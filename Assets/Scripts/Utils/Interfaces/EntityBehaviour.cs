@@ -8,7 +8,8 @@ namespace Utils.Interfaces
     {
         public IEntity Entity;
 
-        public abstract void Init(IEntityData data);
+        public abstract void Init(IEntity data);
+        
         public void SetImage(Texture2D texture) {
             GetComponent<SpriteRenderer>().sprite = Sprite.Create(
                 texture,

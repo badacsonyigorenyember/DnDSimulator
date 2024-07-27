@@ -6,9 +6,10 @@ namespace FileHandling
     {
         public static readonly string MonsterManualPath = Application.streamingAssetsPath + "/monster_manual.json";
         
-        public string path;
+        public string adventurePath;
         public string creaturePath;
         public string playerPath;
+        public string sceneFolderPath;
 
         public static FileManager Instance;
         
@@ -19,9 +20,10 @@ namespace FileHandling
         }
 
         public void SetPaths(string adventurePath) {
-            path = adventurePath;
-            creaturePath = $"{path}/creatures.json";
-            playerPath = $"{path}/players.json";
+            this.adventurePath = adventurePath;
+            creaturePath = $"{adventurePath}/creatures.json";
+            playerPath = $"{adventurePath}/players.json";
+            sceneFolderPath = $"{adventurePath}/Scenes/";
         }
     }
 }

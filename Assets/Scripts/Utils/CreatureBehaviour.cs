@@ -1,6 +1,6 @@
 using System;
 using Models;
-using Utils.Data;
+using Models.Interfaces;
 using Utils.Interfaces;
 
 namespace Utils
@@ -8,9 +8,8 @@ namespace Utils
     [Serializable]
     public class CreatureBehaviour : EntityBehaviour
     {
-        public override void Init(IEntityData data) {
-            CreatureData creatureData = data as CreatureData;
-            Entity = new Creature(creatureData);
+        public override void Init(IEntity data) {
+            Entity = data as Creature;
         }
     }
 }

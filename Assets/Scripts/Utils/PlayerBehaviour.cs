@@ -1,6 +1,6 @@
 ﻿using System;
 using Models;
-using Utils.Data;
+using Models.Interfaces;
 using Utils.Interfaces;
 
 namespace Utils
@@ -8,9 +8,8 @@ namespace Utils
     [Serializable]
     public class PlayerBehaviour : EntityBehaviour
     {
-        public override void Init(IEntityData data) {
-            PlayerData playerData = data as PlayerData;
-            Entity = new Player(playerData);
+        public override void Init(IEntity data) {
+            Entity = data as Player;
         }
     }
 }
