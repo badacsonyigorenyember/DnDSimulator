@@ -23,13 +23,13 @@ namespace Utils.Interfaces
         public override void OnNetworkSpawn() {
             base.OnNetworkSpawn();
 
-            GameManager.Instance.creatures.Add(this);
+            GameManager.Instance.entities.Add(Entity.Uuid, this);
         }
 
         public override void OnNetworkDespawn() {
             base.OnNetworkDespawn();
 
-            GameManager.Instance.creatures.Remove(this);
+            GameManager.Instance.entities.Remove(Entity.Uuid);
         }
 
         [ClientRpc]
