@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Models;
+using Models.Interfaces;
 using FileHandling;
 using JetBrains.Annotations;
 using Models;
@@ -49,8 +51,8 @@ namespace Network
 
             string path = GameManager.SCENE_PATH + $"/{sceneName}.json";
             if (File.Exists(path)) {
-                string json = await File.ReadAllTextAsync(path);
-                SceneData scene = JsonUtility.FromJson<SceneData>(json);
+                SceneData sceneData = JsonConvert.DeserializeObject<SceneData>(path);
+                Scene scene = new Scene(sceneData);
                 GameManager.Instance.currentScene = scene;
                 Camera.main.transform.position = new Vector3(scene.camPosition.x, scene.camPosition.y, -10);
                 Camera.main.orthographicSize = scene.zoomScale;
@@ -59,9 +61,9 @@ namespace Network
 
                 List<Task> tasks = new List<Task>();
 
-                for (int i = 0; i < scene.creatures.Count; i++) {
+                foreach ((string uuid, Creature creature) in scene.creatures) {   //TODO: player-eket is létre kell hozni
                     CreateCreature();
-                    tasks.Add(LoadCreature(GameManager.Instance.entities[i], scene.creatures[i]));
+                    tasks.Add(LoadEntity(GameManager.Instance.entities[uuid], creature)); 
                 }
 
                 await Task.WhenAll(tasks);
@@ -100,16 +102,23 @@ namespace Network
             obj.GetComponent<NetworkObject>().TrySetParent(_creatureContainer);
         }
 
-        public async Task LoadCreature(Creature creature, CreatureData creatureDto) {
-            CreatureDtoHandler.CreatureDtoToCreature(creature, creatureDto);
+        public async Task LoadEntity<T>(EntityBehaviour entity, T entityModel) where T: IEntity {
+            bool isCreature = entityModel.GetType() == typeof(Creature);
+            entity = isCreature ? new CreatureBehaviour(entityModel) : new PlayerBehaviour(entityModel);    //TODO: ez itt kurvaszar, meg faszság
 
-            creature.transform.position = creatureDto.position;
+            Vector2 pos = entityModel.Position;
+            
+            entity.transform.position = new Vector3(pos.x, pos.y);
 
-            byte[] bytes = await File.ReadAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{creatureDto.creatureName}.png");
+            string path = isCreature
+                ? GameManager.CREATURE_IMG_PATH
+                : GameManager.PLAYER_IMG_PATH;
+
+            byte[] bytes = await File.ReadAllBytesAsync(path + $"/{entityModel.Uuid}.png");
             Texture2D texture = new Texture2D(1, 1);
             texture.LoadImage(bytes);
 
-            creature.SetImage(texture);
+            entity.SetImage(texture);
         }
 
         public async Task SaveScene() {
@@ -118,51 +127,53 @@ namespace Network
                 return;
             }
 
-            SceneData sceneData = GameManager.Instance.currentScene;
+            SceneData sceneData = new SceneData(GameManager.Instance.currentScene);
             sceneData.Creatures.Clear();
 
             List<Creature> creatures = new List<Creature>();
             List<Player> players = new List<Player>();
 
-            foreach (var entityBehaviour in GameManager.Instance.entities) {
+            foreach ((string uuid, EntityBehaviour entityBehaviour) in GameManager.Instance.entities) {
                 switch (entityBehaviour.Entity) {
                     case Creature creature: {
-                        sceneData.Creatures.Add(entityBehaviour.Entity.Uuid);
+                        sceneData.Creatures.Add(uuid);
                         creatures.Add(creature);
                         break;
                     }
                     case Player player: {
-                        sceneData.Players.Add(entityBehaviour.Entity.Uuid);
+                        sceneData.Players.Add(uuid);
                         players.Add(player);
                         break;
                     }
                     default:
-                        throw new Exception("Nem megfelelő a reature típusa!");
+                        throw new Exception("Nem megfelelő az entity típusa!");
                 }
             }
+            
+            FileManager fileManager = FileManager.Instance;
 
-            List<Creature> creaturesInAdventure = JsonConvert.DeserializeObject<List<Creature>>(FileManager.creaturePath);
+            List<Creature> creaturesInAdventure = JsonConvert.DeserializeObject<List<Creature>>(fileManager.creaturePath);
             
             string creaturesJson = JsonConvert.SerializeObject(GetAllEntities(creaturesInAdventure, creatures));
-            Task creatureWriteTask = File.WriteAllTextAsync(FileManager.creaturePath, creaturesJson);
+            Task creatureWriteTask = File.WriteAllTextAsync(fileManager.creaturePath, creaturesJson);
             creatureWriteTask.Start();
             
-            List<Player> playersInAdventure = JsonConvert.DeserializeObject<List<Player>>(FileManager.playerPath);
+            List<Player> playersInAdventure = JsonConvert.DeserializeObject<List<Player>>(fileManager.playerPath);
             
             string playersJson = JsonConvert.SerializeObject(GetAllEntities(playersInAdventure, players));
-            Task playerWriteTask = File.WriteAllTextAsync(FileManager.playerPath, playersJson);
+            Task playerWriteTask = File.WriteAllTextAsync(fileManager.playerPath, playersJson);
             playerWriteTask.Start();
             
             sceneData.CamPosition = Camera.main.transform.position;
             sceneData.ZoomScale = Camera.main.orthographicSize;
 
             string sceneJson = JsonConvert.SerializeObject(sceneData);
-            Task sceneWriteTask = File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{sceneData.name}.json", json);
+            Task sceneWriteTask = File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{sceneData.Name}.json", sceneJson);
             sceneWriteTask.Start();
 
             Task.WaitAll(creatureWriteTask, playerWriteTask, sceneWriteTask);
 
-            Debug.Log("Saved at: " + GameManager.SCENE_PATH + $"/{sceneData.name}.json");
+            Debug.Log("Saved at: " + GameManager.SCENE_PATH + $"/{sceneData.Name}.json");
         }
 
         public static List<T> GetAllEntities<T>(List<T> entitiesInAdventure, List<T> sceneEntities) where T : IEntity{
