@@ -27,6 +27,7 @@ public class GameManager : NetworkBehaviour
 
     public GameObject waitingScreenObj;
 
+    //TODO: ezek leváltása FileManager-re
     public static string CREATURE_IMG_PATH;
     public static string PLAYER_IMG_PATH;
     public static string CREATURE_DATA_PATH;
@@ -116,14 +117,16 @@ public class GameManager : NetworkBehaviour
 
             Debug.Log("Current scene set!");
 
-            await CloudDataHandler.SaveCreatureImages(currentScene.creatures.Select(e => e.creatureName).ToList(), gameState);
+            await CloudDataHandler.SaveCreatureImages(currentScene.creatures.Select(e => e.Value.Name).ToList(), gameState);
 
             Debug.Log("Images downloaded!");
 
             List<Task> loadCreatureTasks = new List<Task>();
-            foreach (var creature in entities) {
-                loadCreatureTasks.Add(SceneHandler.Instance.LoadEntity(creature, 
-                    currentScene.creatures.Find(c => c.position == (Vector2)creature.transform.position)));
+            foreach (var creature in entities.Values) {
+                loadCreatureTasks.Add(SceneHandler.Instance.LoadEntityToObject(creature, 
+                    currentScene.creatures.ToList()
+                        .Find(c => c.Value.Position == (Vector2)creature.transform.position).Value)
+                );
             }
             await Task.WhenAll(loadCreatureTasks);
 
