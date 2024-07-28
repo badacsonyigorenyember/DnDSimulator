@@ -25,5 +25,11 @@ namespace Utils.Data
                 Players.Add(uuid);
             }
         }
+
+        public SceneData(string name) {
+            Name = name;
+            Creatures = new List<string>();
+            Players = new List<string>();
+        }
     }
 }
