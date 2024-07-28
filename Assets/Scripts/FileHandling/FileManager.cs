@@ -11,6 +11,8 @@ namespace FileHandling
         public string creaturePath;
         public string playerPath;
         public string sceneFolderPath;
+        public string creatureImgPath;
+        public string playerImgPathPath;
 
         public static FileManager Instance;
         
@@ -25,6 +27,8 @@ namespace FileHandling
             creaturePath = $"{adventurePath}/creatures.json";
             playerPath = $"{adventurePath}/players.json";
             sceneFolderPath = $"{adventurePath}/Scenes/";
+            creatureImgPath = $"{adventurePath}/CreatureImages"; 
+            playerImgPathPath = $"{adventurePath}/PlayerImages";
         }
     }
 }
