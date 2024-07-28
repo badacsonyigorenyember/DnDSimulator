@@ -1,7 +1,11 @@
 using System.IO;
 using System.Threading.Tasks;
+using Models;
+using Newtonsoft.Json;
 using Unity.Netcode;
 using UnityEngine;
+using Utils;
+using Utils.Data;
 
 namespace FileHandling
 {
@@ -20,7 +24,7 @@ namespace FileHandling
         public async Task<CreatureData> LoadCreatureDataAsync(string name) {
             string json = await File.ReadAllTextAsync(GameManager.CREATURE_DATA_PATH + $"/{name}.json");
 
-            CreatureData data = JsonUtility.FromJson<CreatureData>(json);
+            CreatureData data = JsonConvert.DeserializeObject<CreatureData>(json);
 
             return data;
         }
@@ -43,10 +47,12 @@ namespace FileHandling
             GameObject creatureObj = Instantiate(_creaturePrefab, position, Quaternion.identity);
             creatureObj.name = creatureName;
 
-            Creature creature = creatureObj.GetComponent<Creature>();
+            CreatureBehaviour creatureBehaviour = creatureObj.GetComponent<CreatureBehaviour>();
 
-            creature.Init(creatureDataTask.Result);
-            creature.SetImage(creatureImageTask.Result);
+            Creature creature = new Creature(creatureDataTask.Result);
+            
+            creatureBehaviour.Init(creature);
+            creatureBehaviour.SetImage(creatureImageTask.Result);
 
             creatureObj.GetComponent<NetworkObject>().Spawn();
 
