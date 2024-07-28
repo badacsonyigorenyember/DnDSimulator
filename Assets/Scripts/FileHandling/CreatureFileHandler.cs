@@ -10,7 +10,7 @@ using Utils.Data;
 namespace FileHandling
 {
     public class CreatureFileHandler : MonoBehaviour
-    {
+    {   //TODO: átírni function-ökkel eggyütt entity-kre
         [SerializeField] private GameObject _creaturePrefab;
 
         [SerializeField] private Transform _creatureContainer;
