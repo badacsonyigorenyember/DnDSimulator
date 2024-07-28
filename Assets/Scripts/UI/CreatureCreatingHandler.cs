@@ -4,10 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using FileHandling;
+using Script.Structs;
 using SimpleFileBrowser;
 using TMPro;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils.Data;
+using Utils.Interfaces;
 using Random = UnityEngine.Random;
 
 namespace UI
@@ -59,7 +64,7 @@ namespace UI
                     ClosePanel();
                 }
             });
-            _createCreatureButton.onClick.AddListener(CreateCreature);
+            _createCreatureButton.onClick.AddListener(CreateEntity);
             _cancelCreatureButton.onClick.AddListener(ClosePanel);
             _selectImageButton.onClick.AddListener(SelectImage);
         }
@@ -111,7 +116,8 @@ namespace UI
                 null, "Select image for creature!");
         }
 
-        async void CreateCreature() {
+        void CreateEntity() {
+            FileManager fileManager = FileManager.Instance;
             if (!Regex.IsMatch(_creatureNameInputField.text, @"^[a-zA-Z\s]{3,}$")) {
                 _console.text = "Bad name format. Name can't contain any number and must be at least 3 character long!";
                 return;
@@ -122,34 +128,33 @@ namespace UI
                 return;
             }
 
-            CreatureData data = new CreatureData
+            int health = string.IsNullOrEmpty(_maxHPInputField.text) ? 0 : Convert.ToInt32(_maxHPInputField.text);
+
+
+            CustomCreatureData data = new CustomCreatureData
             {
-                creatureName = _creatureNameInputField.text,
-                maxHp = string.IsNullOrEmpty(_maxHPInputField.text) ? 0 : Convert.ToInt32(_maxHPInputField.text),
-                isPlayer = _isPlayerToggle.isOn,
+                uuid = "asdasd",        //TODO uuid generálás
+                name = _creatureNameInputField.text,
+                maxHealth = health,
+                currentHealth = health,
                 initiativeModifier = string.IsNullOrEmpty(_initiativeModifierInputField.text) ? 0 : Convert.ToInt32(_initiativeModifierInputField.text),
-                armorClass = string.IsNullOrEmpty(_armorClassInputField.text) ? 0 : Convert.ToInt32(_armorClassInputField.text)
+                armorClass = string.IsNullOrEmpty(_armorClassInputField.text) ? 0 : Convert.ToInt32(_armorClassInputField.text),
+                abilities = new Abilities(),    //TODO: minden adatot neki
+                visible = true,
+                position = new Vector2(),   //TODO: pozíció lekérése
             };
+            
+            string path = fileManager.creaturePath + $"/{data.uuid}.json";
 
-            string path = GameManager.CREATURE_DATA_PATH + $"/{data.creatureName}.json";
+            List<IEntityData> allCreatures = JsonConvert.DeserializeObject<List<IEntityData>>(path);
 
-            if (File.Exists(path)) {
-                GameObject obj = Instantiate(_overWritePanel, transform);
-                OverWriteConfirm confirm = obj.GetComponent<OverWriteConfirm>();
+            allCreatures.Add(data);
 
-                bool confirmationResult = await confirm.GetResult();
-                Destroy(confirm.gameObject);
-
-                if (!confirmationResult) {
-                    return;
-                }
-            }
-
-            string json = JsonUtility.ToJson(data);
-
+            string json = JsonConvert.SerializeObject(allCreatures);
+            
             Task.WaitAll(
                 File.WriteAllTextAsync(path, json),
-                File.WriteAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{data.creatureName}.png", _image)
+                File.WriteAllBytesAsync(fileManager.creatureImgPath + $"/{data.uuid}.png", _image)
             );
 
             Debug.Log("Successful save!");
