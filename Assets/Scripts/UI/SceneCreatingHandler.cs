@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using Network;
 using SimpleFileBrowser;
 using TMPro;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
-using Utils;
+using Utils.Data;
 
 namespace UI
 {
@@ -125,7 +126,7 @@ namespace UI
 
             await Task.WhenAll(new[]
             {
-                File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{sceneName}.json", JsonUtility.ToJson(scene)),
+                File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{sceneName}.json", JsonConvert.SerializeObject(scene)),
                 File.WriteAllBytesAsync(GameManager.MAP_PATH + $"/{sceneName}.png", _image)
             });
 
