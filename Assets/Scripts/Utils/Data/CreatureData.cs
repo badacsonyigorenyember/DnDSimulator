@@ -8,13 +8,13 @@ namespace Utils.Data
     {
         public string uuid;
         public string name;
-        public int maxHealth;
+        public int? maxHealth;
         public int currentHealth;
-        public int initiativeModifier;
-        public int armorClass;
+        public int? initiativeModifier;
+        public int? armorClass;
         public bool visible;
         public Vector2 position;
-        public Abilities abilities;
-        public string monsterId;
+        public Abilities? abilities;
+        public string monsterId;    //TODO: customCreature ha itt lesz, akkor ez is nullable
     }
 }
