@@ -62,12 +62,12 @@ namespace Network
                 List<Task> loadTasks = new List<Task>();
 
                 foreach ((string uuid, Creature creature) in scene.creatures) {
-                    SpawnEntiyObject();
+                    SpawnEntityObject();
                     loadTasks.Add(LoadEntityToObject(GameManager.Instance.entities[uuid], creature)); 
                 }
                 
                 foreach ((string uuid, Player player) in scene.players) {
-                    SpawnEntiyObject();
+                    SpawnEntityObject();
                     loadTasks.Add(LoadEntityToObject(GameManager.Instance.entities[uuid], player)); 
                 }
 
@@ -95,7 +95,7 @@ namespace Network
             }
         }
 
-        void SpawnEntiyObject() {
+        void SpawnEntityObject() {
             GameObject obj = Instantiate(_creaturePrefab);
 
             obj.GetComponent<NetworkObject>().Spawn();
