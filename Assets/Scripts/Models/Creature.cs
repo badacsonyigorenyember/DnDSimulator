@@ -41,8 +41,7 @@ namespace Models
 
             return CurrentHealth;
         }
-
-
+        
         public Creature(CreatureData data) {
             Uuid = data.uuid;
             Visible = data.visible;
