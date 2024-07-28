@@ -43,7 +43,7 @@ namespace FileHandling
             foreach (var creatureImageName in creatureImageNames) {
                 string creatureName = Path.GetFileNameWithoutExtension(creatureImageName);
 
-                if (GameManager.Instance.entities.Any(e => e.creatureName == creatureName)) {   //TODO: ezzel baszni valamit
+                if (GameManager.Instance.entities.Any(e => e.Value.name == creatureName)) {
                     byte[] picture = await File.ReadAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{creatureName}.png");
                     creaturePictures.Add(creatureName, picture);
                 }
