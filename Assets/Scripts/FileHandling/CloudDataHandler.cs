@@ -58,6 +58,5 @@ namespace FileHandling
         public static async Task DownloadMap(string name, GameStateDto gameState) {
             await File.WriteAllBytesAsync(FileManager.Instance.sceneImgPath + $"/{name}.png", gameState.mapPicture);
         }
-    
     }
 }
