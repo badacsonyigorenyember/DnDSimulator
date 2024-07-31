@@ -8,7 +8,6 @@ namespace FileHandling
 {
     public static class CloudDataHandler
     {
-
         public static async Task SaveCreatureImages(List<string> creatureNames, GameStateDto gameState) {
             List<Task> downloadTasks = new List<Task>();
 
