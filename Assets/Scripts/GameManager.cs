@@ -13,6 +13,7 @@ using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils.Data;
 using Utils.Interfaces;
 
 public class GameManager : NetworkBehaviour
@@ -96,7 +97,7 @@ public class GameManager : NetworkBehaviour
 
     async void SetUpClient(bool isPlaying, GameStateDto gameState) {
         if (isPlaying) {
-            currentScene = JsonConvert.DeserializeObject<Scene>(gameState.sceneData);
+            currentScene = new Scene(JsonConvert.DeserializeObject<SceneData>(gameState.sceneData));
 
             Debug.Log("Current scene set!");
 

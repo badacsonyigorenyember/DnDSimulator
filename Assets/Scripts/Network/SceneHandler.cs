@@ -49,8 +49,7 @@ namespace Network
             string path = FileManager.Instance.sceneFolderPath + $"{sceneName}.json";
             
             if (File.Exists(path)) {
-                //TODO: SZAR
-                SceneData sceneData = JsonConvert.DeserializeObject<SceneData>(path);
+                SceneData sceneData = JsonConvert.DeserializeObject<SceneData>(await File.ReadAllTextAsync(path));
                 Scene scene = new Scene(sceneData);
                 GameManager.Instance.currentScene = scene;
 
@@ -164,13 +163,13 @@ namespace Network
             
             FileManager fileManager = FileManager.Instance;
 
-            List<Creature> creaturesInAdventure = JsonConvert.DeserializeObject<List<Creature>>(fileManager.creaturePath);
+            List<Creature> creaturesInAdventure = JsonConvert.DeserializeObject<List<Creature>>(await File.ReadAllTextAsync(fileManager.creaturePath));
             
             string creaturesJson = JsonConvert.SerializeObject(GetAllEntities(creaturesInAdventure, creatures));
             Task creatureWriteTask = File.WriteAllTextAsync(fileManager.creaturePath, creaturesJson);
             creatureWriteTask.Start();
             
-            List<Player> playersInAdventure = JsonConvert.DeserializeObject<List<Player>>(fileManager.playerPath);
+            List<Player> playersInAdventure = JsonConvert.DeserializeObject<List<Player>>(await File.ReadAllTextAsync(fileManager.playerPath));
             
             string playersJson = JsonConvert.SerializeObject(GetAllEntities(playersInAdventure, players));
             Task playerWriteTask = File.WriteAllTextAsync(fileManager.playerPath, playersJson);

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using FileHandling;
 using Newtonsoft.Json;
 using Script.Structs;
@@ -19,7 +20,7 @@ namespace Models.Interfaces
          * Kiolvassa a kapott monster adatait a json-ből
          */
         protected void GetMonsterDataById(string monsterId) {
-            Monster monster = JsonConvert.DeserializeObject<Dictionary<string, Monster>>(FileManager.MonsterManualPath)[monsterId];
+            Monster monster = JsonConvert.DeserializeObject<Dictionary<string, Monster>>(File.ReadAllText(FileManager.MonsterManualPath))[monsterId];
             
             MonsterId = monster.MonsterId;
             Name = monster.Name;

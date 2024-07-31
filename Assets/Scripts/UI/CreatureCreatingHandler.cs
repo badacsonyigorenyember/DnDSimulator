@@ -146,7 +146,7 @@ namespace UI
             
             string path = fileManager.creaturePath + $"/{data.uuid}.json";
 
-            List<IEntityData> allCreatures = JsonConvert.DeserializeObject<List<IEntityData>>(path);
+            List<IEntityData> allCreatures = JsonConvert.DeserializeObject<List<IEntityData>>(File.ReadAllText(path));
 
             allCreatures.Add(data);
 

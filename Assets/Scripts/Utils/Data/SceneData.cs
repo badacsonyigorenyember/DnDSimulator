@@ -32,5 +32,7 @@ namespace Utils.Data
             Creatures = new List<string>();
             Players = new List<string>();
         }
+
+        public SceneData() {}
     }
 }
