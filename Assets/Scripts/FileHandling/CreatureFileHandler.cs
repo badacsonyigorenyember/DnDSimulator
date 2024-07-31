@@ -22,7 +22,7 @@ namespace FileHandling
         }
 
         public async Task<CreatureData> LoadCreatureDataAsync(string name) {
-            string json = await File.ReadAllTextAsync(GameManager.CREATURE_DATA_PATH + $"/{name}.json");
+            string json = await File.ReadAllTextAsync(FileManager.Instance.creaturePath + $"/{name}.json");
 
             CreatureData data = JsonConvert.DeserializeObject<CreatureData>(json);
 
@@ -30,7 +30,7 @@ namespace FileHandling
         }
 
         public async Task<Texture2D> LoadCreatureImageAsync(string name) {
-            byte[] bytes = await File.ReadAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{name}.png");
+            byte[] bytes = await File.ReadAllBytesAsync(FileManager.Instance.creatureImgPath + $"/{name}.png");
 
             Texture2D texture = new Texture2D(1, 1);
             texture.LoadImage(bytes);

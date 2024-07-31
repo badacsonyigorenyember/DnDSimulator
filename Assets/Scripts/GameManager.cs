@@ -27,28 +27,11 @@ public class GameManager : NetworkBehaviour
 
     public GameObject waitingScreenObj;
 
-    //TODO: ezek leváltása FileManager-re
-    public static string CREATURE_IMG_PATH;
-    public static string PLAYER_IMG_PATH;
-    public static string CREATURE_DATA_PATH;
-    public static string MAP_PATH;
-    public static string SCENE_PATH;
-
     private void Awake() {
         Instance = this;
     }
 
     private void Start() {
-        CREATURE_IMG_PATH = Application.dataPath + "/Adventures/Temp/Images/Creatures";
-        CREATURE_DATA_PATH = Application.dataPath + "/Adventures/Temp/Data/Creatures";
-        MAP_PATH = Application.dataPath + "/Adventures/Temp/Images/Maps";
-        SCENE_PATH = Application.dataPath + "/Adventures/Temp/Data/Scenes";
-
-        Directory.CreateDirectory(CREATURE_IMG_PATH);
-        Directory.CreateDirectory(CREATURE_DATA_PATH);
-        Directory.CreateDirectory(MAP_PATH);
-        Directory.CreateDirectory(SCENE_PATH);
-
         if (!IsServer) {
             NetworkManager.CustomMessagingManager.RegisterNamedMessageHandler("GetGameStateData", ReceiveGetGameStateDataMessage);
             

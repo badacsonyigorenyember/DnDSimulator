@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using FileHandling;
 using UI.Tooltip;
 using Unity.Netcode;
 using UnityEngine;
@@ -70,9 +71,11 @@ namespace UI
             _createButton.SetType(listType);
             _createButton.GetComponent<TooltipTrigger>().Init("Create " + _selectedList.ToString().ToLower());
 
+            FileManager fileManager = FileManager.Instance;
+            
             switch (listType) {
-                case SelectedList.Creature:
-                    files = Directory.GetFiles(GameManager.CREATURE_IMG_PATH);
+                case SelectedList.Creature: {
+                    files = Directory.GetFiles(fileManager.creatureImgPath);
 
                     foreach (var file in files) {
                         if (Path.GetExtension(file) != ".png") continue;
@@ -85,8 +88,9 @@ namespace UI
                     }
 
                     break;
-                case SelectedList.Scene:
-                    files = Directory.GetFiles(GameManager.SCENE_PATH);
+                }
+                case SelectedList.Scene: {
+                    files = Directory.GetFiles(fileManager.sceneFolderPath);
 
                     foreach (var file in files) {
                         if (Path.GetExtension(file) != ".json") continue;
@@ -98,6 +102,7 @@ namespace UI
                     }
 
                     break;
+                }
             }
         }
 

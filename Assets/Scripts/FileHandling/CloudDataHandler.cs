@@ -11,13 +11,15 @@ namespace FileHandling
 
         public static async Task SaveCreatureImages(List<string> creatureNames, GameStateDto gameState) {
             List<Task> downloadTasks = new List<Task>();
-        
-            Directory.CreateDirectory(GameManager.CREATURE_IMG_PATH);
+
+            string creatureImgPath = FileManager.Instance.creatureImgPath;
+            
+            Directory.CreateDirectory(creatureImgPath);
 
             foreach (var creature in creatureNames) {
-                if (!File.Exists(GameManager.CREATURE_IMG_PATH + $"/{creature}.png")) {
+                if (!File.Exists(creatureImgPath + $"/{creature}.png")) {
                     byte[] creaturePicture = gameState.creaturePictures[creature];
-                    downloadTasks.Add(File.WriteAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{creature}.png", creaturePicture));
+                    downloadTasks.Add(File.WriteAllBytesAsync(creatureImgPath + $"/{creature}.png", creaturePicture));
                 }
             }
 
@@ -25,8 +27,9 @@ namespace FileHandling
         }
 
         public static async Task<GameStateDto> GetGameStateDto(string sceneName) {
-            var mapPictureTask = File.ReadAllBytesAsync(GameManager.MAP_PATH + $"/{sceneName}.png");
-            var sceneDataTask = File.ReadAllTextAsync(GameManager.SCENE_PATH + $"/{sceneName}.json");
+            FileManager fileManager = FileManager.Instance;
+            var mapPictureTask = File.ReadAllBytesAsync(fileManager.sceneImgPath + $"/{sceneName}.png");
+            var sceneDataTask = File.ReadAllTextAsync(fileManager.sceneFolderPath + $"/{sceneName}.json");
             var creaturePicturesTask = GetCreaturePictures();
 
             await Task.WhenAll(mapPictureTask, sceneDataTask, creaturePicturesTask);
@@ -38,13 +41,14 @@ namespace FileHandling
         }
 
         private static async Task<Dictionary<string, byte[]>> GetCreaturePictures() {
+            string creatureImgPath = FileManager.Instance.creatureImgPath;
             Dictionary<string, byte[]> creaturePictures = new Dictionary<string, byte[]>();
-            string[] creatureImageNames = Directory.GetFiles(GameManager.CREATURE_IMG_PATH);
+            string[] creatureImageNames = Directory.GetFiles(creatureImgPath);
             foreach (var creatureImageName in creatureImageNames) {
                 string creatureName = Path.GetFileNameWithoutExtension(creatureImageName);
 
                 if (GameManager.Instance.entities.Any(e => e.Value.name == creatureName)) {
-                    byte[] picture = await File.ReadAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{creatureName}.png");
+                    byte[] picture = await File.ReadAllBytesAsync(creatureImgPath + $"/{creatureName}.png");
                     creaturePictures.Add(creatureName, picture);
                 }
             }
@@ -52,7 +56,7 @@ namespace FileHandling
         }
 
         public static async Task DownloadMap(string name, GameStateDto gameState) {
-            await File.WriteAllBytesAsync(GameManager.MAP_PATH + $"/{name}.png", gameState.mapPicture);
+            await File.WriteAllBytesAsync(FileManager.Instance.sceneImgPath + $"/{name}.png", gameState.mapPicture);
         }
     
     }

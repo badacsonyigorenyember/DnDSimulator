@@ -49,6 +49,7 @@ namespace Network
             string path = FileManager.Instance.sceneFolderPath + $"{sceneName}.json";
             
             if (File.Exists(path)) {
+                //TODO: SZAR
                 SceneData sceneData = JsonConvert.DeserializeObject<SceneData>(path);
                 Scene scene = new Scene(sceneData);
                 GameManager.Instance.currentScene = scene;
@@ -80,7 +81,7 @@ namespace Network
         }
 
         public void LoadMap(string sceneName) {
-            string imgPath = GameManager.MAP_PATH + $"/{sceneName}.png";
+            string imgPath = FileManager.Instance.sceneImgPath + $"/{sceneName}.png";
 
             if (File.Exists(imgPath)) {
                 byte[] imgBytes = File.ReadAllBytes(imgPath);
@@ -179,12 +180,13 @@ namespace Network
             sceneData.ZoomScale = Camera.main.orthographicSize;
 
             string sceneJson = JsonConvert.SerializeObject(sceneData);
-            Task sceneWriteTask = File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{sceneData.Name}.json", sceneJson);
+            string sceneFolderPath = FileManager.Instance.sceneFolderPath;
+            Task sceneWriteTask = File.WriteAllTextAsync(sceneFolderPath + $"/{sceneData.Name}.json", sceneJson);
             sceneWriteTask.Start();
 
             Task.WaitAll(creatureWriteTask, playerWriteTask, sceneWriteTask);
 
-            Debug.Log("Saved at: " + GameManager.SCENE_PATH + $"/{sceneData.Name}.json");
+            Debug.Log("Saved at: " + sceneFolderPath + $"/{sceneData.Name}.json");
         }
 
         public static List<T> GetAllEntities<T>(List<T> entitiesInAdventure, List<T> sceneEntities) where T : IEntity{

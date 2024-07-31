@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using FileHandling;
 using Network;
 using SimpleFileBrowser;
 using TMPro;
@@ -108,7 +109,7 @@ namespace UI
             }
 
             string sceneName = _sceneNameInputField.text;
-            string path = GameManager.SCENE_PATH + $"/{sceneName}.json";
+            string path = FileManager.Instance.sceneFolderPath + $"/{sceneName}.json";
 
             if (File.Exists(path)) {
                 GameObject obj = Instantiate(_overWritePanel, transform);
@@ -122,12 +123,23 @@ namespace UI
                 }
             }
 
-            SceneData scene = new SceneData(sceneName);
+            SceneData scene = new SceneData(sceneName)
+            {
+                ZoomScale = 0,
+                CamPosition = new Vector2(1, 2)
+            };
 
+            string json = JsonConvert.SerializeObject(scene, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            FileManager fileManager = FileManager.Instance;
+            
             await Task.WhenAll(new[]
             {
-                File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{sceneName}.json", JsonConvert.SerializeObject(scene)),
-                File.WriteAllBytesAsync(GameManager.MAP_PATH + $"/{sceneName}.png", _image)
+                File.WriteAllTextAsync(fileManager.sceneFolderPath + $"/{sceneName}.json", json),
+                File.WriteAllBytesAsync(fileManager.sceneImgPath + $"/{sceneName}.png", _image)
             });
 
 

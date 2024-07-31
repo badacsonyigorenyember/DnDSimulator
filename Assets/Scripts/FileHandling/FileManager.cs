@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 
 namespace FileHandling
@@ -13,6 +14,7 @@ namespace FileHandling
         public string sceneFolderPath;
         public string creatureImgPath;
         public string playerImgPathPath;
+        public string sceneImgPath;
 
         public static FileManager Instance;
         
@@ -29,6 +31,20 @@ namespace FileHandling
             sceneFolderPath = $"{adventurePath}/Scenes/";
             creatureImgPath = $"{adventurePath}/CreatureImages"; 
             playerImgPathPath = $"{adventurePath}/PlayerImages";
+            sceneImgPath = $"{adventurePath}/SceneImages";
+            
+            if (!Directory.Exists(sceneFolderPath)) {
+                Directory.CreateDirectory(sceneFolderPath);
+            }
+            if (!Directory.Exists(creatureImgPath)) {
+                Directory.CreateDirectory(creatureImgPath);
+            }
+            if (!Directory.Exists(playerImgPathPath)) {
+                Directory.CreateDirectory(playerImgPathPath);
+            }
+            if (!Directory.Exists(sceneImgPath)) {
+                Directory.CreateDirectory(sceneImgPath);
+            }
         }
     }
 }
