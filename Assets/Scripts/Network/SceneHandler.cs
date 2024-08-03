@@ -167,21 +167,21 @@ namespace Network
             
             string creaturesJson = JsonConvert.SerializeObject(GetAllEntities(creaturesInAdventure, creatures));
             Task creatureWriteTask = File.WriteAllTextAsync(fileManager.creaturePath, creaturesJson);
-            creatureWriteTask.Start();
             
             List<Player> playersInAdventure = JsonConvert.DeserializeObject<List<Player>>(await File.ReadAllTextAsync(fileManager.playerPath));
             
             string playersJson = JsonConvert.SerializeObject(GetAllEntities(playersInAdventure, players));
             Task playerWriteTask = File.WriteAllTextAsync(fileManager.playerPath, playersJson);
-            playerWriteTask.Start();
             
             sceneData.CamPosition = Camera.main.transform.position;
             sceneData.ZoomScale = Camera.main.orthographicSize;
 
-            string sceneJson = JsonConvert.SerializeObject(sceneData);
+            string sceneJson = JsonConvert.SerializeObject(sceneData, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
             string sceneFolderPath = FileManager.Instance.sceneFolderPath;
             Task sceneWriteTask = File.WriteAllTextAsync(sceneFolderPath + $"/{sceneData.Name}.json", sceneJson);
-            sceneWriteTask.Start();
 
             Task.WaitAll(creatureWriteTask, playerWriteTask, sceneWriteTask);
 
