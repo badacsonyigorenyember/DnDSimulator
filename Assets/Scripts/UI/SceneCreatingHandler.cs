@@ -125,8 +125,8 @@ namespace UI
 
             SceneData scene = new SceneData(sceneName)
             {
-                ZoomScale = 0,
-                CamPosition = new Vector2(1, 2)
+                ZoomScale = Camera.main.orthographicSize,
+                CamPosition = Camera.main.transform.position
             };
 
             string json = JsonConvert.SerializeObject(scene, new JsonSerializerSettings
