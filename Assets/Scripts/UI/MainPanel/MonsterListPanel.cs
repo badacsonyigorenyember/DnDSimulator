@@ -1,14 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using FileHandling;
-using Loader;
 using Models.Interfaces;
 using Newtonsoft.Json;
 using UI.MainPanel.ListElements;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace UI.MainPanel
@@ -26,7 +24,7 @@ namespace UI.MainPanel
             if (monsterDatas == null) return;
             
             foreach ((string monsterId, Monster monster) in monsterDatas) {
-                AdventureLoader.Instance.PutInQueue(InstantiateMonster(monsterId, monster.Name));
+                await InstantiateMonster(monsterId, monster.Name);
             }
         }
 

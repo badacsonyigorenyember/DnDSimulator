@@ -20,7 +20,7 @@ public class GameManager : NetworkBehaviour
 {
     public Button startStopButton;
 
-    public Dictionary<string, EntityBehaviour> entities = new();
+    public Dictionary<string, EntityBehaviour> entities = new Dictionary<string, EntityBehaviour>();
     public bool isPlaying;
     public Scene currentScene;
 

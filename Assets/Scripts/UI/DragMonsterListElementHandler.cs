@@ -1,5 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using FileHandling;
+using Models;
+using Network;
+using UI.MainPanel.ListElements;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,12 +20,12 @@ namespace UI
 
         [SerializeField] private int distance;
 
-        [SerializeField] private GameObject _creaturePrefab;
+        [SerializeField] private ScrollRect _listScrollView;
 
         private static bool validRelease;
 
-        private GameObject _selectedCreature;
-        private GameObject _instantiatedCreature;
+        public GameObject _selectedCreature;
+        public GameObject _instantiatedCreature;
         private Vector2 _startPosition;
         private CreatureData _creature;
         private Texture2D _creatureImg;
@@ -44,20 +49,15 @@ namespace UI
         }
 
         void SelectCreature() {
-            PointerEventData data = new PointerEventData(null)
-            {
-                position = Input.mousePosition
-            };
+            Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, LayerMask.GetMask("MonsterListElement")); //TODO megcsinálni jobbra
 
-            List<RaycastResult> results = new List<RaycastResult>();
-            _gr.Raycast(data, results);
-
-            foreach (var result in results) {
-                if (result.gameObject.GetComponent<CreatureListElement>() != null) {
-                    _selectedCreature = result.gameObject;
-                    _startPosition = result.screenPosition;
-                }
+            if (hit.collider == null) {
+                return;
             }
+            
+            _selectedCreature = hit.collider.gameObject;
+            _startPosition = _cam.WorldToScreenPoint(hit.point);
         }
 
         void MoveCreature() {
@@ -66,7 +66,9 @@ namespace UI
             if (_instantiatedCreature == null) {
                 if (!(Vector2.Distance(_startPosition, Input.mousePosition) > distance)) return;
 
-                _instantiatedCreature = Instantiate(_selectedCreature, transform.parent);
+                _listScrollView.enabled = false;
+
+                _instantiatedCreature = Instantiate(_selectedCreature, _gr.transform);
                 Destroy(_instantiatedCreature.GetComponent<BoxCollider2D>());
                 _instantiatedCreature.GetComponent<Image>().raycastTarget = false;
             }
@@ -87,10 +89,19 @@ namespace UI
                 Vector3 position = _cam.ScreenToWorldPoint(Input.mousePosition);
                 position.z = 0;
 
-                await CreatureFileHandler.Instance.SpawnCreature(_selectedCreature.name, position);
+                Creature creature = new Creature(_selectedCreature.GetComponent<MonsterListElement>().uuid)
+                {
+                 Position = position
+                };
+
+                await SceneHandler.Instance.SpawnCreature(creature);
+
+                Debug.Log(GameManager.Instance.entities.Count);
+
             }
 
             _selectedCreature = null;
+            _listScrollView.enabled = true;
         }
 
         public static void ValidRelease(bool value) {

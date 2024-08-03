@@ -4,12 +4,11 @@ using UnityEngine;
 
 namespace Utils.Interfaces
 {
-    public abstract class EntityBehaviour : NetworkBehaviour
+    public class EntityBehaviour : NetworkBehaviour
     {
         public IEntity Entity;
+        public string Uuid;
 
-        public abstract void Init(IEntity data);
-        
         public void SetImage(Texture2D texture) {
             GetComponent<SpriteRenderer>().sprite = Sprite.Create(
                 texture,
@@ -24,7 +23,7 @@ namespace Utils.Interfaces
         public override void OnNetworkSpawn() {
             base.OnNetworkSpawn();
 
-            GameManager.Instance.entities.Add(Entity.Uuid, this);
+            GameManager.Instance.entities.Add(Uuid, this);
         }
 
         public override void OnNetworkDespawn() {

@@ -66,5 +66,13 @@ namespace Models
                 Abilities = (Abilities) data.abilities;
             }
         }
+
+        public Creature(string monsterId) {
+            Uuid = Guid.NewGuid().ToString();
+            
+            GetMonsterDataById(monsterId);
+
+            Visible = true;
+        }
     }
 }

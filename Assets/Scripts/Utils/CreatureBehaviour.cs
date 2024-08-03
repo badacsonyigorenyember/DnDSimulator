@@ -8,7 +8,7 @@ namespace Utils
     [Serializable]
     public class CreatureBehaviour : EntityBehaviour
     {
-        public override void Init(IEntity data) {
+        public void Init(IEntity data) {
             Entity = data as Creature;
         }
     }

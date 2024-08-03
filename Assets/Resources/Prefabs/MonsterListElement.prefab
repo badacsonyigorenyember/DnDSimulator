@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6192674006106414270}
   - component: {fileID: 8291237129574557581}
   - component: {fileID: 9089635633505414473}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: MonsterListElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}

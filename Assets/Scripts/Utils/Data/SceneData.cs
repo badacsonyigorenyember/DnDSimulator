@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Models;
-using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 
 namespace Utils.Data

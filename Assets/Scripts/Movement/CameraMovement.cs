@@ -15,6 +15,9 @@ namespace Movement
         public override void OnNetworkSpawn() {
             base.OnNetworkSpawn();
             _cam = GetComponent<Camera>();
+            
+            if (_minZoomScale == 0)
+                _minZoomScale = 0.1f;
         }
 
         private void Update() {

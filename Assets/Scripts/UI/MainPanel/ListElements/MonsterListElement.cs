@@ -6,10 +6,10 @@ namespace UI.MainPanel.ListElements
 {
     public class MonsterListElement : MonoBehaviour
     {
-        private string _uuid;
+        public string uuid;
 
         public void SetMonster(string monsterName, string uuid, byte[] img) {
-            this._uuid = uuid;
+            this.uuid = uuid;
             
             Texture2D texture = new Texture2D(1, 1);
             texture.LoadImage(img);

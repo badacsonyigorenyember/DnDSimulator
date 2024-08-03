@@ -61,14 +61,10 @@ namespace Network
 
                 List<Task> loadTasks = new List<Task>();
 
-                foreach ((string uuid, Creature creature) in scene.creatures) {
-                    SpawnEntityObject();
-                    loadTasks.Add(LoadEntityToObject(GameManager.Instance.entities[uuid], creature)); 
-                }
-                
-                foreach ((string uuid, Player player) in scene.players) {
-                    SpawnEntityObject();
-                    loadTasks.Add(LoadEntityToObject(GameManager.Instance.entities[uuid], player)); 
+                List<IEntity> entities = scene.creatures.Values.Cast<IEntity>().Concat(scene.players.Values).ToList();
+
+                foreach (var entity in entities) {
+                    loadTasks.Add(SpawnCreature(entity));
                 }
 
                 await Task.WhenAll(loadTasks);
@@ -95,9 +91,17 @@ namespace Network
             }
         }
 
-        void SpawnEntityObject() {
-            GameObject obj = Instantiate(_creaturePrefab);
+        public async Task SpawnCreature(IEntity creature) {
+            SpawnEntityObject(creature.Uuid);
+            await LoadEntityToObject(GameManager.Instance.entities[creature.Uuid], creature);
+        }
 
+        void SpawnEntityObject(string uuid) {
+            Debug.Log(uuid);
+            GameObject obj = Instantiate(_creaturePrefab);
+            
+            obj.GetComponent<EntityBehaviour>().Uuid = uuid;
+            
             obj.GetComponent<NetworkObject>().Spawn();
 
             if (!_creatureContainer.GetComponent<NetworkObject>().IsSpawned) {
@@ -130,6 +134,8 @@ namespace Network
             texture.LoadImage(bytes);
 
             entity.SetImage(texture);
+            
+            Destroy(entity);
         }
 
         public async Task SaveScene() {

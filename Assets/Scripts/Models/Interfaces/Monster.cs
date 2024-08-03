@@ -22,6 +22,10 @@ namespace Models.Interfaces
         protected void GetMonsterDataById(string monsterId) {
             Monster monster = JsonConvert.DeserializeObject<Dictionary<string, Monster>>(File.ReadAllText(FileManager.MonsterManualPath))[monsterId];
             
+            SetMonsterData(monster);
+        }
+
+        protected void SetMonsterData(Monster monster) {
             MonsterId = monster.MonsterId;
             Name = monster.Name;
             MaxHealth = monster.MaxHealth;

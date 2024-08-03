@@ -3390,50 +3390,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
---- !u!1 &508145803
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 508145805}
-  - component: {fileID: 508145804}
-  m_Layer: 0
-  m_Name: Loader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &508145804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508145803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e7502e0ddfc4ce9bd0321c257052226, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &508145805
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508145803}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2860504, y: -2.8444116, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519423029
 GameObject:
   m_ObjectHideFlags: 0
@@ -4977,6 +4933,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 744129861}
   m_CullTransparentMesh: 1
+--- !u!1 &755035385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 755035387}
+  - component: {fileID: 755035386}
+  m_Layer: 0
+  m_Name: DragMonster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &755035386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755035385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7bf52d8332534cd688a2d6e807ec14b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cam: {fileID: 2004787804}
+  _gr: {fileID: 1008277081}
+  distance: 1
+  _listScrollView: {fileID: 885588036}
+  _selectedCreature: {fileID: 0}
+  _instantiatedCreature: {fileID: 0}
+--- !u!4 &755035387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755035385}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.2860504, y: -2.8444116, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &756491038
 GameObject:
   m_ObjectHideFlags: 0
@@ -5663,7 +5669,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 5
   m_Viewport: {fileID: 1747684295}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -6458,8 +6464,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: DragCreatureListElementHandler, Assembly-CSharp
+        - m_Target: {fileID: 755035386}
+          m_TargetAssemblyTypeName: UI.DragCreatureListElementHandler, Scripts
           m_MethodName: ValidRelease
           m_Mode: 6
           m_Arguments:
@@ -6474,8 +6480,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: DragCreatureListElementHandler, Assembly-CSharp
+        - m_Target: {fileID: 755035386}
+          m_TargetAssemblyTypeName: UI.DragCreatureListElementHandler, Scripts
           m_MethodName: ValidRelease
           m_Mode: 6
           m_Arguments:
@@ -8267,7 +8273,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 1168422107}
   waitingText: {fileID: 328677229}
-  _container: {fileID: 171358922}
   seconds: 5
   _textures:
   - {fileID: 2800000, guid: 2c298cbf71ce541b885abe42839949b3, type: 3}
@@ -10647,7 +10652,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679043299}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dcc216f8cdb44fb2988793315b6871e, type: 3}
   m_Name: 
@@ -12034,7 +12039,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _creatureContainer: {fileID: 104144859}
-  _creaturePrefab: {fileID: 2232566447712330940, guid: 7dca7f469ac9a43ac96a1e773fee2862, type: 3}
+  _creaturePrefab: {fileID: 3307566192098615681, guid: 90dea82e823344d9ca6f55f2e8bdd77c, type: 3}
   sceneObject: {fileID: 1539517414163062185}
   autosaveInSeconds: 300
 --- !u!1 &1943810665
@@ -12434,7 +12439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementSpeed: 10
   _zoomSpeed: 10
-  _minZoomScale: 0
+  _minZoomScale: 0.1
   _maxZoomScale: 50
 --- !u!1 &2013866901
 GameObject:
@@ -14047,4 +14052,4 @@ SceneRoots:
   - {fileID: 173470008}
   - {fileID: 1207603743}
   - {fileID: 2114300530}
-  - {fileID: 508145805}
+  - {fileID: 755035387}

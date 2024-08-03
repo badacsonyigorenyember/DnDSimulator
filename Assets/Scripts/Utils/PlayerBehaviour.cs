@@ -8,7 +8,7 @@ namespace Utils
     [Serializable]
     public class PlayerBehaviour : EntityBehaviour
     {
-        public override void Init(IEntity data) {
+        public void Init(IEntity data) {
             Entity = data as Player;
         }
     }
