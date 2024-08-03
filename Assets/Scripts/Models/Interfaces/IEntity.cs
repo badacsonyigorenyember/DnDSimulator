@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Structs;
+using UnityEngine;
 
 namespace Models.Interfaces
 {
@@ -11,7 +12,7 @@ namespace Models.Interfaces
         public int InitiativeModifier { get; set; }
         public int ArmorClass { get; set; }
         public bool Visible { get; set; }
-        public Vector2 Position { get; set; }
+        public Position Position { get; set; }
 
         public int DoDamage(int damage);
         public int Heal(int amount);

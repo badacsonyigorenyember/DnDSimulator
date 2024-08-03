@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,6 +37,7 @@ namespace Network
 
             if (_timer >= autosaveInSeconds || Input.GetKeyDown(KeyCode.Period)) {
                 _timer = 0;
+                Debug.Log("Saved!");
                 SaveScene();
             }
         }
@@ -92,15 +94,30 @@ namespace Network
         }
 
         public async Task SpawnCreature(IEntity creature) {
-            SpawnEntityObject(creature.Uuid);
-            await LoadEntityToObject(GameManager.Instance.entities[creature.Uuid], creature);
+            SpawnEntityObject(creature);
+            await LoadEntityToObject(GameManager.Instance.entities[creature.Uuid]);
         }
 
-        void SpawnEntityObject(string uuid) {
-            Debug.Log(uuid);
+        void SpawnEntityObject<T>(T entity) where T : IEntity {
+            Debug.Log(entity.Uuid);
             GameObject obj = Instantiate(_creaturePrefab);
             
-            obj.GetComponent<EntityBehaviour>().Uuid = uuid;
+            //obj.GetComponent<EntityBehaviour>().Uuid = entity.Uuid;
+            
+            switch (entity) {
+                case Creature creature:
+                    CreatureBehaviour creatureBehaviour = obj.AddComponent<CreatureBehaviour>();
+                    creatureBehaviour.Init(creature);
+                    break;
+                case Player player: 
+                    PlayerBehaviour playerBehaviour = obj.AddComponent<PlayerBehaviour>();
+                    playerBehaviour.Init(player);
+                    break;
+                default:
+                    throw new Exception("Nem megfelelő típus!");
+            }
+            
+            obj.transform.position = entity.Position.GetPosition();
             
             obj.GetComponent<NetworkObject>().Spawn();
 
@@ -111,31 +128,14 @@ namespace Network
             obj.GetComponent<NetworkObject>().TrySetParent(_creatureContainer);
         }
 
-        public async Task LoadEntityToObject<T>(EntityBehaviour entity, T entityModel) where T: IEntity {
-            switch (entityModel) {
-                case Creature creature:
-                    CreatureBehaviour creatureBehaviour = entity.gameObject.AddComponent<CreatureBehaviour>();
-                    creatureBehaviour.Init(creature);
-                    break;
-                case Player player: 
-                    PlayerBehaviour playerBehaviour = entity.gameObject.AddComponent<PlayerBehaviour>();
-                    playerBehaviour.Init(player);
-                    break;
-                default:
-                    throw new Exception("Nem megfelelő típus!");
-            }
-            
-            entity.transform.position = entityModel.Position;
-
-            string imagePath = FileManager.MonsterManualImagesPath + $"{entityModel.Name}.png"; //TODO: lekezelni a custom képeket! 
+        public async Task LoadEntityToObject(EntityBehaviour entity) {
+            string imagePath = FileManager.MonsterManualImagesPath + $"{entity.Entity.Name}.png"; //TODO: lekezelni a custom képeket! 
             
             byte[] bytes = await File.ReadAllBytesAsync(imagePath);
             Texture2D texture = new Texture2D(1, 1);
             texture.LoadImage(bytes);
 
             entity.SetImage(texture);
-            
-            Destroy(entity);
         }
 
         public async Task SaveScene() {
@@ -147,19 +147,19 @@ namespace Network
             SceneData sceneData = new SceneData(GameManager.Instance.currentScene);
             sceneData.Creatures.Clear();
 
-            List<Creature> creatures = new List<Creature>();
-            List<Player> players = new List<Player>();
+            Dictionary<string, Creature> creatures = new Dictionary<string, Creature>();
+            Dictionary<string, Player> players = new Dictionary<string, Player>();
 
             foreach ((string uuid, EntityBehaviour entityBehaviour) in GameManager.Instance.entities) {
                 switch (entityBehaviour.Entity) {
                     case Creature creature: {
                         sceneData.Creatures.Add(uuid);
-                        creatures.Add(creature);
+                        creatures.Add(uuid, creature);
                         break;
                     }
                     case Player player: {
                         sceneData.Players.Add(uuid);
-                        players.Add(player);
+                        players.Add(uuid, player);
                         break;
                     }
                     default:
@@ -169,14 +169,16 @@ namespace Network
             
             FileManager fileManager = FileManager.Instance;
 
-            List<Creature> creaturesInAdventure = JsonConvert.DeserializeObject<List<Creature>>(await File.ReadAllTextAsync(fileManager.creaturePath));
-            
-            string creaturesJson = JsonConvert.SerializeObject(GetAllEntities(creaturesInAdventure, creatures));
+            Dictionary<string, Creature> creaturesInAdventure = JsonConvert.DeserializeObject<Dictionary<string, Creature>>(await File.ReadAllTextAsync(fileManager.creaturePath));
+
+            var getAllCreatures = GetAllEntities(creaturesInAdventure, creatures); 
+            string creaturesJson = JsonConvert.SerializeObject(getAllCreatures);
             Task creatureWriteTask = File.WriteAllTextAsync(fileManager.creaturePath, creaturesJson);
             
-            List<Player> playersInAdventure = JsonConvert.DeserializeObject<List<Player>>(await File.ReadAllTextAsync(fileManager.playerPath));
+            Dictionary<string, Player> playersInAdventure = JsonConvert.DeserializeObject<Dictionary<string, Player>>(await File.ReadAllTextAsync(fileManager.playerPath));
             
-            string playersJson = JsonConvert.SerializeObject(GetAllEntities(playersInAdventure, players));
+            var getAllPlayers = GetAllEntities(playersInAdventure, players);
+            string playersJson = JsonConvert.SerializeObject(getAllPlayers);
             Task playerWriteTask = File.WriteAllTextAsync(fileManager.playerPath, playersJson);
             
             sceneData.CamPosition = Camera.main.transform.position;
@@ -194,20 +196,15 @@ namespace Network
             Debug.Log("Saved at: " + sceneFolderPath + $"/{sceneData.Name}.json");
         }
 
-        public static List<T> GetAllEntities<T>(List<T> entitiesInAdventure, List<T> sceneEntities) where T : IEntity{
-            if (entitiesInAdventure != null) {
-                foreach (T entity in sceneEntities) {
-                    T matchingEntity = entitiesInAdventure.FirstOrDefault(e => e.Uuid == entity.Uuid);
-
-                    if (matchingEntity != null) {
-                        entitiesInAdventure.Remove(matchingEntity);
-                        entitiesInAdventure.Add(entity);
-                    } else {
-                        entitiesInAdventure.Add(entity);
-                    }
-                }
-            } else {
-                entitiesInAdventure = sceneEntities;
+        static Dictionary<string, T> GetAllEntities<T>(Dictionary<string, T> entitiesInAdventure, Dictionary<string, T> sceneEntities)
+            where T : IEntity {
+            if (entitiesInAdventure == null) {
+                return sceneEntities;
+            }
+            
+            foreach ((string uuid, T entity) in sceneEntities) {
+                entitiesInAdventure.Remove(uuid);
+                entitiesInAdventure.Add(uuid, entity);
             }
 
             return entitiesInAdventure;

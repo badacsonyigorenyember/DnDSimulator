@@ -26,14 +26,14 @@ namespace Models
             string creaturePath = fileManager.creaturePath;
             string playerPath = fileManager.playerPath;
 
-            if (Directory.Exists(creaturePath)) {
+            if (File.Exists(creaturePath)) {
                 Dictionary<string, Creature> creatureJson = JsonConvert.DeserializeObject<Dictionary<string, Creature>>(File.ReadAllText(creaturePath));
                 foreach (string uuid in data.Creatures) {
                     creatures[uuid] = creatureJson[uuid];
                 }
             }
 
-            if (Directory.Exists(playerPath)) {
+            if (File.Exists(playerPath)) {
                 Dictionary<string, Player> playerJson = JsonConvert.DeserializeObject<Dictionary<string, Player>>(File.ReadAllText(playerPath));
                 foreach (string uuid in data.Players) {
                     players[uuid] = playerJson[uuid];

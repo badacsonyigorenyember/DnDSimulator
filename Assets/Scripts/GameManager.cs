@@ -107,9 +107,11 @@ public class GameManager : NetworkBehaviour
 
             List<Task> loadCreatureTasks = new List<Task>();
             foreach (var creature in entities.Values) {
-                loadCreatureTasks.Add(SceneHandler.Instance.LoadEntityToObject(creature, 
+                loadCreatureTasks.Add(SceneHandler.Instance.LoadEntityToObject(creature
+                    /*, 
                     currentScene.creatures.ToList()
-                        .Find(c => c.Value.Position == (Vector2)creature.transform.position).Value)
+                        .Find(c => c.Value.Position == (Vector2)creature.transform.position).Value*/
+                    )
                 );
             }
             await Task.WhenAll(loadCreatureTasks);

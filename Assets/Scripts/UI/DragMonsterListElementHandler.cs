@@ -4,6 +4,7 @@ using System.Linq;
 using FileHandling;
 using Models;
 using Network;
+using Structs;
 using UI.MainPanel.ListElements;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -27,7 +28,6 @@ namespace UI
         public GameObject _selectedCreature;
         public GameObject _instantiatedCreature;
         private Vector2 _startPosition;
-        private CreatureData _creature;
         private Texture2D _creatureImg;
 
         private void Update() {
@@ -91,7 +91,7 @@ namespace UI
 
                 Creature creature = new Creature(_selectedCreature.GetComponent<MonsterListElement>().uuid)
                 {
-                 Position = position
+                 Position = new Position(position)
                 };
 
                 await SceneHandler.Instance.SpawnCreature(creature);

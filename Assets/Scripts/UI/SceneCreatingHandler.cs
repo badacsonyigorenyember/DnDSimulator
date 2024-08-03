@@ -42,7 +42,7 @@ namespace UI
             _selectImageButton.onClick.AddListener(SelectImage);
         }
 
-        void Init() {
+        public void Init() {
             transform.GetChild(0).gameObject.SetActive(true);
 
             ClearPanel();

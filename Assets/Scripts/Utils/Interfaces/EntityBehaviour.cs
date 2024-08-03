@@ -7,7 +7,7 @@ namespace Utils.Interfaces
     public class EntityBehaviour : NetworkBehaviour
     {
         public IEntity Entity;
-        public string Uuid;
+        //public string Uuid;
 
         public void SetImage(Texture2D texture) {
             GetComponent<SpriteRenderer>().sprite = Sprite.Create(
@@ -23,7 +23,7 @@ namespace Utils.Interfaces
         public override void OnNetworkSpawn() {
             base.OnNetworkSpawn();
 
-            GameManager.Instance.entities.Add(Uuid, this);
+            GameManager.Instance.entities.Add(Entity.Uuid, this);
         }
 
         public override void OnNetworkDespawn() {

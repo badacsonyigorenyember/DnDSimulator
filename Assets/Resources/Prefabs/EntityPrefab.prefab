@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1721578518726697072}
   - component: {fileID: 2024112442959908821}
   - component: {fileID: 7688232184375310600}
-  - component: {fileID: 8983027706701123513}
   m_Layer: 0
   m_Name: EntityPrefab
   m_TagString: Untagged
@@ -175,16 +174,3 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &8983027706701123513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3307566192098615681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 515f4d12c0b8e81418c9126d7a59d470, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Uuid: 

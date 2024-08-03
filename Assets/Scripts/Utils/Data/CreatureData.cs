@@ -1,4 +1,5 @@
 using Script.Structs;
+using Structs;
 using UnityEngine;
 using Utils.Interfaces;
 
@@ -13,7 +14,7 @@ namespace Utils.Data
         public int? initiativeModifier;
         public int? armorClass;
         public bool visible;
-        public Vector2 position;
+        public Position position;
         public Abilities? abilities;
         public string monsterId;    //TODO: customCreature ha itt lesz, akkor ez is nullable
     }

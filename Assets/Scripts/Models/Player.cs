@@ -1,5 +1,6 @@
 ﻿using Models.Interfaces;
 using Script.Structs;
+using Structs;
 using Utils.Data;
 using Vector2 = UnityEngine.Vector2;
 
@@ -14,7 +15,7 @@ namespace Models
         public int InitiativeModifier { get; set; }
         public int ArmorClass { get; set; }
         public bool Visible { get; set; }
-        public Vector2 Position { get; set; }
+        public Position Position { get; set; }
 
         public Abilities Abilities { get; set; }
         

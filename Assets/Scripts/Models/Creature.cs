@@ -1,6 +1,7 @@
 ﻿using System;
 using Models.Interfaces;
 using Script.Structs;
+using Structs;
 using UnityEngine;
 using Utils.Data;
 
@@ -9,7 +10,7 @@ namespace Models
     public class Creature : Monster, IEntity
     {
         public string Uuid { get; set; }
-        public Vector2 Position { get; set; }
+        public Position Position { get; set; }
         public bool Visible { get; set; }
         public int CurrentHealth { get; set; }
 
@@ -74,5 +75,7 @@ namespace Models
 
             Visible = true;
         }
+
+        public Creature() { } 
     }
 }
