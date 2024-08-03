@@ -45,6 +45,12 @@ namespace FileHandling
             if (!Directory.Exists(sceneImgPath)) {
                 Directory.CreateDirectory(sceneImgPath);
             }
+            if (!File.Exists(creaturePath)) {
+                File.Create(creaturePath);    
+            }
+            if (!File.Exists(playerPath)) {
+                File.Create(playerPath);    
+            }
         }
     }
 }
