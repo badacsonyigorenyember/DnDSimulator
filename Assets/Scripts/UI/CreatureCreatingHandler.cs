@@ -56,14 +56,7 @@ namespace UI
             FileBrowser.SetExcludedExtensions(".lnk", ".tmp", ".zip", ".rar", ".exe");
             FileBrowser.AddQuickLink("Users", "C:\\Users");
 
-            _openCreatingButton.onClick.AddListener(() => {
-                if (_openCreatingButton.GetComponent<CreateButton>().selected == SelectedList.Creature) {
-                    Init();
-                }
-                else {
-                    ClosePanel();
-                }
-            });
+            //_openCreatingButton.onClick.AddListener(() => { });
             _createCreatureButton.onClick.AddListener(CreateEntity);
             _cancelCreatureButton.onClick.AddListener(ClosePanel);
             _selectImageButton.onClick.AddListener(SelectImage);
@@ -160,7 +153,6 @@ namespace UI
             Debug.Log("Successful save!");
 
             ClearPanel();
-            InfoPanelHandler.RefreshAction.Invoke();
         }
 
         void ClearPanel() {

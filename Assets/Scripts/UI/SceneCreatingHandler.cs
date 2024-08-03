@@ -36,14 +36,7 @@ namespace UI
             FileBrowser.SetExcludedExtensions(".lnk", ".tmp", ".zip", ".rar", ".exe");
             FileBrowser.AddQuickLink("Users", "C:\\Users");
 
-            _openCreatingButton.onClick.AddListener(() => {
-                if (_openCreatingButton.GetComponent<CreateButton>().selected == SelectedList.Scene) {
-                    Init();
-                }
-                else {
-                    ClosePanel();
-                }
-            });
+            //_openCreatingButton.onClick.AddListener(() => { });
             _createSceneButton.onClick.AddListener(CreateScene);
             _cancelCreatureButton.onClick.AddListener(ClosePanel);
             _selectImageButton.onClick.AddListener(SelectImage);
@@ -146,7 +139,6 @@ namespace UI
             SceneHandler.Instance.LoadMap(sceneName);
 
             ClosePanel();
-            InfoPanelHandler.RefreshAction.Invoke();
         }
 
         void ClearPanel() {
