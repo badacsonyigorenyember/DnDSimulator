@@ -1,10 +1,13 @@
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FileHandling;
+using Models;
 using Network;
 using Newtonsoft.Json;
 using SimpleFileBrowser;
+using Structs;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -116,16 +119,19 @@ namespace UI
                 }
             }
 
+            Camera mainCamera = Camera.main;
+            if (mainCamera is null) {
+                Debug.Log("Main camera is null!");
+                throw new Exception("Main camera is null!");
+            }
+            
             SceneData scene = new SceneData(sceneName)
             {
-                ZoomScale = Camera.main.orthographicSize,
-                CamPosition = Camera.main.transform.position
+                ZoomScale = mainCamera.orthographicSize,
+                CamPosition = new Position(mainCamera.transform.position)
             };
 
-            string json = JsonConvert.SerializeObject(scene, new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
+            string json = JsonConvert.SerializeObject(scene);
 
             FileManager fileManager = FileManager.Instance;
             
@@ -138,6 +144,8 @@ namespace UI
 
             SceneHandler.Instance.LoadMap(sceneName);
 
+            GameManager.Instance.currentScene = new Scene(scene);
+            //TODO: ekcsöli mehet innen már a list elementek közés is
             ClosePanel();
         }
 
