@@ -1,9 +1,6 @@
 ﻿using System;
 using Models.Interfaces;
-using Script.Structs;
 using Structs;
-using UnityEngine;
-using Utils.Data;
 
 namespace Models
 {
@@ -13,6 +10,8 @@ namespace Models
         public Position Position { get; set; }
         public bool Visible { get; set; }
         public int CurrentHealth { get; set; }
+
+        public Creature() { } 
 
         /**
          * Alkalmazza a paraméterben kapott sebzést
@@ -42,31 +41,6 @@ namespace Models
 
             return CurrentHealth;
         }
-        
-        public Creature(CreatureData data) {
-            Uuid = data.uuid;
-            Visible = data.visible;
-            Position = data.position;
-            CurrentHealth = data.currentHealth;
-            
-            GetMonsterDataById(data.monsterId);
-            
-            if (data.name is not null) {
-                Name = data.name;
-            }
-            if (data.maxHealth is not null) {
-                MaxHealth = (int) data.maxHealth;
-            }
-            if (data.initiativeModifier is not null) {
-                InitiativeModifier = (int) data.initiativeModifier;
-            }
-            if (data.armorClass is not null) {
-                ArmorClass = (int) data.armorClass;
-            }
-            if (data.abilities is not null) {
-                Abilities = (Abilities) data.abilities;
-            }
-        }
 
         public Creature(string monsterId) {
             Uuid = Guid.NewGuid().ToString();
@@ -75,7 +49,5 @@ namespace Models
 
             Visible = true;
         }
-
-        public Creature() { } 
     }
 }
