@@ -16,8 +16,13 @@ namespace UI.MainPanel
         
         [SerializeField] private SceneCreatingHandler _createScenePanel;
 
+        public static MainPanelManager Instance;
         
         private MainPanelState _state;
+
+        private void Awake() {
+            Instance = this;
+        }
 
         private void Start() {
             _monsterListPanelButton.onClick.AddListener(() => ChangePanel(MainPanelState.Monster));
@@ -25,6 +30,8 @@ namespace UI.MainPanel
             
             _createSceneButton.onClick.AddListener(_createScenePanel.Init);
             
+            _sceneListListPanel.ListScenes();
+            _monsterListPanel.ListMonsters();
         }
 
         void ChangePanel(MainPanelState nextState) {
@@ -32,18 +39,18 @@ namespace UI.MainPanel
                 case MainPanelState.Scene: {
                     _monsterListPanel.gameObject.SetActive(false);
                     _sceneListListPanel.gameObject.SetActive(true);
-                    
-                    _sceneListListPanel.ListScenes();
                     break;
                 }
                 case MainPanelState.Monster: {
                     _sceneListListPanel.gameObject.SetActive(false);
                     _monsterListPanel.gameObject.SetActive(true);
-                    
-                    _monsterListPanel.ListMonsters();
                     break;
                 }
             }
+        }
+
+        public void ListScenes() {
+            _sceneListListPanel.ListScenes();
         }
     }
 }

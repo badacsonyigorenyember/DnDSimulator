@@ -15,9 +15,10 @@ namespace UI.MainPanel
         [SerializeField] private GameObject _sceneListElementPrefab;
 
         public void ListScenes() {
+            ClearScenes();
             string[] paths = Directory.GetFiles(FileManager.Instance.sceneFolderPath);
 
-            foreach (var path in paths) {//TODO: ne adja hozzá többször újranyitásnál (vagy clear-elni, de a pluszt megtartani, vagy csak nem addolni)
+            foreach (var path in paths) {
                 if (path.EndsWith(".meta")) continue;
                 
                 string json = File.ReadAllText(path);
@@ -32,6 +33,12 @@ namespace UI.MainPanel
         void InstantiateScene(string sceneName) {
             SceneListElement sceneListElement = Instantiate(_sceneListElementPrefab, _listElementsContainer).GetComponent<SceneListElement>();
             sceneListElement.SetSceneListElement(sceneName);
+        }
+
+        private void ClearScenes() {
+            foreach (Transform child in _listElementsContainer) {
+                if (child.GetComponent<SceneListElement>() is not null) Destroy(child.gameObject);
+            }
         }
     }
 }

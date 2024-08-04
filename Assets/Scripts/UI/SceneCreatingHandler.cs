@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using SimpleFileBrowser;
 using Structs;
 using TMPro;
+using UI.MainPanel;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils.Data;
@@ -39,7 +40,6 @@ namespace UI
             FileBrowser.SetExcludedExtensions(".lnk", ".tmp", ".zip", ".rar", ".exe");
             FileBrowser.AddQuickLink("Users", "C:\\Users");
 
-            //_openCreatingButton.onClick.AddListener(() => { });
             _createSceneButton.onClick.AddListener(CreateScene);
             _cancelCreatureButton.onClick.AddListener(ClosePanel);
             _selectImageButton.onClick.AddListener(SelectImage);
@@ -145,7 +145,9 @@ namespace UI
             SceneHandler.Instance.LoadMap(sceneName);
 
             GameManager.Instance.currentScene = new Scene(scene);
-            //TODO: ekcsöli mehet innen már a list elementek közés is
+
+            MainPanelManager.Instance.ListScenes();
+            
             ClosePanel();
         }
 

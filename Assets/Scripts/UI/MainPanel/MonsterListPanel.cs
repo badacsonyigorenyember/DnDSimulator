@@ -6,7 +6,6 @@ using Models.Interfaces;
 using Newtonsoft.Json;
 using UI.MainPanel.ListElements;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 namespace UI.MainPanel
