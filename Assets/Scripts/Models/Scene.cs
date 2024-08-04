@@ -20,7 +20,7 @@ namespace Models
             creatures = new Dictionary<string, Creature>();
             players = new Dictionary<string, Player>();
             zoomScale = data.ZoomScale;
-            camPosition = data.CamPosition;
+            camPosition = new Vector2(data.CamPosition.x, data.CamPosition.y);
 
             FileManager fileManager = FileManager.Instance;
             string creaturePath = fileManager.creaturePath;
