@@ -1,3 +1,4 @@
+#nullable enable
 using System.IO;
 using FileHandling;
 using Newtonsoft.Json;
@@ -36,8 +37,9 @@ namespace UI.MainPanel
         }
 
         private void ClearScenes() {
-            foreach (Transform child in _listElementsContainer) {
-                if (child.GetComponent<SceneListElement>() is not null) Destroy(child.gameObject);
+            for (int i = _listElementsContainer.childCount - 1; i >= 0; i--) {
+                SceneListElement? sceneListElement = _listElementsContainer.GetChild(i).GetComponent<SceneListElement>();
+                Destroy(sceneListElement?.gameObject);
             }
         }
     }
