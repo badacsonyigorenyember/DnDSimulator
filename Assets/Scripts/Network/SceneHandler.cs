@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +8,7 @@ using Models;
 using Models.Interfaces;
 using FileHandling;
 using Newtonsoft.Json;
+using Structs;
 using Unity.Netcode;
 using UnityEngine;
 using Utils;
@@ -48,7 +49,7 @@ namespace Network
             await SaveScene();
             ClearScene();
 
-            string path = FileManager.Instance.sceneFolderPath + $"{sceneName}.json";
+            string path = FileManager.Instance.sceneFolderPath + $"/{sceneName}.json";
             
             if (File.Exists(path)) {
                 SceneData sceneData = JsonConvert.DeserializeObject<SceneData>(await File.ReadAllTextAsync(path));
@@ -59,7 +60,7 @@ namespace Network
                 mainCam.transform.position = new Vector3(scene.camPosition.x, scene.camPosition.y, -10);
                 mainCam.orthographicSize = scene.zoomScale;
 
-                LoadMap(sceneName); //TODO: Map-hoz még hozzá se nyúltunk??
+                LoadMap(sceneName); //TODO: Map-hoz még hozzá se nyúltunk?? De nem ám
 
                 List<Task> loadTasks = new List<Task>();
 
@@ -181,8 +182,15 @@ namespace Network
             string playersJson = JsonConvert.SerializeObject(getAllPlayers);
             Task playerWriteTask = File.WriteAllTextAsync(fileManager.playerPath, playersJson);
             
-            sceneData.CamPosition = Camera.main.transform.position;
-            sceneData.ZoomScale = Camera.main.orthographicSize;
+            Camera mainCamera = Camera.main;
+
+            if (mainCamera is null) {
+                Debug.Log("Main camera is null!");
+                throw new Exception("Main camera is null!");
+            }
+            
+            sceneData.CamPosition = new Position(mainCamera.transform.position);
+            sceneData.ZoomScale = mainCamera.orthographicSize;
 
             string sceneJson = JsonConvert.SerializeObject(sceneData, new JsonSerializerSettings
             {
