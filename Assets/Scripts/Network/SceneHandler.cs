@@ -221,8 +221,8 @@ namespace Network
         void ClearScene() {
             sceneObject.GetComponent<SpriteRenderer>().sprite = null;
 
-            foreach ((_, EntityBehaviour entity) in GameManager.Instance.entities) {
-                entity.GetComponent<NetworkObject>().Despawn();
+            for (int i = 0; i < GameManager.Instance.entities.Values.Count; i++) {
+                GameManager.Instance.entities.Values.ToList()[i].GetComponent<NetworkObject>().Despawn();
             }
 
             GameManager.Instance.currentScene = null;
