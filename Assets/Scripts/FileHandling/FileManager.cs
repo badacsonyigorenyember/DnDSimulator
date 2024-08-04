@@ -28,7 +28,7 @@ namespace FileHandling
             this.adventurePath = adventurePath;
             creaturePath = $"{adventurePath}/creatures.json";
             playerPath = $"{adventurePath}/players.json";
-            sceneFolderPath = $"{adventurePath}/Scenes/";
+            sceneFolderPath = $"{adventurePath}/Scenes";
             creatureImgPath = $"{adventurePath}/CreatureImages"; 
             playerImgPathPath = $"{adventurePath}/PlayerImages";
             sceneImgPath = $"{adventurePath}/SceneImages";

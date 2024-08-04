@@ -1,8 +1,6 @@
 ﻿using Models.Interfaces;
 using Script.Structs;
 using Structs;
-using Utils.Data;
-using Vector2 = UnityEngine.Vector2;
 
 namespace Models
 {
@@ -18,18 +16,8 @@ namespace Models
         public Position Position { get; set; }
 
         public Abilities Abilities { get; set; }
-        
-        public Player(PlayerData data) {
-            Uuid = data.uuid;
-            Name = data.name;
-            MaxHealth = data.maxHealth;
-            CurrentHealth = data.currentHealth;
-            InitiativeModifier = data.initiativeModifier;
-            ArmorClass = data.armorClass;
-            Visible = data.visible;
-            Position = data.position;
-            Abilities = data.abilities;
-        }
+
+        public Player() { }
 
         public int DoDamage(int damage) {
             CurrentHealth -= damage;
