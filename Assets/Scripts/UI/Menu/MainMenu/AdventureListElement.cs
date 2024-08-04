@@ -25,7 +25,7 @@ namespace UI.Menu.MainMenu
         }
 
         void StartGame() {
-            FileManager.Instance.path = adventurePath;
+            FileManager.Instance.SetPaths(adventurePath);
             NetworkManagerHelper.Instance.StartHost();
         }
 

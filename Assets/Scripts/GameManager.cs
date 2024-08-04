@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FileHandling;
+using FileHandling.Dto;
+using Models;
 using Network;
 using Newtonsoft.Json;
 using TMPro;
@@ -11,39 +13,26 @@ using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils.Data;
+using Utils.Interfaces;
 
 public class GameManager : NetworkBehaviour
 {
     public Button startStopButton;
 
-    public List<Creature> creatures = new();
+    public Dictionary<string, EntityBehaviour> entities = new Dictionary<string, EntityBehaviour>();
     public bool isPlaying;
-    public SceneData currentScene;
+    public Scene currentScene;
 
     public static GameManager Instance;
 
     public GameObject waitingScreenObj;
-
-    public static string CREATURE_IMG_PATH;
-    public static string CREATURE_DATA_PATH;
-    public static string MAP_PATH;
-    public static string SCENE_PATH;
 
     private void Awake() {
         Instance = this;
     }
 
     private void Start() {
-        CREATURE_IMG_PATH = Application.dataPath + "/Adventures/Temp/Images/Creatures";
-        CREATURE_DATA_PATH = Application.dataPath + "/Adventures/Temp/Data/Creatures";
-        MAP_PATH = Application.dataPath + "/Adventures/Temp/Images/Maps";
-        SCENE_PATH = Application.dataPath + "/Adventures/Temp/Data/Scenes";
-
-        Directory.CreateDirectory(CREATURE_IMG_PATH);
-        Directory.CreateDirectory(CREATURE_DATA_PATH);
-        Directory.CreateDirectory(MAP_PATH);
-        Directory.CreateDirectory(SCENE_PATH);
-
         if (!IsServer) {
             NetworkManager.CustomMessagingManager.RegisterNamedMessageHandler("GetGameStateData", ReceiveGetGameStateDataMessage);
             
@@ -108,18 +97,18 @@ public class GameManager : NetworkBehaviour
 
     async void SetUpClient(bool isPlaying, GameStateDto gameState) {
         if (isPlaying) {
-            currentScene = JsonConvert.DeserializeObject<SceneData>(gameState.sceneData);
+            currentScene = new Scene(JsonConvert.DeserializeObject<SceneData>(gameState.sceneData));
 
             Debug.Log("Current scene set!");
 
-            await CloudDataHandler.SaveCreatureImages(currentScene.creatures.Select(e => e.creatureName).ToList(), gameState);
+            await CloudDataHandler.SaveCreatureImages(currentScene.creatures.Select(e => e.Value.Name).ToList(), gameState);
 
             Debug.Log("Images downloaded!");
 
             List<Task> loadCreatureTasks = new List<Task>();
-            foreach (var creature in creatures) {
-                loadCreatureTasks.Add(SceneHandler.Instance.LoadCreature(creature, 
-                    currentScene.creatures.Find(c => c.position == (Vector2)creature.transform.position)));
+            foreach (var creature in entities.Values) {
+                loadCreatureTasks.Add(SceneHandler.Instance.LoadEntityToObject(creature)
+                );
             }
             await Task.WhenAll(loadCreatureTasks);
 

@@ -1,9 +1,19 @@
+using System;
+
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Models;
+using Models.Interfaces;
 using FileHandling;
+using Newtonsoft.Json;
+using Structs;
 using Unity.Netcode;
 using UnityEngine;
+using Utils;
+using Utils.Data;
+using Utils.Interfaces;
 
 namespace Network
 {
@@ -15,8 +25,8 @@ namespace Network
         [SerializeField] private GameObject sceneObject;
 
         public float autosaveInSeconds;
-
-        private float timer;
+        
+        private float _timer;
         public static SceneHandler Instance;
 
         private void Awake() {
@@ -24,10 +34,11 @@ namespace Network
         }
 
         private void Update() {
-            timer += Time.deltaTime;
+            _timer += Time.deltaTime;
 
-            if (timer >= autosaveInSeconds || Input.GetKeyDown(KeyCode.Period)) {
-                timer = 0;
+            if (_timer >= autosaveInSeconds || Input.GetKeyDown(KeyCode.Period)) {
+                _timer = 0;
+                Debug.Log("Saved!");
                 SaveScene();
             }
         }
@@ -38,24 +49,28 @@ namespace Network
             await SaveScene();
             ClearScene();
 
-            string path = GameManager.SCENE_PATH + $"/{sceneName}.json";
+            string path = FileManager.Instance.sceneFolderPath + $"/{sceneName}.json";
+            
             if (File.Exists(path)) {
-                string json = await File.ReadAllTextAsync(path);
-                SceneData scene = JsonUtility.FromJson<SceneData>(json);
+                SceneData sceneData = JsonConvert.DeserializeObject<SceneData>(await File.ReadAllTextAsync(path));
+                Scene scene = new Scene(sceneData);
                 GameManager.Instance.currentScene = scene;
-                Camera.main.transform.position = new Vector3(scene.camPosition.x, scene.camPosition.y, -10);
-                Camera.main.orthographicSize = scene.zoomScale;
 
-                LoadMap(sceneName);
+                Camera mainCam = Camera.main;
+                mainCam.transform.position = new Vector3(scene.camPosition.x, scene.camPosition.y, -10);
+                mainCam.orthographicSize = scene.zoomScale;
 
-                List<Task> tasks = new List<Task>();
+                LoadMap(sceneName); //TODO: Map-hoz még hozzá se nyúltunk?? De nem ám
 
-                for (int i = 0; i < scene.creatures.Count; i++) {
-                    CreateCreature();
-                    tasks.Add(LoadCreature(GameManager.Instance.creatures[i], scene.creatures[i]));
+                List<Task> loadTasks = new List<Task>();
+
+                List<IEntity> entities = scene.creatures.Values.Cast<IEntity>().Concat(scene.players.Values).ToList();
+
+                foreach (var entity in entities) {
+                    loadTasks.Add(SpawnCreature(entity));
                 }
 
-                await Task.WhenAll(tasks);
+                await Task.WhenAll(loadTasks);
                 Debug.Log("Scene loaded!");
             }
             else {
@@ -64,7 +79,7 @@ namespace Network
         }
 
         public void LoadMap(string sceneName) {
-            string imgPath = GameManager.MAP_PATH + $"/{sceneName}.png";
+            string imgPath = FileManager.Instance.sceneImgPath + $"/{sceneName}.png";
 
             if (File.Exists(imgPath)) {
                 byte[] imgBytes = File.ReadAllBytes(imgPath);
@@ -79,9 +94,32 @@ namespace Network
             }
         }
 
-        void CreateCreature() {
-            GameObject obj = Instantiate(_creaturePrefab);
+        public async Task SpawnCreature(IEntity creature) {
+            SpawnEntityObject(creature);
+            await LoadEntityToObject(GameManager.Instance.entities[creature.Uuid]);
+        }
 
+        void SpawnEntityObject<T>(T entity) where T : IEntity {
+            Debug.Log(entity.Uuid);
+            GameObject obj = Instantiate(_creaturePrefab);
+            
+            //obj.GetComponent<EntityBehaviour>().Uuid = entity.Uuid;
+            
+            switch (entity) {
+                case Creature creature:
+                    CreatureBehaviour creatureBehaviour = obj.AddComponent<CreatureBehaviour>();
+                    creatureBehaviour.Init(creature);
+                    break;
+                case Player player: 
+                    PlayerBehaviour playerBehaviour = obj.AddComponent<PlayerBehaviour>();
+                    playerBehaviour.Init(player);
+                    break;
+                default:
+                    throw new Exception("Nem megfelelő típus!");
+            }
+            
+            obj.transform.position = entity.Position.GetPosition();
+            
             obj.GetComponent<NetworkObject>().Spawn();
 
             if (!_creatureContainer.GetComponent<NetworkObject>().IsSpawned) {
@@ -91,16 +129,14 @@ namespace Network
             obj.GetComponent<NetworkObject>().TrySetParent(_creatureContainer);
         }
 
-        public async Task LoadCreature(Creature creature, CreatureDto creatureDto) {
-            CreatureDtoHandler.CreatureDtoToCreature(creature, creatureDto);
-
-            creature.transform.position = creatureDto.position;
-
-            byte[] bytes = await File.ReadAllBytesAsync(GameManager.CREATURE_IMG_PATH + $"/{creatureDto.creatureName}.png");
+        public async Task LoadEntityToObject(EntityBehaviour entity) {
+            string imagePath = FileManager.MonsterManualImagesPath + $"{entity.Entity.Name}.png"; //TODO: lekezelni a custom képeket! 
+            
+            byte[] bytes = await File.ReadAllBytesAsync(imagePath);
             Texture2D texture = new Texture2D(1, 1);
             texture.LoadImage(bytes);
 
-            creature.SetImage(texture);
+            entity.SetImage(texture);
         }
 
         public async Task SaveScene() {
@@ -109,27 +145,84 @@ namespace Network
                 return;
             }
 
-            SceneData scene = GameManager.Instance.currentScene;
-            scene.creatures.Clear();
+            SceneData sceneData = new SceneData(GameManager.Instance.currentScene);
+            sceneData.Creatures.Clear();
 
-            foreach (var creature in GameManager.Instance.creatures) {
-                scene.creatures.Add(new CreatureDto(creature));
+            Dictionary<string, Creature> creatures = new Dictionary<string, Creature>();
+            Dictionary<string, Player> players = new Dictionary<string, Player>();
+
+            foreach ((string uuid, EntityBehaviour entityBehaviour) in GameManager.Instance.entities) {
+                switch (entityBehaviour.Entity) {
+                    case Creature creature: {
+                        sceneData.Creatures.Add(uuid);
+                        creatures.Add(uuid, creature);
+                        break;
+                    }
+                    case Player player: {
+                        sceneData.Players.Add(uuid);
+                        players.Add(uuid, player);
+                        break;
+                    }
+                    default:
+                        throw new Exception("Nem megfelelő az entity típusa!");
+                }
+            }
+            
+            FileManager fileManager = FileManager.Instance;
+
+            Dictionary<string, Creature> creaturesInAdventure = JsonConvert.DeserializeObject<Dictionary<string, Creature>>(await File.ReadAllTextAsync(fileManager.creaturePath));
+
+            var getAllCreatures = GetAllEntities(creaturesInAdventure, creatures); 
+            string creaturesJson = JsonConvert.SerializeObject(getAllCreatures);
+            Task creatureWriteTask = File.WriteAllTextAsync(fileManager.creaturePath, creaturesJson);
+            
+            Dictionary<string, Player> playersInAdventure = JsonConvert.DeserializeObject<Dictionary<string, Player>>(await File.ReadAllTextAsync(fileManager.playerPath));
+            
+            var getAllPlayers = GetAllEntities(playersInAdventure, players);
+            string playersJson = JsonConvert.SerializeObject(getAllPlayers);
+            Task playerWriteTask = File.WriteAllTextAsync(fileManager.playerPath, playersJson);
+            
+            Camera mainCamera = Camera.main;
+
+            if (mainCamera is null) {
+                Debug.Log("Main camera is null!");
+                throw new Exception("Main camera is null!");
+            }
+            
+            sceneData.CamPosition = new Position(mainCamera.transform.position);
+            sceneData.ZoomScale = mainCamera.orthographicSize;
+
+            string sceneJson = JsonConvert.SerializeObject(sceneData, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            string sceneFolderPath = FileManager.Instance.sceneFolderPath;
+            Task sceneWriteTask = File.WriteAllTextAsync(sceneFolderPath + $"/{sceneData.Name}.json", sceneJson);
+
+            Task.WaitAll(creatureWriteTask, playerWriteTask, sceneWriteTask);
+
+            Debug.Log("Saved at: " + sceneFolderPath + $"/{sceneData.Name}.json");
+        }
+
+        static Dictionary<string, T> GetAllEntities<T>(Dictionary<string, T> entitiesInAdventure, Dictionary<string, T> sceneEntities)
+            where T : IEntity {
+            if (entitiesInAdventure == null) {
+                return sceneEntities;
+            }
+            
+            foreach ((string uuid, T entity) in sceneEntities) {
+                entitiesInAdventure.Remove(uuid);
+                entitiesInAdventure.Add(uuid, entity);
             }
 
-            scene.camPosition = Camera.main.transform.position;
-            scene.zoomScale = Camera.main.orthographicSize;
-
-            string json = JsonUtility.ToJson(scene);
-            await File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{scene.name}.json", json);
-
-            Debug.Log("Saved at: " + GameManager.SCENE_PATH + $"/{scene.name}.json");
+            return entitiesInAdventure;
         }
 
         void ClearScene() {
             sceneObject.GetComponent<SpriteRenderer>().sprite = null;
 
-            for (int i = GameManager.Instance.creatures.Count - 1; i >= 0; i--) {
-                GameManager.Instance.creatures[i].GetComponent<NetworkObject>().Despawn();
+            for (int i = 0; i < GameManager.Instance.entities.Values.Count; i++) {
+                GameManager.Instance.entities.Values.ToList()[i].GetComponent<NetworkObject>().Despawn();
             }
 
             GameManager.Instance.currentScene = null;

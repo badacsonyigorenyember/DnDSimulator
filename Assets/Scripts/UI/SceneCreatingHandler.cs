@@ -1,11 +1,18 @@
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using FileHandling;
+using Models;
 using Network;
+using Newtonsoft.Json;
 using SimpleFileBrowser;
+using Structs;
 using TMPro;
+using UI.MainPanel;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils.Data;
 
 namespace UI
 {
@@ -33,20 +40,12 @@ namespace UI
             FileBrowser.SetExcludedExtensions(".lnk", ".tmp", ".zip", ".rar", ".exe");
             FileBrowser.AddQuickLink("Users", "C:\\Users");
 
-            _openCreatingButton.onClick.AddListener(() => {
-                if (_openCreatingButton.GetComponent<CreateButton>().selected == SelectedList.Scene) {
-                    Init();
-                }
-                else {
-                    ClosePanel();
-                }
-            });
             _createSceneButton.onClick.AddListener(CreateScene);
             _cancelCreatureButton.onClick.AddListener(ClosePanel);
             _selectImageButton.onClick.AddListener(SelectImage);
         }
 
-        void Init() {
+        public void Init() {
             transform.GetChild(0).gameObject.SetActive(true);
 
             ClearPanel();
@@ -106,7 +105,7 @@ namespace UI
             }
 
             string sceneName = _sceneNameInputField.text;
-            string path = GameManager.SCENE_PATH + $"/{sceneName}.json";
+            string path = FileManager.Instance.sceneFolderPath + $"/{sceneName}.json";
 
             if (File.Exists(path)) {
                 GameObject obj = Instantiate(_overWritePanel, transform);
@@ -120,19 +119,36 @@ namespace UI
                 }
             }
 
-            SceneData scene = new SceneData(sceneName);
+            Camera mainCamera = Camera.main;
+            if (mainCamera is null) {
+                Debug.Log("Main camera is null!");
+                throw new Exception("Main camera is null!");
+            }
+            
+            SceneData scene = new SceneData(sceneName)
+            {
+                ZoomScale = mainCamera.orthographicSize,
+                CamPosition = new Position(mainCamera.transform.position)
+            };
 
+            string json = JsonConvert.SerializeObject(scene);
+
+            FileManager fileManager = FileManager.Instance;
+            
             await Task.WhenAll(new[]
             {
-                File.WriteAllTextAsync(GameManager.SCENE_PATH + $"/{sceneName}.json", JsonUtility.ToJson(scene)),
-                File.WriteAllBytesAsync(GameManager.MAP_PATH + $"/{sceneName}.png", _image)
+                File.WriteAllTextAsync(fileManager.sceneFolderPath + $"/{sceneName}.json", json),
+                File.WriteAllBytesAsync(fileManager.sceneImgPath + $"/{sceneName}.png", _image)
             });
 
 
             SceneHandler.Instance.LoadMap(sceneName);
 
+            GameManager.Instance.currentScene = new Scene(scene);
+
+            MainPanelManager.Instance.ListScenes();
+            
             ClosePanel();
-            InfoPanelHandler.RefreshAction.Invoke();
         }
 
         void ClearPanel() {
