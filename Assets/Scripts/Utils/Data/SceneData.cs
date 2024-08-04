@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Models;
-using UnityEngine;
+using Structs;
 
 namespace Utils.Data
 {
@@ -10,7 +10,7 @@ namespace Utils.Data
         public List<string> Creatures { get; set; }
         public List<string> Players { get; set; }
         public float ZoomScale { get; set; }
-        public Vector2 CamPosition { get; set; }
+        public Position CamPosition { get; set; }
 
         public SceneData(Scene scene) {
             Creatures = new List<string>();
