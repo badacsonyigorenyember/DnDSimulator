@@ -1,12 +1,8 @@
-using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using FileHandling;
-using Models.Interfaces;
 using Newtonsoft.Json;
 using UI.MainPanel.ListElements;
 using UnityEngine;
-using UnityEngine.UI;
 using Utils.Data;
 
 
@@ -21,13 +17,13 @@ namespace UI.MainPanel
         public void ListScenes() {
             string[] paths = Directory.GetFiles(FileManager.Instance.sceneFolderPath);
 
-            foreach (var path in paths) {
-                if (path.EndsWith(".meta")) return;
+            foreach (var path in paths) {//TODO: ne adja hozzá többször újranyitásnál (vagy clear-elni, de a pluszt megtartani, vagy csak nem addolni)
+                if (path.EndsWith(".meta")) continue;
                 
                 string json = File.ReadAllText(path);
                 SceneData data = JsonConvert.DeserializeObject<SceneData>(json);
 
-                if (data == null) return;
+                if (data == null) continue;
 
                 InstantiateScene(data.Name);
             }
